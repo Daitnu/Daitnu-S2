@@ -19,7 +19,7 @@ https://docs.google.com/spreadsheets/d/18ZN7nae42eTuZcYPfB8H5yR_VzxCTVyE8_JS-o5Y
 ### 기술 스택
 ---
 
-**FE** - TS, React, Next.js(Optional), Styled-Component
+**FE** - TS, React, Redux, Next.js(Optional), Styled-Component
 
 **BE** - Spring(Spring Boot), Spring JPA, Spring Security 등등..(암튼 짱 많음 ㅋㅋ)
 
