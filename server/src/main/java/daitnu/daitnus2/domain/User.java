@@ -8,29 +8,29 @@ import javax.validation.constraints.NotBlank;
 
 @Entity @Getter
 @NoArgsConstructor
-@Table(uniqueConstraints = {
-        @UniqueConstraint(
-                name = "ID_EMAIL_SUB_EMAIL_UNIQUE",
-                columnNames = {"user_id", "email", "sub_email"}
-)})
 public class User {
 
     @Id @GeneratedValue
     private Long id;
 
     @NotBlank
+    @Column(nullable = false, unique = true)
     private String userId;
 
     @NotBlank
+    @Column(nullable = false)
     private String pw;
 
     @NotBlank
+    @Column(nullable = false)
     private String name;
 
     @NotBlank
+    @Column(nullable = false, unique = true)
     private String email;
 
     @NotBlank
+    @Column(nullable = false, unique = true)
     private String subEmail;
 
     public User(String userId, String pw, String name, String email, String subEmail) {
