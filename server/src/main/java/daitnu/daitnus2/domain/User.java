@@ -38,4 +38,12 @@ public class User {
         this.email = email;
         this.subEmail = subEmail;
     }
+
+    public void updateUser(String userId, String pw, String name, String email, String subEmail) {
+        this.userId = userId;
+        this.pw = pw;
+        this.name = name;
+        this.email = email;
+        this.subEmail = subEmail;
+    }
 }
