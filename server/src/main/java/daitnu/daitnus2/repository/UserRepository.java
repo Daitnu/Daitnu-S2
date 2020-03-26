@@ -46,9 +46,9 @@ public class UserRepository {
                 .getResultList();
     }
 
-    public List<User> findOneByUserNameAndSubEmail(String name, String subEmail) {
-        return em.createQuery("select u from User u where u.name = :name and u.subEmail = :subEmail", User.class)
-                .setParameter("name", name)
+    public List<User> findOneByUserIdAndSubEmail(String userId, String subEmail) {
+        return em.createQuery("select u from User u where u.userId = :userId and u.subEmail = :subEmail", User.class)
+                .setParameter("userId", userId)
                 .setParameter("subEmail", subEmail)
                 .getResultList();
     }
