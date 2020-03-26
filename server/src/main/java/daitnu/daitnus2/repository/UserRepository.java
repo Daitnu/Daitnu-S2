@@ -26,30 +26,30 @@ public class UserRepository {
         em.remove(user);
     }
 
-    public User findOne(Long id) throws NoResultException {
+    public User findOne(Long id) {
         return em.find(User.class, id);
     }
 
-    public List<User> findAll() throws NoResultException {
+    public List<User> findAll() {
         return em.createQuery("select u from User u", User.class).getResultList();
     }
 
-    public User findOneByUserId(String userId) throws NoResultException {
+    public List<User> findOneByUserId(String userId) {
         return em.createQuery("select u from User u where u.userId = :userId", User.class)
                 .setParameter("userId", userId)
-                .getSingleResult();
+                .getResultList();
     }
 
-    public User findOneByUserEmail(String email) throws NoResultException {
+    public List<User> findOneByUserEmail(String email) {
         return em.createQuery("select u from User u where u.email = :email", User.class)
                 .setParameter("email", email)
-                .getSingleResult();
+                .getResultList();
     }
 
-    public User findOneByUserNameAndSubEmail(String name, String subEmail) throws NoResultException {
+    public List<User> findOneByUserNameAndSubEmail(String name, String subEmail) {
         return em.createQuery("select u from User u where u.name = :name and u.subEmail = :subEmail", User.class)
                 .setParameter("name", name)
                 .setParameter("subEmail", subEmail)
-                .getSingleResult();
+                .getResultList();
     }
 }
