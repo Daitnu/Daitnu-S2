@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 @Repository
@@ -21,27 +22,27 @@ public class UserRepository {
         }
     }
 
-    public User findOne(Long id) {
+    public User findOne(Long id) throws NoResultException {
         return em.find(User.class, id);
     }
 
-    public List<User> findAll() {
+    public List<User> findAll() throws NoResultException {
         return em.createQuery("select u from User u", User.class).getResultList();
     }
 
-    public User findOneByUserId(String userId) {
+    public User findOneByUserId(String userId) throws NoResultException {
         return em.createQuery("select u from User u where u.userId = :userId", User.class)
                 .setParameter("userId", userId)
                 .getSingleResult();
     }
 
-    public User findOneByUserEmail(String email) {
+    public User findOneByUserEmail(String email) throws NoResultException {
         return em.createQuery("select u from User u where u.email = :email", User.class)
                 .setParameter("email", email)
                 .getSingleResult();
     }
 
-    public User findOneByUserNameAndSubEmail(String name, String subEmail) {
+    public User findOneByUserNameAndSubEmail(String name, String subEmail) throws NoResultException {
         return em.createQuery("select u from User u where u.name = :name and u.subEmail = :subEmail", User.class)
                 .setParameter("name", name)
                 .setParameter("subEmail", subEmail)
