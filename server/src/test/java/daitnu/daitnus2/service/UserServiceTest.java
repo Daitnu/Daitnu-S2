@@ -90,4 +90,20 @@ public class UserServiceTest {
         assertEquals("kimsoso2@daitnu2.com", updatedUser.getEmail());
         assertEquals("kimsoso2@gaver.com", updatedUser.getSubEmail());
     }
+
+    @Test
+    public void 회원탈퇴() throws Exception {
+        // given
+        User user = new User("kimsoso1", "1234", "kss1",
+                "kimsoso1@daitnu2.com", "kimsoso1@gaver.com");
+
+        // when
+        userService.register(user);
+        User registeredUser = userService.findOne(user.getId());
+        userService.withDraw(registeredUser);
+
+        // then
+        List<User> users = userService.findAll();
+        assertEquals(0, users.size());
+    }
 }
