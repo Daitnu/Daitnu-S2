@@ -22,6 +22,10 @@ public class UserRepository {
         }
     }
 
+    public void delete(User user) {
+        em.remove(user);
+    }
+
     public User findOne(Long id) throws NoResultException {
         return em.find(User.class, id);
     }
