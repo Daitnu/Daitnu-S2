@@ -69,4 +69,25 @@ public class UserServiceTest {
         assertEquals(0, foundUser2.size());
         assertEquals(1, foundUser3.size());
     }
+
+    @Test
+    public void 회원정보_업데이트() throws Exception {
+        // given
+        User user = new User("kimsoso1", "1234", "kss1",
+                "kimsoso1@daitnu2.com", "kimsoso1@gaver.com");
+
+        // when
+        userService.register(user);
+        User registeredUser = userService.findOne(user.getId());
+        registeredUser.updateUser("kimsoso2", "12345", "kss2",
+                "kimsoso2@daitnu2.com", "kimsoso2@gaver.com");
+
+        // then
+        User updatedUser = userService.findOne(user.getId());
+        assertEquals("kimsoso2", updatedUser.getUserId());
+        assertEquals("12345", updatedUser.getPw());
+        assertEquals("kss2", updatedUser.getName());
+        assertEquals("kimsoso2@daitnu2.com", updatedUser.getEmail());
+        assertEquals("kimsoso2@gaver.com", updatedUser.getSubEmail());
+    }
 }
