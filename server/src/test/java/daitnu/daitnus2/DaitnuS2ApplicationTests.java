@@ -1,4 +1,4 @@
-package me.sjh2428.daitnus2;
+package daitnu.daitnus2;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

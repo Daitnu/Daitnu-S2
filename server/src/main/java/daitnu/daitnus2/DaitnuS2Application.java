@@ -1,4 +1,4 @@
-package me.sjh2428.daitnus2;
+package daitnu.daitnus2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
