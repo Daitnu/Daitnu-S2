@@ -3,14 +3,16 @@ package daitnu.daitnus2.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-@Entity
-@Getter
+@Entity @Getter
 @NoArgsConstructor
+@Table(uniqueConstraints = {
+        @UniqueConstraint(
+                name = "ID_EMAIL_SUB_EMAIL_UNIQUE",
+                columnNames = {"user_id", "email", "sub_email"}
+)})
 public class User {
 
     @Id @GeneratedValue
