@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -51,6 +53,20 @@ public class UserServiceTest {
 
     @Test
     public void 해당하는_아이디와_서브이메일을_가진_유저가_존재하지_않습니다() throws Exception {
+        // given
+        String userId = "kimsoso1";
+        String subEmail = "kimsoso1@gaver.com";
+        User user = new User(userId, "1234", "kss1", "kimsoso1@daitnu2.com", subEmail);
 
+        // when
+        userService.register(user);
+        List<User> foundUser1 = userService.findOneByUserIdAndSubEmail(userId + "1", subEmail);
+        List<User> foundUser2 = userService.findOneByUserIdAndSubEmail(userId, subEmail + "1");
+        List<User> foundUser3 = userService.findOneByUserIdAndSubEmail(userId, subEmail);
+
+        // then
+        assertEquals(0, foundUser1.size());
+        assertEquals(0, foundUser2.size());
+        assertEquals(1, foundUser3.size());
     }
 }
