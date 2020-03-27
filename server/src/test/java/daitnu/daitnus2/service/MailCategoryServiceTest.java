@@ -85,7 +85,26 @@ public class MailCategoryServiceTest {
         assertEquals(0, mailCategories.size());
     }
 
-    //TODO: 타인의_메일함_삭제_불가
+    @Test(expected = IllegalStateException.class)
+    public void 타인의_메일함_삭제_불가() {
+        // given
+        User user1 = new User("kimsoso1", "1234", "kss1",
+                "kimsoso1@daitnu2.com", "kimsoso1@gaver.com");
+        User user2 = new User("kimsoso1", "1234", "kss2",
+                "kimsoso1@daitnu2.com", "kimsoso1@gaver.com");
+        MailCategory mailCategory1 = new MailCategory("mailboxName1", user1);
+        MailCategory mailCategory2 = new MailCategory("mailboxName2", user2);
+
+        // when
+        userService.register(user1);
+        userService.register(user2);
+        mailCategoryService.makeDir(mailCategory1);
+        mailCategoryService.makeDir(mailCategory2);
+        mailCategoryService.removeDir(mailCategory1, user2);
+
+        // then
+        fail("타인의 메일함 삭제는 불가합니다");
+    }
 
     @Test(expected = IllegalStateException.class)
     public void 유저는_메일함_이름_중복_생성_불가() {
