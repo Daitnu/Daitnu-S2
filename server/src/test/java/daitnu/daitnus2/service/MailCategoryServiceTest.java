@@ -2,8 +2,6 @@ package daitnu.daitnus2.service;
 
 import daitnu.daitnus2.domain.MailCategory;
 import daitnu.daitnus2.domain.User;
-import daitnu.daitnus2.repository.MailCategoryRepository;
-import daitnu.daitnus2.repository.UserRepository;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,9 +19,7 @@ import static org.junit.Assert.*;
 @Transactional
 public class MailCategoryServiceTest {
 
-    @Autowired UserRepository userRepository;
     @Autowired UserService userService;
-    @Autowired MailCategoryRepository mailCategoryRepository;
     @Autowired MailCategoryService mailCategoryService;
 
     @Test
