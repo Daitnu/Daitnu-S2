@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity @Getter
 @NoArgsConstructor
@@ -12,6 +13,8 @@ public class MailCategory {
     @Id @GeneratedValue
     private Long id;
 
+    @NotBlank
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
