@@ -21,7 +21,7 @@ public class MailCategoryRepository {
         }
     }
 
-    public void delete(MailCategory mailCategory) {
+    public void remove(MailCategory mailCategory) {
         em.remove(mailCategory);
     }
 
@@ -36,6 +36,25 @@ public class MailCategoryRepository {
     public List<MailCategory> findByUserId(String userId) {
         return em.createQuery("select m from MailCategory m where m.user.userId = :userId", MailCategory.class)
                 .setParameter("userId", userId)
+                .getResultList();
+    }
+
+    // 메일함 생성할 때 사용할 것 같음
+    public List<MailCategory> findByUserIdAndCategoryName(String userId, String categoryName) {
+        return em.createQuery("select m from MailCategory m " +
+                "where m.user.userId = :userId and m.name = :categoryName", MailCategory.class)
+                .setParameter("userId", userId)
+                .setParameter("categoryName", categoryName)
+                .getResultList();
+    }
+
+    // 삭제시, 수정시 사용할 것 같음
+    public List<MailCategory> findByUserIdAndCategoryNameAndCategoryNo(String userId, String categoryName, Long categoryNo) {
+        return em.createQuery("select m from MailCategory m " +
+                "where m.user.userId = :userId and m.name = :categoryName and m.id = :categoryNo", MailCategory.class)
+                .setParameter("userId", userId)
+                .setParameter("categoryName", categoryName)
+                .setParameter("categoryNo", categoryNo)
                 .getResultList();
     }
 }
