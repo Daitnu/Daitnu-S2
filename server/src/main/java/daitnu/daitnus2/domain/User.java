@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity @Getter
 @NoArgsConstructor
@@ -32,6 +33,9 @@ public class User {
     @NotBlank
     @Column(nullable = false, unique = true)
     private String subEmail;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<MailCategory> mailCategories;
 
     public User(String userId, String pw, String name, String email, String subEmail) {
         this.userId = userId;
