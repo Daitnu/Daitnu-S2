@@ -1,6 +1,7 @@
 package daitnu.daitnus2.service;
 
 import daitnu.daitnus2.domain.MailCategory;
+import daitnu.daitnus2.domain.User;
 import daitnu.daitnus2.repository.MailCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,14 +29,35 @@ public class MailCategoryService {
         List<MailCategory> mailCategories = mailCategoryRepository.
                 findByUserIdAndCategoryName(mailCategory.getUser().getUserId(), mailCategory.getName());
         if (!mailCategories.isEmpty()) {
-            throw new IllegalStateException("같은 이름의 메일함은 만들 수 없습니다!");
+            throw new IllegalStateException("같은 이름의 메일함은 만들 수 없습니다!"); // TODO: retype sentence
         }
     }
 
     // 메일 폴더 삭제
     @Transactional
-    public Long removeDir(MailCategory mailCategory) {
+    public Long removeDir(MailCategory mailCategory, User user) {
+        validateRemoveDir(mailCategory, user);
         mailCategoryRepository.remove(mailCategory);
         return mailCategory.getId();
+    }
+
+    private void validateRemoveDir(MailCategory mailCategory, User user) {
+        List<MailCategory> mailCategories = mailCategoryRepository.
+                findByUserIdAndCategoryNameAndCategoryNo(user.getUserId(), mailCategory.getName(), mailCategory.getId());
+        if (mailCategories.isEmpty()) {
+            throw new IllegalStateException("해당 메일함의 소유자이어야 합니다"); // TODO: retype sentence
+        }
+    }
+
+    public MailCategory findOne(Long id) {
+        return mailCategoryRepository.findOne(id);
+    }
+
+    public List<MailCategory> findAll() {
+        return mailCategoryRepository.findAll();
+    }
+
+    public List<MailCategory> findByUserId(String userId) {
+        return mailCategoryRepository.findByUserId(userId);
     }
 }
