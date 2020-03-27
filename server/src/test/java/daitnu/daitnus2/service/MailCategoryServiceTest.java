@@ -86,8 +86,8 @@ public class MailCategoryServiceTest {
         // given
         User user1 = new User("kimsoso1", "1234", "kss1",
                 "kimsoso1@daitnu2.com", "kimsoso1@gaver.com");
-        User user2 = new User("kimsoso1", "1234", "kss2",
-                "kimsoso1@daitnu2.com", "kimsoso1@gaver.com");
+        User user2 = new User("kimsoso2", "12345", "kss2",
+                "kimsoso2@daitnu2.com", "kimsoso2@gaver.com");
         MailCategory mailCategory1 = new MailCategory("mailboxName1", user1);
         MailCategory mailCategory2 = new MailCategory("mailboxName2", user2);
 
