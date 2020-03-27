@@ -85,5 +85,23 @@ public class MailCategoryServiceTest {
         assertEquals(0, mailCategories.size());
     }
 
-    //TODO: 유저는 같은 이름의 메일함을 만들지 못한다
+    //TODO: 타인의_메일함_삭제_불가
+
+    @Test(expected = IllegalStateException.class)
+    public void 유저는_메일함_이름_중복_생성_불가() {
+        // given
+        String mailboxName = "mailbox1";
+        User user = new User("kimsoso", "1234", "kss",
+                "kimsoso@daitnu2.com", "kimsoso@gaver.com");
+        MailCategory mailCategory1 = new MailCategory(mailboxName, user);
+        MailCategory mailCategory2 = new MailCategory(mailboxName, user);
+
+        // when
+        userService.register(user);
+        mailCategoryService.makeDir(mailCategory1);
+        mailCategoryService.makeDir(mailCategory2);
+
+        // then
+        fail("메일함 이름 중복 생성 불가!");
+    }
 }
