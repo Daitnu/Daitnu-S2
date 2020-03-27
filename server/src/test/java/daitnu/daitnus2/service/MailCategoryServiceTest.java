@@ -45,4 +45,26 @@ public class MailCategoryServiceTest {
         assertEquals(user.getUserId(), madeMailCategory.getUser().getUserId());
         assertEquals(mailboxName, madeMailCategory.getName());
     }
+
+    @Test
+    public void 메일함_수정() {
+        // given
+        String mailboxName = "mailbox1";
+        User user = new User("kimsoso", "1234", "kss",
+                "kimsoso@daitnu2.com", "kimsoso@gaver.com");
+        MailCategory mailCategory = new MailCategory(mailboxName, user);
+
+        // when
+        userService.register(user);
+        mailCategoryService.makeDir(mailCategory);
+
+        // then
+        String otherMailboxName = "hoho";
+        mailCategory.updateName(otherMailboxName);
+        MailCategory mailBox = mailCategoryService.findOne(mailCategory.getId());
+        assertEquals(otherMailboxName, mailBox.getName());
+    }
+
+    //TODO: 메일함 삭제
+    //TODO: 유저는 같은 이름의 메일함을 만들지 못한다
 }
