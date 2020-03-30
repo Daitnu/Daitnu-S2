@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Getter
@@ -20,10 +21,10 @@ public class MailTemplate {
   private String from;
 
   @OneToMany(mappedBy = "mailTemplate", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<MailReceiver> to;
+  private List<MailReceiver> to = new ArrayList<>();
 
   @OneToMany(mappedBy = "mailTemplate", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Mail> mails;
+  private List<Mail> mails = new ArrayList<>();
 
   @NotBlank
   @Column(nullable = false)

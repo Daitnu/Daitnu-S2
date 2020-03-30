@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Getter
@@ -35,7 +36,7 @@ public class User {
     private String subEmail;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MailCategory> mailCategories;
+    private List<MailCategory> mailCategories = new ArrayList<>();
 
     public User(String userId, String pw, String name, String email, String subEmail) {
         this.userId = userId;
