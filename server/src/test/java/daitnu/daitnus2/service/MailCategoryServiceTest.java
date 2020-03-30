@@ -31,15 +31,18 @@ public class MailCategoryServiceTest {
         MailCategory mailCategory = new MailCategory(mailboxName, user);
 
         // when
-        userService.register(user);
+        Long newUserId = userService.register(user);
         mailCategoryService.makeDir(mailCategory);
 
         // then
         List<MailCategory> mailCategories = mailCategoryService.findByUserId(user.getUserId());
         MailCategory madeMailCategory = mailCategories.get(0);
+        User one = userService.findOne(newUserId);
 
         assertEquals(user.getUserId(), madeMailCategory.getUser().getUserId());
         assertEquals(mailboxName, madeMailCategory.getName());
+        assertEquals(newUserId, one.getId());
+        assertEquals(1, one.getMailCategories().size());
     }
 
     @Test

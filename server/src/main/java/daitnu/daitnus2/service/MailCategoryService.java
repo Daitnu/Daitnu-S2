@@ -20,6 +20,7 @@ public class MailCategoryService {
     @Transactional
     public Long makeDir(MailCategory mailCategory) {
         validateMakeDir(mailCategory);
+        mailCategory.getUser().getMailCategories().add(mailCategory);
         mailCategoryRepository.save(mailCategory);
         return mailCategory.getId();
     }
