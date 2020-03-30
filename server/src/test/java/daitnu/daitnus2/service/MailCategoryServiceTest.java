@@ -62,6 +62,7 @@ public class MailCategoryServiceTest {
         mailCategory.updateName(otherMailboxName);
         MailCategory mailBox = mailCategoryService.findOne(mailCategory.getId());
         assertEquals(otherMailboxName, mailBox.getName());
+        assertEquals(otherMailboxName, user.getMailCategories().get(0).getName());
     }
 
     @Test
