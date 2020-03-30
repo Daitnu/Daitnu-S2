@@ -26,3 +26,25 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+
+---
+
+spring:
+  profiles: test
+  datasource:
+    username: root
+    password: 140902
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/daitnu_s2_test?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
