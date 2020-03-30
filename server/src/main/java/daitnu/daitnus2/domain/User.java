@@ -34,7 +34,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String subEmail;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MailCategory> mailCategories;
 
     public User(String userId, String pw, String name, String email, String subEmail) {
