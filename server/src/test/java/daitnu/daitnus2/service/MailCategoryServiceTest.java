@@ -82,6 +82,7 @@ public class MailCategoryServiceTest {
 
         assertEquals(madeMailboxId, removedMailboxId);
         assertEquals(0, mailCategories.size());
+        assertEquals(0, user.getMailCategories().size());
     }
 
     @Test(expected = IllegalStateException.class)

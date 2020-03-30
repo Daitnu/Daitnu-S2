@@ -39,6 +39,7 @@ public class MailCategoryService {
     public Long removeDir(MailCategory mailCategory, User user) {
         validateRemoveDir(mailCategory, user);
         mailCategoryRepository.remove(mailCategory);
+        user.getMailCategories().remove(mailCategory);
         return mailCategory.getId();
     }
 
