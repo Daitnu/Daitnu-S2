@@ -33,19 +33,13 @@ public class MailRepository {
     return em.createQuery("select m from Mail m", Mail.class).getResultList();
   }
 
-  public List<Mail> findAllByUserId(Long userId) {
+  public List<Mail> findAll(Long userId) {
     return em.createQuery("select m from Mail m where m.owner = :userId", Mail.class)
       .setParameter("userId", userId)
       .getResultList();
   }
 
-  public List<Mail> findAllByCategoryId(Long categoryId) {
-    return em.createQuery("select m from Mail m where m.category = :categoryId", Mail.class)
-      .setParameter("categoryId", categoryId)
-      .getResultList();
-  }
-
-  public List<Mail> findAllByUserIdAndCategoryId(Long userId, Long categoryId) {
+  public List<Mail> findAll(Long userId, Long categoryId) {
     return em.createQuery("select m from Mail m where m.owner = :userId and m.category = :categoryId", Mail.class)
       .setParameter("userId", userId)
       .setParameter("categoryId", categoryId)
