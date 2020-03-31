@@ -18,6 +18,7 @@ public class UserService {
     // 회원 가입
     @Transactional
     public Long register(User user) {
+        // TODO: 비밀번호 암호화
         validateDuplicateUser(user);
         userRepository.save(user);
         return user.getId();
@@ -25,6 +26,7 @@ public class UserService {
 
     // 회원 가입 validation
     private void validateDuplicateUser(User user) {
+        // TODO: length validation, regex validation
         List<User> foundUser = userRepository.findOneByUserId(user.getUserId());
         if (!foundUser.isEmpty()) {
             throw new IllegalStateException("already registered user");
@@ -41,6 +43,7 @@ public class UserService {
     // 회원 이름, 서브이메일 수정
     @Transactional
     public void updateUserNameAndSubEmail(Long id, String name, String subEmail) {
+        // TODO: length + regex validation
         User one = userRepository.findOne(id);
         one.updateUserNameAndSubEmail(name, subEmail);
     }
@@ -48,7 +51,7 @@ public class UserService {
     // 패스워드 수정
     @Transactional
     public void changePassword(Long id, String newPassword) {
-      // TODO: 패스워드 암호화
+      // TODO: 패스워드 암호화, length + regex validation
       User one = userRepository.findOne(id);
       one.changePassword(newPassword);
     }

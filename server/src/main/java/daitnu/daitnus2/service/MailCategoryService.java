@@ -26,7 +26,7 @@ public class MailCategoryService {
     }
 
     private void validateMakeDir(MailCategory mailCategory) {
-        // TODO: 길이 제한
+        // TODO: length validation
         List<MailCategory> mailCategories = mailCategoryRepository.
                 findByUserIdAndCategoryName(mailCategory.getUser().getUserId(), mailCategory.getName());
         if (!mailCategories.isEmpty()) {
