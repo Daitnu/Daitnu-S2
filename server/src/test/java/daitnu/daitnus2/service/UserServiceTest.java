@@ -80,16 +80,14 @@ public class UserServiceTest {
 
         // when
         userService.register(user);
-        User registeredUser = userService.findOne(user.getId());
-        registeredUser.updateUser("kimsoso2", "12345", "kss2",
-                "kimsoso2@daitnu2.com", "kimsoso2@gaver.com");
+        userService.updateUserNameAndSubEmail(user.getId(), "kss2", "kimsoso2@gaver.com");
 
         // then
         User updatedUser = userService.findOne(user.getId());
-        assertEquals("kimsoso2", updatedUser.getUserId());
-        assertEquals("12345", updatedUser.getPw());
+        assertEquals("kimsoso1", updatedUser.getUserId());
+        assertEquals("1234", updatedUser.getPw());
         assertEquals("kss2", updatedUser.getName());
-        assertEquals("kimsoso2@daitnu2.com", updatedUser.getEmail());
+        assertEquals("kimsoso1@daitnu2.com", updatedUser.getEmail());
         assertEquals("kimsoso2@gaver.com", updatedUser.getSubEmail());
     }
 

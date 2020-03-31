@@ -32,9 +32,17 @@ public class UserService {
     }
 
     // 회원 탈퇴
+    @Transactional
     public Long withDraw(User user) {
         userRepository.remove(user);
         return user.getId();
+    }
+
+    // 회원 이름, 서브이메일 수정
+    @Transactional
+    public void updateUserNameAndSubEmail(Long id, String name, String subEmail) {
+        User one = userRepository.findOne(id);
+        one.updateUserNameAndSubEmail(name, subEmail);
     }
 
     public User findOne(Long id) {
