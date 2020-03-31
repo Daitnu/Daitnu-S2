@@ -45,6 +45,14 @@ public class UserService {
         one.updateUserNameAndSubEmail(name, subEmail);
     }
 
+    // 패스워드 수정
+    @Transactional
+    public void changePassword(Long id, String newPassword) {
+      // TODO: 패스워드 암호화
+      User one = userRepository.findOne(id);
+      one.changePassword(newPassword);
+    }
+
     public User findOne(Long id) {
         return userRepository.findOne(id);
     }

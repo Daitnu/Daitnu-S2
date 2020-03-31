@@ -92,6 +92,23 @@ public class UserServiceTest {
     }
 
     @Test
+    public void 비밀번호_변경() throws Exception {
+        // given
+        User user = new User("kimsoso1", "1234", "kss1",
+          "kimsoso1@daitnu2.com", "kimsoso1@gaver.com");
+
+        // when
+        userService.register(user);
+        userService.changePassword(user.getId(), "5678");
+
+        // then
+        User updatedUser = userService.findOne(user.getId());
+        assertEquals("kimsoso1", updatedUser.getUserId());
+        assertEquals("5678", updatedUser.getPw());
+        assertEquals(user.getPw(), updatedUser.getPw());
+    }
+
+    @Test
     public void 회원탈퇴() throws Exception {
         // given
         User user = new User("kimsoso1", "1234", "kss1",

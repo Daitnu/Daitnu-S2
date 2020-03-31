@@ -50,4 +50,8 @@ public class User {
         this.name = name;
         this.subEmail = subEmail;
     }
+
+    public void changePassword(String pw) {
+        this.pw = pw;
+    }
 }
