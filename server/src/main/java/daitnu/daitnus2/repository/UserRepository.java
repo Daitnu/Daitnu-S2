@@ -21,7 +21,7 @@ public class UserRepository {
         }
     }
 
-    public void delete(User user) {
+    public void remove(User user) {
         em.remove(user);
     }
 

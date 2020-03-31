@@ -33,7 +33,7 @@ public class UserService {
 
     // 회원 탈퇴
     public Long withDraw(User user) {
-        userRepository.delete(user);
+        userRepository.remove(user);
         return user.getId();
     }
 
