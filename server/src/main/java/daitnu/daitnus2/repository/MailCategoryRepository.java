@@ -39,6 +39,15 @@ public class MailCategoryRepository {
                 .getResultList();
     }
 
+    // 메일을 해당 메일로 이동시킬 때 validation
+    public List<MailCategory> findAllByUserIdAndCategoryId(Long userId, Long categoryId) {
+        return em.createQuery("select m from MailCategory m " +
+            "where m.user.userId = :userId and m.id = :categoryId", MailCategory.class)
+            .setParameter("userId", userId)
+            .setParameter("categoryId", categoryId)
+            .getResultList();
+    }
+
     // 메일함 생성할 때 사용할 것 같음
     public List<MailCategory> findByUserIdAndCategoryName(String userId, String categoryName) {
         return em.createQuery("select m from MailCategory m " +
