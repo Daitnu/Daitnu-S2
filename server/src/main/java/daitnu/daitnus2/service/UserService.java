@@ -27,8 +27,8 @@ public class UserService {
     // 회원 가입 validation
     private void validateDuplicateUser(User user) {
         // TODO: length validation, regex validation
-        List<User> foundUser = userRepository.findOneByUserId(user.getUserId());
-        if (!foundUser.isEmpty()) {
+        User foundUser = userRepository.findOne(user.getUserId());
+        if (foundUser != null) {
             throw new IllegalStateException("already registered user");
         }
     }
@@ -64,16 +64,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public List<User> findOneByUserId(String userId) {
-        return userRepository.findOneByUserId(userId);
-    }
-
-    public List<User> findOneByUserEmail(String userEmail) {
-        return userRepository.findOneByUserEmail(userEmail);
+    public User findOne(String userId) {
+        return userRepository.findOne(userId);
     }
 
     // 비밀번호 찾기시 사용할 예정
-    public List<User> findOneByUserIdAndSubEmail(String userId, String subEmail) {
-        return userRepository.findOneByUserIdAndSubEmail(userId, subEmail);
+    public User findOne(String userId, String subEmail) {
+        return userRepository.findOne(userId, subEmail);
     }
 }

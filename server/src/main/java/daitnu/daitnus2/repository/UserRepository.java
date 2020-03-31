@@ -29,26 +29,30 @@ public class UserRepository {
         return em.find(User.class, id);
     }
 
-    public List<User> findAll() {
-        return em.createQuery("select u from User u", User.class).getResultList();
+    public User findOne(String userId) {
+        List<User> result = em.createQuery("select u from User u where u.userId = :userId", User.class)
+            .setParameter("userId", userId)
+            .getResultList();
+        if (result.isEmpty()) {
+            return null;
+        } else {
+            return result.get(0);
+        }
     }
 
-    public List<User> findOneByUserId(String userId) {
-        return em.createQuery("select u from User u where u.userId = :userId", User.class)
-                .setParameter("userId", userId)
-                .getResultList();
-    }
-
-    public List<User> findOneByUserEmail(String email) {
-        return em.createQuery("select u from User u where u.email = :email", User.class)
-                .setParameter("email", email)
-                .getResultList();
-    }
-
-    public List<User> findOneByUserIdAndSubEmail(String userId, String subEmail) {
-        return em.createQuery("select u from User u where u.userId = :userId and u.subEmail = :subEmail", User.class)
+    public User findOne(String userId, String subEmail) {
+        List<User> result = em.createQuery("select u from User u where u.userId = :userId and u.subEmail = :subEmail", User.class)
                 .setParameter("userId", userId)
                 .setParameter("subEmail", subEmail)
                 .getResultList();
+        if (result.isEmpty()) {
+            return null;
+        } else {
+            return result.get(0);
+        }
+    }
+
+    public List<User> findAll() {
+        return em.createQuery("select u from User u", User.class).getResultList();
     }
 }

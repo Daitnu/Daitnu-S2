@@ -59,14 +59,14 @@ public class UserServiceTest {
 
         // when
         userService.register(user);
-        List<User> foundUser1 = userService.findOneByUserIdAndSubEmail(userId + "1", subEmail);
-        List<User> foundUser2 = userService.findOneByUserIdAndSubEmail(userId, subEmail + "1");
-        List<User> foundUser3 = userService.findOneByUserIdAndSubEmail(userId, subEmail);
+        User foundUser1 = userService.findOne(userId + "1", subEmail);
+        User foundUser2 = userService.findOne(userId, subEmail + "1");
+        User foundUser3 = userService.findOne(userId, subEmail);
 
         // then
-        assertEquals(0, foundUser1.size());
-        assertEquals(0, foundUser2.size());
-        assertEquals(1, foundUser3.size());
+        assertNull(foundUser1);
+        assertNull(foundUser2);
+        assertEquals(user.getId(), foundUser3.getId());
     }
 
     @Test
