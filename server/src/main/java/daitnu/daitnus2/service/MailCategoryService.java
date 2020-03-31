@@ -28,7 +28,7 @@ public class MailCategoryService {
     private void validateMakeDir(MailCategory mailCategory) {
         // TODO: length validation
         List<MailCategory> mailCategories = mailCategoryRepository.
-                findByUserIdAndCategoryName(mailCategory.getUser().getUserId(), mailCategory.getName());
+                findAll(mailCategory.getUser().getUserId(), mailCategory.getName());
         if (!mailCategories.isEmpty()) {
             throw new IllegalStateException("같은 이름의 메일함은 만들 수 없습니다!"); // TODO: retype sentence
         }
@@ -45,7 +45,7 @@ public class MailCategoryService {
 
     private void validateRemoveDir(MailCategory mailCategory, User user) {
         List<MailCategory> mailCategories = mailCategoryRepository.
-                findByUserIdAndCategoryNameAndCategoryNo(user.getUserId(), mailCategory.getName(), mailCategory.getId());
+                findAll(user.getUserId(), mailCategory.getName(), mailCategory.getId());
         if (mailCategories.isEmpty()) {
             throw new IllegalStateException("해당 메일함의 소유자이어야 합니다"); // TODO: retype sentence
         }
@@ -59,7 +59,7 @@ public class MailCategoryService {
         return mailCategoryRepository.findAll();
     }
 
-    public List<MailCategory> findByUserId(String userId) {
-        return mailCategoryRepository.findByUserId(userId);
+    public List<MailCategory> findAll(String userId) {
+        return mailCategoryRepository.findAll(userId);
     }
 }

@@ -36,7 +36,7 @@ public class MailCategoryServiceTest {
         mailCategoryService.makeDir(mailCategory);
 
         // then
-        List<MailCategory> mailCategories = mailCategoryService.findByUserId(user.getUserId());
+        List<MailCategory> mailCategories = mailCategoryService.findAll(user.getUserId());
         MailCategory madeMailCategory = mailCategories.get(0);
         User one = userService.findOne(newUserId);
 

@@ -25,22 +25,22 @@ public class MailCategoryRepository {
         em.remove(mailCategory);
     }
 
+    public MailCategory findOne(Long id) {
+    return em.find(MailCategory.class, id);
+  }
+
     public List<MailCategory> findAll() {
         return em.createQuery("select m from MailCategory m", MailCategory.class).getResultList();
     }
 
-    public MailCategory findOne(Long id) {
-        return em.find(MailCategory.class, id);
-    }
-
-    public List<MailCategory> findByUserId(String userId) {
+    public List<MailCategory> findAll(String userId) {
         return em.createQuery("select m from MailCategory m where m.user.userId = :userId", MailCategory.class)
                 .setParameter("userId", userId)
                 .getResultList();
     }
 
     // 메일을 해당 메일로 이동시킬 때 validation
-    public List<MailCategory> findAllByUserIdAndCategoryId(Long userId, Long categoryId) {
+    public List<MailCategory> findAll(Long userId, Long categoryId) {
         return em.createQuery("select m from MailCategory m " +
             "where m.user.userId = :userId and m.id = :categoryId", MailCategory.class)
             .setParameter("userId", userId)
@@ -49,7 +49,7 @@ public class MailCategoryRepository {
     }
 
     // 메일함 생성할 때 사용할 것 같음
-    public List<MailCategory> findByUserIdAndCategoryName(String userId, String categoryName) {
+    public List<MailCategory> findAll(String userId, String categoryName) {
         return em.createQuery("select m from MailCategory m " +
                 "where m.user.userId = :userId and m.name = :categoryName", MailCategory.class)
                 .setParameter("userId", userId)
@@ -58,7 +58,7 @@ public class MailCategoryRepository {
     }
 
     // 삭제시, 수정시 사용할 것 같음
-    public List<MailCategory> findByUserIdAndCategoryNameAndCategoryNo(String userId, String categoryName, Long categoryNo) {
+    public List<MailCategory> findAll(String userId, String categoryName, Long categoryNo) {
         return em.createQuery("select m from MailCategory m " +
                 "where m.user.userId = :userId and m.name = :categoryName and m.id = :categoryNo", MailCategory.class)
                 .setParameter("userId", userId)

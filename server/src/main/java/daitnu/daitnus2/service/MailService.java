@@ -55,7 +55,7 @@ public class MailService {
       throw new IllegalStateException("해당 메일함이 존재하지 않습니다"); // TODO: retype error msg
     }
 
-    List<MailCategory> categories = mailCategoryRepository.findAllByUserIdAndCategoryId(userId, mailCategoryId);
+    List<MailCategory> categories = mailCategoryRepository.findAll(userId, mailCategoryId);
     if (categories.isEmpty()) {
       throw new IllegalStateException("해당 메일함은 본인의 소유가 아님"); // TODO: retype error msg
     }
