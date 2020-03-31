@@ -28,8 +28,7 @@ public class MailCategoryServiceTest {
     public void 메일함_생성() {
         // given
         String mailboxName = "mailbox1";
-        User user = new User("kimsoso", "1234", "kss",
-                "kimsoso@daitnu2.com", "kimsoso@gaver.com");
+        User user = new User("kimsoso", "1234", "kss", "kimsoso@gaver.com");
         MailCategory mailCategory = new MailCategory(mailboxName, user);
 
         // when
@@ -51,8 +50,7 @@ public class MailCategoryServiceTest {
     public void 메일함_수정() {
         // given
         String mailboxName = "mailbox1";
-        User user = new User("kimsoso", "1234", "kss",
-                "kimsoso@daitnu2.com", "kimsoso@gaver.com");
+        User user = new User("kimsoso", "1234", "kss", "kimsoso@gaver.com");
         MailCategory mailCategory = new MailCategory(mailboxName, user);
 
         // when
@@ -71,8 +69,7 @@ public class MailCategoryServiceTest {
     public void 메일함_삭제() {
         // given
         String mailboxName = "mailbox1";
-        User user = new User("kimsoso", "1234", "kss",
-                "kimsoso@daitnu2.com", "kimsoso@gaver.com");
+        User user = new User("kimsoso", "1234", "kss", "kimsoso@gaver.com");
         MailCategory mailCategory = new MailCategory(mailboxName, user);
 
         // when
@@ -91,10 +88,8 @@ public class MailCategoryServiceTest {
     @Test(expected = IllegalStateException.class)
     public void 타인의_메일함_삭제_불가() {
         // given
-        User user1 = new User("kimsoso1", "1234", "kss1",
-                "kimsoso1@daitnu2.com", "kimsoso1@gaver.com");
-        User user2 = new User("kimsoso2", "12345", "kss2",
-                "kimsoso2@daitnu2.com", "kimsoso2@gaver.com");
+        User user1 = new User("kimsoso1", "1234", "kss1", "kimsoso1@gaver.com");
+        User user2 = new User("kimsoso2", "12345", "kss2", "kimsoso2@gaver.com");
         MailCategory mailCategory1 = new MailCategory("mailboxName1", user1);
         MailCategory mailCategory2 = new MailCategory("mailboxName2", user2);
 
@@ -113,8 +108,7 @@ public class MailCategoryServiceTest {
     public void 유저는_메일함_이름_중복_생성_불가() {
         // given
         String mailboxName = "mailbox1";
-        User user = new User("kimsoso", "1234", "kss",
-                "kimsoso@daitnu2.com", "kimsoso@gaver.com");
+        User user = new User("kimsoso", "1234", "kss", "kimsoso@gaver.com");
         MailCategory mailCategory1 = new MailCategory(mailboxName, user);
         MailCategory mailCategory2 = new MailCategory(mailboxName, user);
 

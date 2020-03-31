@@ -27,8 +27,7 @@ public class UserServiceTest {
     @Test
     public void 회원가입() throws Exception {
         // given
-        User user = new User("kimsoso", "1234", "kss",
-                "kimsoso@daitnu2.com", "kimsoso@gaver.com");
+        User user = new User("kimsoso", "1234", "kss", "kimsoso@gaver.com");
 
         // when
         Long newUserId = userService.register(user);
@@ -40,10 +39,8 @@ public class UserServiceTest {
     @Test(expected = IllegalStateException.class)
     public void 같은아이디_중복처리() throws Exception {
         // given
-        User user1 = new User("kimsoso1", "1234", "kss1",
-                "kimsoso1@daitnu2.com", "kimsoso1@gaver.com");
-        User user2 = new User("kimsoso1", "1234", "kss2",
-                "kimsoso1@daitnu2.com", "kimsoso1@gaver.com");
+        User user1 = new User("kimsoso1", "1234", "kss1", "kimsoso1@gaver.com");
+        User user2 = new User("kimsoso1", "1234", "kss2", "kimsoso1@gaver.com");
 
         // when
         userService.register(user1);
@@ -58,7 +55,7 @@ public class UserServiceTest {
         // given
         String userId = "kimsoso1";
         String subEmail = "kimsoso1@gaver.com";
-        User user = new User(userId, "1234", "kss1", "kimsoso1@daitnu2.com", subEmail);
+        User user = new User(userId, "1234", "kss1", subEmail);
 
         // when
         userService.register(user);
@@ -75,8 +72,7 @@ public class UserServiceTest {
     @Test
     public void 회원정보_업데이트() throws Exception {
         // given
-        User user = new User("kimsoso1", "1234", "kss1",
-                "kimsoso1@daitnu2.com", "kimsoso1@gaver.com");
+        User user = new User("kimsoso1", "1234", "kss1", "kimsoso1@gaver.com");
 
         // when
         userService.register(user);
@@ -94,8 +90,7 @@ public class UserServiceTest {
     @Test
     public void 비밀번호_변경() throws Exception {
         // given
-        User user = new User("kimsoso1", "1234", "kss1",
-          "kimsoso1@daitnu2.com", "kimsoso1@gaver.com");
+        User user = new User("kimsoso1", "1234", "kss1", "kimsoso1@gaver.com");
 
         // when
         userService.register(user);
@@ -111,8 +106,7 @@ public class UserServiceTest {
     @Test
     public void 회원탈퇴() throws Exception {
         // given
-        User user = new User("kimsoso1", "1234", "kss1",
-                "kimsoso1@daitnu2.com", "kimsoso1@gaver.com");
+        User user = new User("kimsoso1", "1234", "kss1", "kimsoso1@gaver.com");
 
         // when
         userService.register(user);

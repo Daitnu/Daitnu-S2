@@ -38,11 +38,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MailCategory> mailCategories = new ArrayList<>();
 
-    public User(String userId, String pw, String name, String email, String subEmail) {
+    public User(String userId, String pw, String name, String subEmail) {
         this.userId = userId;
         this.pw = pw;
         this.name = name;
-        this.email = email;
+        this.email = userId + "@daitnu2.com";
         this.subEmail = subEmail;
     }
 
