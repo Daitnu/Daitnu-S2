@@ -15,12 +15,14 @@ public class MailReceiverService {
 
   private final MailReceiverRepository mailReceiverRepository;
 
+  @Transactional
   public Long makeReceiver(MailReceiver mailReceiver) {
     mailReceiver.getMailTemplate().addReceiver(mailReceiver);
     mailReceiverRepository.save(mailReceiver);
     return mailReceiver.getId();
   }
 
+  @Transactional
   public Long removeReceiver(MailReceiver mailReceiver) {
     mailReceiver.getMailTemplate().removeReceiver(mailReceiver);
     mailReceiverRepository.remove(mailReceiver);
