@@ -2,6 +2,7 @@ package daitnu.daitnus2.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity @Getter
 @NoArgsConstructor
+@ToString
 public class User {
 
     @Id @GeneratedValue
