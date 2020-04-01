@@ -1,7 +1,5 @@
 package daitnu.daitnus2.accounts;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import daitnu.daitnus2.dto.AccountsDTO;
 import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.exception.ErrorResponse;
 import org.springframework.http.HttpStatus;

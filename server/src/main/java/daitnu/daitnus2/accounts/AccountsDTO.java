@@ -1,4 +1,4 @@
-package daitnu.daitnus2.dto;
+package daitnu.daitnus2.accounts;
 
 import lombok.Getter;
 import lombok.Setter;
