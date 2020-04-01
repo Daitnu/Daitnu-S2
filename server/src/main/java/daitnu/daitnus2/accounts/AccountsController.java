@@ -2,6 +2,7 @@ package daitnu.daitnus2.accounts;
 
 import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.exception.ErrorResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -13,18 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
+@RequiredArgsConstructor
 public class AccountsController {
+  private final AccountsService service;
 
   @PostMapping("/login")
-  public ResponseEntity<?> login(@RequestBody @Valid AccountsDTO.LoginDTO dto , BindingResult result) {
+  public ResponseEntity<?> login(@RequestBody @Valid AccountsDTO.LoginDTO dto, BindingResult result) {
 
     if (result.hasErrors()) {
       ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, result);
       return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    //TODO : SERVICE 계층 작성하기
-
+    service.login(dto);
     return new ResponseEntity<>(dto, HttpStatus.OK);
   }
 
