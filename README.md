@@ -1,6 +1,7 @@
 # Daitnu-S2
 
 - 20.03.19 재호 시작
+
   - 지금은 혼자서.. ㅠ 같이 해요 ㅎㅎ2
 
 - 20.03.27 종화 합류 (아래는 하고싶은것)
@@ -26,17 +27,18 @@
 
 ## 기술 스택
 
-
 ### Season1 기술스택
+
 ![기술스택](https://user-images.githubusercontent.com/33617083/71553794-c2afa100-2a58-11ea-9576-a216552105e3.PNG)
 
-
 ### Season2 기술스택
+
 **FE** - TS, React, Redux, Styled-Component
 
-**BE** - Spring(Spring Boot), Spring JPA, Spring Security, Lombok 등등..(암튼 짱 많음 ㅋㅋ)
+**BE** - Spring Boot, Spring JPA, Spring Security
+
+**DB** - Mysql, MongoDB
 
 **Infra** - NCP(돈 적게 드는 방향으로..), Ubuntu, Nginx, Postfix, Dovecot
 
 **Testing** - Mocha, JUnit4
-
