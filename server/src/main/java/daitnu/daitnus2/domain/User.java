@@ -46,6 +46,14 @@ public class User {
         this.subEmail = subEmail;
     }
 
+    public void addMailCategory(MailCategory mailCategory) {
+      this.mailCategories.add(mailCategory);
+    }
+
+    public void removeMailCategory(MailCategory mailCategory) {
+      this.mailCategories.remove(mailCategory);
+    }
+
     public void updateUserNameAndSubEmail(String name, String subEmail) {
         this.name = name;
         this.subEmail = subEmail;

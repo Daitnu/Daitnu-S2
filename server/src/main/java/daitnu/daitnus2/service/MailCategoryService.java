@@ -20,7 +20,7 @@ public class MailCategoryService {
     @Transactional
     public Long makeDir(MailCategory mailCategory) {
         validateMakeDir(mailCategory);
-        mailCategory.getUser().getMailCategories().add(mailCategory);
+        mailCategory.getUser().addMailCategory(mailCategory);
         mailCategoryRepository.save(mailCategory);
         return mailCategory.getId();
     }
@@ -39,7 +39,7 @@ public class MailCategoryService {
     public Long removeDir(MailCategory mailCategory, User user) {
         validateRemoveDir(mailCategory, user);
         mailCategoryRepository.remove(mailCategory);
-        user.getMailCategories().remove(mailCategory);
+        user.removeMailCategory(mailCategory);
         return mailCategory.getId();
     }
 
