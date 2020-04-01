@@ -27,18 +27,25 @@ public class MailService {
 
   // 메일 삭제
   @Transactional
-  public Long removeMail(Mail mail) {
-    // TODO: 메일은 본인만 삭제 가능
+  public Long removeMail(Mail mail, Long userId) {
+    validateMailOwner(mail.getId(), userId);
     mailRepository.remove(mail);
     return mail.getId();
   }
 
   // 메일 속성 변경
   @Transactional
-  public void updateProperties(Long mailId, boolean isImportant, boolean isRead, boolean isRemoved) {
-    // TODO: 메일의 속성은 본인만 변경 가능
+  public void updateProperties(Long mailId, Long userId, boolean isImportant, boolean isRead, boolean isRemoved) {
+    validateMailOwner(mailId, userId);
     Mail one = mailRepository.findOne(mailId);
     one.updateProperties(isImportant, isRead, isRemoved);
+  }
+
+  private void validateMailOwner(Long mailId, Long userId) {
+    Mail mail = mailRepository.findOne(mailId);
+    if (!mail.getOwner().getId().equals(userId)) {
+      throw new IllegalStateException("해당 메일은 본인의 소유가 아님"); // TODO: retype error msg
+    }
   }
 
   // 메일함(Category) 수정(== 메일 이동)
@@ -60,10 +67,7 @@ public class MailService {
       throw new IllegalStateException("해당 메일함은 본인의 소유가 아님"); // TODO: retype error msg
     }
 
-    Mail mail = mailRepository.findOne(mailId);
-    if (!mail.getOwner().getId().equals(userId)) {
-      throw new IllegalStateException("해당 메일은 본인의 소유가 아님"); // TODO: retype error msg
-    }
+    validateMailOwner(mailId, userId);
   }
 
   // 메일 find
