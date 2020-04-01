@@ -33,7 +33,7 @@ public class MailReceiverRepository {
     return em.createQuery("select mr from MailReceiver mr", MailReceiver.class).getResultList();
   }
 
-  public List<MailReceiver> findAllByMailTemplateId(Long mailTemplateId) {
+  public List<MailReceiver> findAll(Long mailTemplateId) {
     return em.createQuery("select mr from MailReceiver mr where mr.mailTemplate = :mailTemplateId", MailReceiver.class)
       .setParameter("mailTemplateId", mailTemplateId)
       .getResultList();
