@@ -33,7 +33,7 @@ public class MailAttachmentRepository {
     return em.createQuery("select ma from MailAttachment ma", MailAttachment.class).getResultList();
   }
 
-  public List<MailAttachment> findAllByMailTemplateId(Long mailTemplateId) {
+  public List<MailAttachment> findAll(Long mailTemplateId) {
     return em.createQuery("select ma from MailAttachment ma where ma.mailTemplate = :mailTemplateId", MailAttachment.class)
       .setParameter("mailTemplateId", mailTemplateId)
       .getResultList();
