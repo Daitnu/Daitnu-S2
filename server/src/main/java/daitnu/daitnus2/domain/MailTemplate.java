@@ -21,7 +21,7 @@ public class MailTemplate {
   private String from;
 
   @OneToMany(mappedBy = "mailTemplate", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<MailReceiver> to = new ArrayList<>();
+  private List<MailReceiver> mailReceivers = new ArrayList<>();
 
   @OneToMany(mappedBy = "mailTemplate", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Mail> mails = new ArrayList<>();
@@ -34,11 +34,25 @@ public class MailTemplate {
   @Column(columnDefinition = "LONGTEXT")
   private String subject;
 
-  public MailTemplate(String from, List<MailReceiver> to, List<Mail> mails, String title, String subject) {
+  public MailTemplate(String from, String title, String subject) {
     this.from = from;
-    this.to = to;
-    this.mails = mails;
     this.title = title;
     this.subject = subject;
+  }
+
+  public void addReceiver(MailReceiver mailReceiver) {
+    this.mailReceivers.add(mailReceiver);
+  }
+
+  public void removeReceiver(MailReceiver mailReceiver) {
+    this.mailReceivers.remove(mailReceiver);
+  }
+
+  public void addMail(Mail mail) {
+    this.mails.add(mail);
+  }
+
+  public void removeMail(Mail mail) {
+    this.mails.remove(mail);
   }
 }

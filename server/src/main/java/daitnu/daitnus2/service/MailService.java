@@ -21,6 +21,7 @@ public class MailService {
   // 메일 생성
   @Transactional
   public Long makeMail(Mail mail) {
+    mail.getMailTemplate().addMail(mail);
     mailRepository.save(mail);
     return mail.getId();
   }
@@ -29,6 +30,7 @@ public class MailService {
   @Transactional
   public Long removeMail(Mail mail, Long userId) {
     validateMailOwner(mail.getId(), userId);
+    mail.getMailTemplate().removeMail(mail);
     mailRepository.remove(mail);
     return mail.getId();
   }
