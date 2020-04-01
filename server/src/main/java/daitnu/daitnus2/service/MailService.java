@@ -41,7 +41,7 @@ public class MailService {
     one.updateProperties(isImportant, isRead, isRemoved);
   }
 
-  // 메일함(Category) 수정
+  // 메일함(Category) 수정(== 메일 이동)
   @Transactional
   public void updateCategory(Long mailId, Long userId, MailCategory mailCategory) {
     validateCategory(userId, mailCategory.getId(), mailId);
