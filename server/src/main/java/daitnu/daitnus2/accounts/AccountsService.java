@@ -33,4 +33,15 @@ public class AccountsService {
     return user;
   }
 
+  public User register(AccountsDTO.RegisterDTO dto) {
+    String userId = dto.getId();
+    String userPw = dto.getPassword();
+    String userSubEmail = dto.getSubEmail();
+    String userName = dto.getName();
+    User newUser = new User(userId,userPw,userSubEmail,userName);
+
+    // TODO : SubEmail unique 확인, Id duplicate 확인
+    User createdUser = userRepository.save(newUser);
+    return createdUser;
+  }
 }

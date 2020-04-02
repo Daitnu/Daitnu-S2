@@ -1,5 +1,6 @@
 package daitnu.daitnus2.accounts;
 
+import daitnu.daitnus2.domain.User;
 import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.exception.ErrorResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +27,22 @@ public class AccountsController {
       return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    service.login(dto);
+    User user = service.login(dto);
+    // todo : 반환형식 mapper
     return new ResponseEntity<>(dto, HttpStatus.OK);
   }
 
   @GetMapping("/register")
-  public String register() {
-    return "register page";
+  public ResponseEntity<?>  register(@RequestBody @Valid AccountsDTO.RegisterDTO dto, BindingResult result) {
+
+    if (result.hasErrors()) {
+      ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, result);
+      return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    // todo : pw와 pwCheck 같은지 확인
+    User user = service.register(dto);
+    return new ResponseEntity<>(dto, HttpStatus.CREATED);
   }
 
   @GetMapping("/password")
