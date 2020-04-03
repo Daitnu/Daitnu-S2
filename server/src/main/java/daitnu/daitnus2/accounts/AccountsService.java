@@ -1,7 +1,7 @@
 package daitnu.daitnus2.accounts;
 
 import daitnu.daitnus2.accounts.exception.InvalidLoginInput;
-import daitnu.daitnus2.domain.User;
+import daitnu.daitnus2.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

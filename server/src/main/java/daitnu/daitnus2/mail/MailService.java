@@ -1,9 +1,7 @@
-package daitnu.daitnus2.service;
+package daitnu.daitnus2.mail;
 
-import daitnu.daitnus2.domain.Mail;
-import daitnu.daitnus2.domain.MailCategory;
-import daitnu.daitnus2.repository.MailCategoryRepository;
-import daitnu.daitnus2.repository.MailRepository;
+import daitnu.daitnus2.mail.category.MailCategory;
+import daitnu.daitnus2.mail.category.MailCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

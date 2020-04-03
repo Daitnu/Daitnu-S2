@@ -1,8 +1,8 @@
 package daitnu.daitnus2.accounts;
 
-import daitnu.daitnus2.domain.User;
 import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.exception.ErrorResponse;
+import daitnu.daitnus2.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

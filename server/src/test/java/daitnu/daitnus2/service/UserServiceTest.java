@@ -1,7 +1,8 @@
 package daitnu.daitnus2.service;
 
-import daitnu.daitnus2.domain.User;
-import daitnu.daitnus2.repository.UserRepository;
+import daitnu.daitnus2.user.UserService;
+import daitnu.daitnus2.user.User;
+import daitnu.daitnus2.user.UserRepository;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +23,8 @@ import static org.junit.Assert.*;
 public class UserServiceTest {
 
     @Autowired UserRepository userRepository;
-    @Autowired UserService userService;
+    @Autowired
+    UserService userService;
 
     @Test
     public void 회원가입() throws Exception {

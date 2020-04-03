@@ -1,7 +1,5 @@
-package daitnu.daitnus2.service;
+package daitnu.daitnus2.user;
 
-import daitnu.daitnus2.domain.User;
-import daitnu.daitnus2.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

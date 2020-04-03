@@ -1,8 +1,10 @@
 package daitnu.daitnus2.service;
 
-import daitnu.daitnus2.domain.MailCategory;
-import daitnu.daitnus2.domain.User;
+import daitnu.daitnus2.user.UserService;
+import daitnu.daitnus2.mail.category.MailCategory;
+import daitnu.daitnus2.user.User;
 
+import daitnu.daitnus2.mail.category.MailCategoryService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,10 @@ import static org.junit.Assert.*;
 @Transactional
 public class MailCategoryServiceTest {
 
-    @Autowired UserService userService;
-    @Autowired MailCategoryService mailCategoryService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    MailCategoryService mailCategoryService;
 
     @Test
     public void 메일함_생성() {

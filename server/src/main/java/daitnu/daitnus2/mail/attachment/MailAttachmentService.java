@@ -1,7 +1,7 @@
-package daitnu.daitnus2.service;
+package daitnu.daitnus2.mail.attachment;
 
-import daitnu.daitnus2.domain.MailAttachment;
-import daitnu.daitnus2.repository.MailAttachmentRepository;
+import daitnu.daitnus2.mail.attachment.MailAttachment;
+import daitnu.daitnus2.mail.attachment.MailAttachmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,5 @@
-package daitnu.daitnus2.repository;
+package daitnu.daitnus2.mail.category;
 
-import daitnu.daitnus2.domain.MailCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

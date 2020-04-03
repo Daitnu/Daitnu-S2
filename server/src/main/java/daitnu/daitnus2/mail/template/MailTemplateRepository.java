@@ -1,6 +1,6 @@
-package daitnu.daitnus2.repository;
+package daitnu.daitnus2.mail.template;
 
-import daitnu.daitnus2.domain.MailTemplate;
+import daitnu.daitnus2.mail.template.MailTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

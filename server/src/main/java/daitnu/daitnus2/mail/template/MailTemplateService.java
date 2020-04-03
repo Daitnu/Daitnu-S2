@@ -1,7 +1,7 @@
-package daitnu.daitnus2.service;
+package daitnu.daitnus2.mail.template;
 
-import daitnu.daitnus2.domain.MailTemplate;
-import daitnu.daitnus2.repository.MailTemplateRepository;
+import daitnu.daitnus2.mail.template.MailTemplate;
+import daitnu.daitnus2.mail.template.MailTemplateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
