@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -50,6 +49,22 @@ public class AccountsDTO {
     @NotBlank
     @Email(message = "서브 이메일은 이메일 주소여야 합니다.")
     @Length(max = 50, message = "서브 이메일의 최대 길이는 50입니다.")
+    private String subEmail;
+  }
+
+
+  @Setter
+  @Getter
+  public static class ResponseLogin {
+    private String id;
+  }
+
+  @Getter
+  @Setter
+  public static class ResponseRegister {
+    private Long no;
+    private String email;
+    private String name;
     private String subEmail;
   }
 }

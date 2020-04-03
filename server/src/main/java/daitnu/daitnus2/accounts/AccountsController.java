@@ -1,9 +1,10 @@
 package daitnu.daitnus2.accounts;
 
+import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.exception.ErrorResponse;
-import daitnu.daitnus2.database.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 public class AccountsController {
   private final AccountsService service;
   private final AccountsValidation accountsValidation;
+  private final ModelMapper modelMapper;
 
   @PostMapping(path = "/login", consumes = "application/json", produces = "application/json")
   public ResponseEntity<?> login(@RequestBody @Valid AccountsDTO.LoginDTO dto, BindingResult result) {
@@ -29,8 +31,7 @@ public class AccountsController {
     }
 
     User user = service.login(dto);
-    // todo : 반환형식 mapper
-    return new ResponseEntity<>(dto, HttpStatus.OK);
+    return new ResponseEntity<>(modelMapper.map(user, AccountsDTO.ResponseLogin.class), HttpStatus.OK);
   }
 
   @PostMapping(path = "/register", consumes = "application/json", produces = "application/json")
@@ -42,8 +43,8 @@ public class AccountsController {
       return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    User user = service.register(dto);
-    return new ResponseEntity<>(dto, HttpStatus.CREATED);
+    User newUser = service.register(dto);
+    return new ResponseEntity<>(modelMapper.map(newUser,AccountsDTO.ResponseRegister.class), HttpStatus.CREATED);
   }
 
   @GetMapping("/password")
