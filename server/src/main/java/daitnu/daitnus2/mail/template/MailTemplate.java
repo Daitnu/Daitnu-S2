@@ -1,5 +1,6 @@
 package daitnu.daitnus2.mail.template;
 
+import daitnu.daitnus2.mail.attachment.MailAttachment;
 import daitnu.daitnus2.mail.template.receiver.MailReceiver;
 import daitnu.daitnus2.mail.Mail;
 import lombok.Getter;
@@ -27,6 +28,9 @@ public class MailTemplate {
 
   @OneToMany(mappedBy = "mailTemplate", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Mail> mails = new ArrayList<>();
+
+  @OneToMany(mappedBy = "mailTemplate", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<MailAttachment> mailAttachments = new ArrayList<>();
 
   @NotBlank
   @Column(nullable = false)
@@ -56,5 +60,13 @@ public class MailTemplate {
 
   public void removeMail(Mail mail) {
     this.mails.remove(mail);
+  }
+
+  public void addAttachment(MailAttachment mailAttachment) {
+    this.mailAttachments.add(mailAttachment);
+  }
+
+  public void removeAttachment(MailAttachment mailAttachment) {
+    this.mailAttachments.remove(mailAttachment);
   }
 }
