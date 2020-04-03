@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
   compile "org.springframework.boot:spring-boot-devtools"
+  compile 'org.modelmapper:modelmapper:2.3.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
   implementation 'org.springframework.boot:spring-boot-starter-web'
   implementation 'org.springframework.boot:spring-boot-starter-security'
