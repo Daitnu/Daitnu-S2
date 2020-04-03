@@ -40,6 +40,15 @@ public class Mail {
   @Column(nullable = false)
   private boolean isRemoved;
 
+  public Mail(MailCategory category, User owner, MailTemplate mailTemplate) {
+    this.category = category;
+    this.owner = owner;
+    this.mailTemplate = mailTemplate;
+    this.isImportant = false;
+    this.isRead = false;
+    this.isRemoved = false;
+  }
+
   public Mail(MailCategory category, User owner, MailTemplate mailTemplate, boolean isImportant, boolean isRead, boolean isRemoved) {
     this.category = category;
     this.owner = owner;
