@@ -1,7 +1,8 @@
 package daitnu.daitnus2.accounts;
 
 import daitnu.daitnus2.accounts.exception.InvalidLoginInput;
-import daitnu.daitnus2.user.User;
+import daitnu.daitnus2.database.entity.User;
+import daitnu.daitnus2.database.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AccountsService {
 
-  private final UserRepo userRepository;
+  private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
 

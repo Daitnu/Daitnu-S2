@@ -2,7 +2,7 @@ package daitnu.daitnus2.accounts;
 
 import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.exception.ErrorResponse;
-import daitnu.daitnus2.user.User;
+import daitnu.daitnus2.database.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +18,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AccountsController {
   private final AccountsService service;
+  private final AccountsValidation accountsValidation;
 
   @PostMapping("/login")
   public ResponseEntity<?> login(@RequestBody @Valid AccountsDTO.LoginDTO dto, BindingResult result) {
@@ -33,14 +34,14 @@ public class AccountsController {
   }
 
   @GetMapping("/register")
-  public ResponseEntity<?>  register(@RequestBody @Valid AccountsDTO.RegisterDTO dto, BindingResult result) {
+  public ResponseEntity<?> register(@RequestBody @Valid AccountsDTO.RegisterDTO dto, BindingResult result) {
+    accountsValidation.pwEqCheck(dto, result);
 
     if (result.hasErrors()) {
       ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, result);
       return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    // todo : pw와 pwCheck 같은지 확인
     User user = service.register(dto);
     return new ResponseEntity<>(dto, HttpStatus.CREATED);
   }

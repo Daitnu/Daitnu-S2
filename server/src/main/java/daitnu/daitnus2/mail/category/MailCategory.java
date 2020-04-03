@@ -1,6 +1,6 @@
 package daitnu.daitnus2.mail.category;
 
-import daitnu.daitnus2.user.User;
+import daitnu.daitnus2.database.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

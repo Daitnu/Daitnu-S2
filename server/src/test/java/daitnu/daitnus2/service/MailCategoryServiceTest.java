@@ -2,7 +2,7 @@ package daitnu.daitnus2.service;
 
 import daitnu.daitnus2.user.UserService;
 import daitnu.daitnus2.mail.category.MailCategory;
-import daitnu.daitnus2.user.User;
+import daitnu.daitnus2.database.entity.User;
 
 import daitnu.daitnus2.mail.category.MailCategoryService;
 import org.junit.Test;

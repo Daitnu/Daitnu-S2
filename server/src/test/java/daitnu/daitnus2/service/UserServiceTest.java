@@ -1,7 +1,7 @@
 package daitnu.daitnus2.service;
 
 import daitnu.daitnus2.user.UserService;
-import daitnu.daitnus2.user.User;
+import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.user.UserRepository;
 
 import org.junit.Test;

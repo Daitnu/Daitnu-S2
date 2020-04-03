@@ -1,5 +1,6 @@
 package daitnu.daitnus2.user;
 
+import daitnu.daitnus2.database.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

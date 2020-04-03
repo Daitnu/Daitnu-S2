@@ -10,7 +10,7 @@ import daitnu.daitnus2.mail.template.MailTemplate;
 import daitnu.daitnus2.mail.template.MailTemplateService;
 import daitnu.daitnus2.mail.template.receiver.MailReceiver;
 import daitnu.daitnus2.mail.template.receiver.MailReceiverService;
-import daitnu.daitnus2.user.User;
+import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
