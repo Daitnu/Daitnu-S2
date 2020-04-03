@@ -20,7 +20,7 @@ public class AccountsController {
   private final AccountsService service;
   private final AccountsValidation accountsValidation;
 
-  @PostMapping("/login")
+  @PostMapping(path = "/login", consumes = "application/json", produces = "application/json")
   public ResponseEntity<?> login(@RequestBody @Valid AccountsDTO.LoginDTO dto, BindingResult result) {
 
     if (result.hasErrors()) {
@@ -33,7 +33,7 @@ public class AccountsController {
     return new ResponseEntity<>(dto, HttpStatus.OK);
   }
 
-  @GetMapping("/register")
+  @PostMapping(path = "/register", consumes = "application/json", produces = "application/json")
   public ResponseEntity<?> register(@RequestBody @Valid AccountsDTO.RegisterDTO dto, BindingResult result) {
     accountsValidation.pwEqCheck(dto, result);
 
