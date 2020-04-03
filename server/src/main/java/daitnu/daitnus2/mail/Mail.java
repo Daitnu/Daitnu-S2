@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity @Getter
 @NoArgsConstructor
@@ -28,16 +28,13 @@ public class Mail {
   @JoinColumn(name = "mail_template_id", nullable = false)
   private MailTemplate mailTemplate;
 
-  @NotBlank
-  @Column(nullable = false)
+  @NotNull
   private boolean isImportant;
 
-  @NotBlank
-  @Column(nullable = false)
+  @NotNull
   private boolean isRead;
 
-  @NotBlank
-  @Column(nullable = false)
+  @NotNull
   private boolean isRemoved;
 
   public Mail(MailCategory category, User owner, MailTemplate mailTemplate) {

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity @Getter
 @NoArgsConstructor
@@ -30,7 +31,7 @@ public class MailAttachment {
   @Column(nullable = false)
   private String url;
 
-  @NotBlank
+  @NotNull
   @Column(nullable = false)
   private Long size;
 
