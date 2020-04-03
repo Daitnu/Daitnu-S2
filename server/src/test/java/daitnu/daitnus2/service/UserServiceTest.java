@@ -23,8 +23,7 @@ import static org.junit.Assert.*;
 public class UserServiceTest {
 
     @Autowired UserRepository userRepository;
-    @Autowired
-    UserService userService;
+    @Autowired UserService userService;
 
     @Test
     public void 회원가입() throws Exception {

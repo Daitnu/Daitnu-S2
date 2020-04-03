@@ -23,10 +23,8 @@ import static org.junit.Assert.*;
 @Transactional
 public class MailCategoryServiceTest {
 
-    @Autowired
-    UserService userService;
-    @Autowired
-    MailCategoryService mailCategoryService;
+    @Autowired UserService userService;
+    @Autowired MailCategoryService mailCategoryService;
 
     @Test
     public void 메일함_생성() {
