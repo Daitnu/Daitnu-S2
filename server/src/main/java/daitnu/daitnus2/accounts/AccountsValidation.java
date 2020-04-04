@@ -15,7 +15,7 @@ public class AccountsValidation {
     String pwCheck = dto.getPasswordCheck();
     boolean isSame = pw.equals(pwCheck);
     if(!isSame) {
-      errors.rejectValue("pw", "Not Equal", "비밀번호 입력값이 올바르지 않습니다.");
+      errors.rejectValue("password", "secret", "비밀번호 확인값이 올바르지 않습니다.");
     }
   }
 }
