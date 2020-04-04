@@ -2,7 +2,7 @@ package daitnu.daitnus2.service;
 
 import daitnu.daitnus2.user.UserService;
 import daitnu.daitnus2.database.entity.User;
-import daitnu.daitnus2.user.UserRepository;
+import daitnu.daitnus2.user.UserRepos;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +22,8 @@ import static org.junit.Assert.*;
 @Transactional
 public class UserServiceTest {
 
-    @Autowired UserRepository userRepository;
+    @Autowired
+    UserRepos userRepository;
     @Autowired UserService userService;
 
     @Test
