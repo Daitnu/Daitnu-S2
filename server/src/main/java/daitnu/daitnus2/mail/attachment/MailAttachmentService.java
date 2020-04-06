@@ -1,6 +1,7 @@
 package daitnu.daitnus2.mail.attachment;
 
 import daitnu.daitnus2.database.entity.MailAttachment;
+import daitnu.daitnus2.database.repository.MailAttachmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +23,12 @@ public class MailAttachmentService {
 
   public Long removeMailAttachment(MailAttachment mailAttachment) {
     // TODO: validation
-    mailAttachmentRepository.remove(mailAttachment);
+    mailAttachmentRepository.delete(mailAttachment);
     return mailAttachment.getId();
   }
 
   public MailAttachment findOne(Long id) {
-    return mailAttachmentRepository.findOne(id);
+    return mailAttachmentRepository.getOne(id);
   }
 
   public List<MailAttachment> findAll() {
@@ -35,6 +36,6 @@ public class MailAttachmentService {
   }
 
   public List<MailAttachment> findAll(Long mailTemplateId) {
-    return mailAttachmentRepository.findAll(mailTemplateId);
+    return mailAttachmentRepository.findAllByMailTemplateId(mailTemplateId);
   }
 }

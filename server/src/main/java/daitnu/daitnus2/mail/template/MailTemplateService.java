@@ -1,6 +1,7 @@
 package daitnu.daitnus2.mail.template;
 
 import daitnu.daitnus2.database.entity.MailTemplate;
+import daitnu.daitnus2.database.repository.MailTemplateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,13 +25,13 @@ public class MailTemplateService {
   // 메일 템플릿 삭제
   @Transactional
   public Long removeMailTemplate(MailTemplate mailTemplate) {
-    mailTemplateRepository.remove(mailTemplate);
+    mailTemplateRepository.delete(mailTemplate);
     return mailTemplate.getId();
   }
 
   // find one
   public MailTemplate findOne(Long id) {
-    return mailTemplateRepository.findOne(id);
+    return mailTemplateRepository.getOne(id);
   }
 
   // find all

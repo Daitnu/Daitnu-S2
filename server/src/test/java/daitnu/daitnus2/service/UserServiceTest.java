@@ -22,8 +22,7 @@ import static org.junit.Assert.*;
 @Transactional
 public class UserServiceTest {
 
-    @Autowired
-    UserRepos userRepository;
+    @Autowired UserRepos userRepository;
     @Autowired UserService userService;
 
     @Test
