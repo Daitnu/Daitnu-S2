@@ -1,4 +1,4 @@
-package daitnu.daitnus2.mail.category;
+package daitnu.daitnus2.database.entity;
 
 import daitnu.daitnus2.database.entity.User;
 import lombok.Getter;

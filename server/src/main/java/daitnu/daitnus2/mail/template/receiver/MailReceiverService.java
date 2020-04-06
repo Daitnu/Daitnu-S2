@@ -1,5 +1,6 @@
 package daitnu.daitnus2.mail.template.receiver;
 
+import daitnu.daitnus2.database.entity.MailReceiver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

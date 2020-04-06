@@ -1,14 +1,14 @@
 package daitnu.daitnus2.service;
 
-import daitnu.daitnus2.mail.Mail;
+import daitnu.daitnus2.database.entity.Mail;
 import daitnu.daitnus2.mail.MailService;
-import daitnu.daitnus2.mail.attachment.MailAttachment;
+import daitnu.daitnus2.database.entity.MailAttachment;
 import daitnu.daitnus2.mail.attachment.MailAttachmentService;
-import daitnu.daitnus2.mail.category.MailCategory;
+import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.mail.category.MailCategoryService;
-import daitnu.daitnus2.mail.template.MailTemplate;
+import daitnu.daitnus2.database.entity.MailTemplate;
 import daitnu.daitnus2.mail.template.MailTemplateService;
-import daitnu.daitnus2.mail.template.receiver.MailReceiver;
+import daitnu.daitnus2.database.entity.MailReceiver;
 import daitnu.daitnus2.mail.template.receiver.MailReceiverService;
 import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.user.UserService;

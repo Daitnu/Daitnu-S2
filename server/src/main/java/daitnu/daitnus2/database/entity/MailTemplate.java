@@ -1,8 +1,5 @@
-package daitnu.daitnus2.mail.template;
+package daitnu.daitnus2.database.entity;
 
-import daitnu.daitnus2.mail.attachment.MailAttachment;
-import daitnu.daitnus2.mail.template.receiver.MailReceiver;
-import daitnu.daitnus2.mail.Mail;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -1,6 +1,5 @@
 package daitnu.daitnus2.database.entity;
 
-import daitnu.daitnus2.mail.category.MailCategory;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

@@ -1,7 +1,7 @@
-package daitnu.daitnus2.mail;
+package daitnu.daitnus2.database.entity;
 
-import daitnu.daitnus2.mail.category.MailCategory;
-import daitnu.daitnus2.mail.template.MailTemplate;
+import daitnu.daitnus2.database.entity.MailCategory;
+import daitnu.daitnus2.database.entity.MailTemplate;
 import daitnu.daitnus2.database.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

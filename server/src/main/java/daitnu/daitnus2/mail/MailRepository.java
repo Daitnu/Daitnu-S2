@@ -1,5 +1,6 @@
 package daitnu.daitnus2.mail;
 
+import daitnu.daitnus2.database.entity.Mail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
