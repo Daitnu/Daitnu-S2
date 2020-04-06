@@ -16,13 +16,11 @@ public class MailAttachmentService {
   private final MailAttachmentRepository mailAttachmentRepository;
 
   public Long makeMailAttachment(MailAttachment mailAttachment) {
-    // TODO: validation
     mailAttachmentRepository.save(mailAttachment);
     return mailAttachment.getId();
   }
 
   public Long removeMailAttachment(MailAttachment mailAttachment) {
-    // TODO: validation
     mailAttachmentRepository.delete(mailAttachment);
     return mailAttachment.getId();
   }
