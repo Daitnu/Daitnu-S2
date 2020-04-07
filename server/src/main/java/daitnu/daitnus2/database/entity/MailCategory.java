@@ -1,6 +1,5 @@
 package daitnu.daitnus2.database.entity;
 
-import daitnu.daitnus2.database.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

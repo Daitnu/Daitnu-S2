@@ -1,6 +1,5 @@
 package daitnu.daitnus2.database.entity;
 
-import daitnu.daitnus2.database.entity.MailTemplate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
