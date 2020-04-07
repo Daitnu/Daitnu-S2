@@ -33,7 +33,7 @@ public class MailCategoryControllerTest {
   @Autowired MockMvc mockMvc;
 
   @Test
-  public void postControllerTest() throws Exception {
+  public void 메일함_추가_컨트롤러_테스트() throws Exception {
     // given
     MockHttpSession mockHttpSession = new MockHttpSession();
     User user = new User("kimsoso", "1234", "kss", "kimsoso@gaver.com");

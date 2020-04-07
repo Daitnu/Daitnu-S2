@@ -29,7 +29,7 @@ public class AccountsControllerTest {
   @Autowired UserService userService;
 
   @Test
-  public void 회원가입_테스트() throws Exception {
+  public void 회원가입_컨트롤러_테스트() throws Exception {
     // given
     mockMvc.perform(post("/register")
       .contentType(MediaType.APPLICATION_JSON_VALUE)
