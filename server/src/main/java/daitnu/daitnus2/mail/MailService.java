@@ -4,6 +4,8 @@ import daitnu.daitnus2.database.entity.Mail;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.repository.MailCategoryRepository;
 import daitnu.daitnus2.database.repository.MailRepository;
+import daitnu.daitnus2.mail.category.exception.NotFoundCategory;
+import daitnu.daitnus2.mail.exception.NotFoundMail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,11 +49,11 @@ public class MailService {
   private void validateMailOwner(Long mailId, Long userId) {
     Optional<Mail> mail = mailRepository.findById(mailId);
     if (!mail.isPresent()) {
-      throw new IllegalStateException("해당 메일이 존재하지 않습니다"); // TODO: retype error msg
+      throw new NotFoundMail();
     }
 
     if (!mail.get().getOwner().getId().equals(userId)) {
-      throw new IllegalStateException("해당 메일은 본인의 소유가 아님"); // TODO: retype error msg
+      throw new NotFoundMail();
     }
   }
 
@@ -66,12 +68,12 @@ public class MailService {
   private void validateCategory(Long userId, Long mailCategoryId, Long mailId) {
     Optional<MailCategory> mailCategory = mailCategoryRepository.findById(mailCategoryId);
     if (!mailCategory.isPresent()) {
-      throw new IllegalStateException("해당 메일함이 존재하지 않습니다"); // TODO: retype error msg
+      throw new NotFoundCategory();
     }
 
     List<MailCategory> categories = mailCategoryRepository.findAllByIdAndUserId(userId, mailCategoryId);
     if (categories.isEmpty()) {
-      throw new IllegalStateException("해당 메일함은 본인의 소유가 아님"); // TODO: retype error msg
+      throw new NotFoundCategory();
     }
 
     validateMailOwner(mailId, userId);

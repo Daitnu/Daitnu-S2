@@ -32,6 +32,9 @@ public enum ErrorCode {
   CHATROOM_NOT_ACCESS(403, "MESSAGE001", "접근할 수 없는 채팅방입니다."),
   CHATROOM_NOT_FOUND(404, "MESSAGE002", "접근할 수 없는 채팅방입니다."),
 
+  // Mail
+  MAIL_NOT_FOUNT(404, "MAIL001", "존재하지 않는 메일입니다"),
+
   // MailCategory
   INVALID_CATEGORY_NAME_LENGTH(400, "CATEGORY001", "메일함 이름은 최대 20글자로 작성해주세요"),
   INVALID_CATEGORY_NAME(400, "CATEGORY002", "메일함 이름은 완성된 한글, 영문, 숫자로만 이루어질 수 있습니다"),
