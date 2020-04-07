@@ -52,9 +52,52 @@ public class AccountsControllerTest {
       .content(objectMapper.writeValueAsString(newUser)))
       .andExpect(status().isCreated());
 
-    result.andDo(MockMvcResultHandlers.print());
     result.andExpect(jsonPath("$.email").value(userId + domain));
     result.andExpect(jsonPath("$.name").value(name));
     result.andExpect(jsonPath("$.subEmail").value(subEmail));
   }
+
+
+  @Test
+  public void 회원가입_실패케이스_비밀번호확인() throws Exception {
+    final AccountsDTO.RegisterDTO newUser = new AccountsDTO.RegisterDTO();
+    newUser.setId(userId);
+    newUser.setPassword(password);
+    newUser.setPasswordCheck(passwordCheck + "1");
+    newUser.setSubEmail(subEmail);
+    newUser.setName(name);
+
+    ResultActions result = mockMvc.perform(post("/register")
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(newUser)))
+      .andExpect(status().isBadRequest());
+
+    result.andExpect(jsonPath("$.message").value("Invalid Input Value"));
+    result.andExpect(jsonPath("$.status").value(400));
+    result.andExpect(jsonPath("$.errors[0].field").value("password"));
+    result.andExpect(jsonPath("$.errors[0].value").value("secret"));
+  }
+
+  @Test
+  public void 회원가입_실패케이스_아이디가_짧은경우() throws Exception {
+    final AccountsDTO.RegisterDTO newUser = new AccountsDTO.RegisterDTO();
+    newUser.setId("id");
+    newUser.setPassword(password);
+    newUser.setPasswordCheck(passwordCheck);
+    newUser.setSubEmail(subEmail);
+    newUser.setName(name);
+
+    ResultActions result = mockMvc.perform(post("/register")
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE)
+      .content(objectMapper.writeValueAsString(newUser)))
+      .andExpect(status().isBadRequest());
+
+    result.andExpect(jsonPath("$.message").value("Invalid Input Value"));
+    result.andExpect(jsonPath("$.status").value(400));
+    result.andExpect(jsonPath("$.errors[0].field").value("id"));
+    result.andExpect(jsonPath("$.errors[0].value").value("Length"));
+  }
+
 }
