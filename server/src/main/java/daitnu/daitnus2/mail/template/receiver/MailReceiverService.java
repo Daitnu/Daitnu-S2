@@ -17,7 +17,6 @@ public class MailReceiverService {
 
   @Transactional
   public Long makeReceiver(MailReceiver mailReceiver) {
-    // TODO: validation
     mailReceiver.getMailTemplate().addReceiver(mailReceiver);
     mailReceiverRepository.save(mailReceiver);
     return mailReceiver.getId();
