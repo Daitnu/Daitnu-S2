@@ -36,10 +36,9 @@ public enum ErrorCode {
   MAIL_NOT_FOUNT(404, "MAIL001", "존재하지 않는 메일입니다"),
 
   // MailCategory
-  INVALID_CATEGORY_NAME_LENGTH(400, "CATEGORY001", "메일함 이름은 최대 20글자로 작성해주세요"),
-  INVALID_CATEGORY_NAME(400, "CATEGORY002", "메일함 이름은 완성된 한글, 영문, 숫자로만 이루어질 수 있습니다"),
-  DUPLICATED_MAIL_CATEGORY_NAME(400, "CATEGORY003", "같은 이름의 메일함은 만들 수 없습니다."),
-  CATEGORY_NOT_FOUND(404, "CATEGORY004", "존재하지 않는 메일함입니다."),
+  INVALID_CATEGORY_NAME(400, "CATEGORY001", "메일함 이름은 완성된 한글, 영문, 숫자로만 이루어질 수 있습니다"),
+  DUPLICATED_MAIL_CATEGORY_NAME(400, "CATEGORY002", "같은 이름의 메일함은 만들 수 없습니다."),
+  CATEGORY_NOT_FOUND(404, "CATEGORY003", "존재하지 않는 메일함입니다."),
 
   // Mypage
   PASSWORD_DID_NOT_MATCH(400, "MYPAGE001" , "비밀번호가 일치하지 않습니다.")

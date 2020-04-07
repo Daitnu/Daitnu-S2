@@ -76,13 +76,13 @@ public class MailCategoryServiceTest {
 
         // when
         userService.register(user);
-        Long madeMailboxId = mailCategoryService.makeDir(mailCategory);
+        mailCategoryService.makeDir(mailCategory);
         Long removedMailboxId = mailCategoryService.removeDir(mailCategory, user);
 
         // then
         List<MailCategory> mailCategories = mailCategoryService.findAll();
 
-        assertEquals(madeMailboxId, removedMailboxId);
+        assertEquals(mailCategory.getId(), removedMailboxId);
         assertEquals(0, mailCategories.size());
         assertEquals(0, user.getMailCategories().size());
     }

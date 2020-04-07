@@ -18,11 +18,11 @@ public class MailCategoryService {
 
     // 메일 폴더 만들기
     @Transactional
-    public Long makeDir(MailCategory mailCategory) {
+    public MailCategory makeDir(MailCategory mailCategory) {
         validateMakeDir(mailCategory);
         mailCategory.getUser().addMailCategory(mailCategory);
         mailCategoryRepository.save(mailCategory);
-        return mailCategory.getId();
+        return mailCategory;
     }
 
     private void validateMakeDir(MailCategory mailCategory) {
