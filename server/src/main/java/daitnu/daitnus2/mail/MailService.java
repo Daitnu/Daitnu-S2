@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -59,8 +60,8 @@ public class MailService {
   }
 
   private void validateCategory(Long userId, Long mailCategoryId, Long mailId) {
-    MailCategory mailCategory = mailCategoryRepository.getOne(mailCategoryId);
-    if (mailCategory == null) {
+    Optional<MailCategory> mailCategory = mailCategoryRepository.findById(mailCategoryId);
+    if (!mailCategory.isPresent()) {
       throw new IllegalStateException("해당 메일함이 존재하지 않습니다"); // TODO: retype error msg
     }
 
