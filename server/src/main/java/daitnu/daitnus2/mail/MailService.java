@@ -47,7 +47,7 @@ public class MailService {
   private void validateMailOwner(Long mailId, Long userId) {
     Optional<Mail> mail = mailRepository.findById(mailId);
     if (!mail.isPresent()) {
-      throw new IllegalStateException("해당 메일함이 존재하지 않습니다"); // TODO: retype error msg
+      throw new IllegalStateException("해당 메일이 존재하지 않습니다"); // TODO: retype error msg
     }
 
     if (!mail.get().getOwner().getId().equals(userId)) {
