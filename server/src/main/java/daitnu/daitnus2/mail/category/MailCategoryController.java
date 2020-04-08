@@ -25,7 +25,7 @@ public class MailCategoryController {
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> make(@RequestBody @Valid MailCategoryDTO.MakeDTO dto, HttpServletRequest req, BindingResult result) {
     if (result.hasErrors()) {
-      ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_CATEGORY_NAME);
+      ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
       return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
