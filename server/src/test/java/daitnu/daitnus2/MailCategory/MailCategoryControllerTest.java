@@ -1,4 +1,4 @@
-package daitnu.daitnus2.service;
+package daitnu.daitnus2.MailCategory;
 
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.entity.User;

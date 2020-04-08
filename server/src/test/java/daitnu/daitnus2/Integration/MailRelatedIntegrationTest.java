@@ -1,4 +1,4 @@
-package daitnu.daitnus2.service;
+package daitnu.daitnus2.Integration;
 
 import daitnu.daitnus2.database.entity.Mail;
 import daitnu.daitnus2.mail.MailService;
