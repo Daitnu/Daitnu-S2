@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.junit.Assert.*;
 
@@ -32,25 +33,30 @@ public class MailCategoryControllerTest {
   @Autowired MailCategoryService mailCategoryService;
   @Autowired MockMvc mockMvc;
 
+  final String userId = "kimsoso";
+  final String pw = "12345";
+  final String name = "kss";
+  final String subEmail = "kimsoso@gaver.com";
+
   @Test
   public void 메일함_추가_컨트롤러_테스트() throws Exception {
     // given
+    User user = new User(userId, pw, name, subEmail);
     MockHttpSession mockHttpSession = new MockHttpSession();
-    User user = new User("kimsoso", "1234", "kss", "kimsoso@gaver.com");
 
     // when
     userService.register(user);
     mockHttpSession.setAttribute("user", user);
-
-    // then
     mockMvc.perform(post("/mail/category")
       .session(mockHttpSession)
       .content("{\"mailCategoryName\": \"메일함이름1\"}")
       .contentType(MediaType.APPLICATION_JSON_VALUE)
       .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print())
       .andExpect(status().isCreated())
     ;
 
+    // then
     List<MailCategory> categories = mailCategoryService.findAll("kimsoso");
     assertEquals(1, categories.size());
     assertEquals("메일함이름1", categories.get(0).getName());
