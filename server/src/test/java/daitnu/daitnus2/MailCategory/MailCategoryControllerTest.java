@@ -1,7 +1,9 @@
 package daitnu.daitnus2.MailCategory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.entity.User;
+import daitnu.daitnus2.mail.category.MailCategoryDTO;
 import daitnu.daitnus2.mail.category.MailCategoryService;
 import daitnu.daitnus2.user.UserService;
 import org.junit.Test;
@@ -32,6 +34,7 @@ public class MailCategoryControllerTest {
   @Autowired UserService userService;
   @Autowired MailCategoryService mailCategoryService;
   @Autowired MockMvc mockMvc;
+  @Autowired ObjectMapper objectMapper;
 
   final String userId = "kimsoso";
   final String pw = "12345";
@@ -39,17 +42,19 @@ public class MailCategoryControllerTest {
   final String subEmail = "kimsoso@gaver.com";
 
   @Test
-  public void 메일함_추가_컨트롤러_테스트() throws Exception {
+  public void 메일함_추가_성공_테스트() throws Exception {
     // given
-    User user = new User(userId, pw, name, subEmail);
     MockHttpSession mockHttpSession = new MockHttpSession();
+    User user = new User(userId, pw, name, subEmail);
+    MailCategoryDTO.MakeDTO newCategory = new MailCategoryDTO.MakeDTO();
 
     // when
+    newCategory.setMailCategoryName("메일함이름1");
     userService.register(user);
     mockHttpSession.setAttribute("user", user);
     mockMvc.perform(post("/mail/category")
       .session(mockHttpSession)
-      .content("{\"mailCategoryName\": \"메일함이름1\"}")
+      .content(objectMapper.writeValueAsString(newCategory))
       .contentType(MediaType.APPLICATION_JSON_VALUE)
       .accept(MediaType.APPLICATION_JSON_VALUE))
       .andDo(print())
