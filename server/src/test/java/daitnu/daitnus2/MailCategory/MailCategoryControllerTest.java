@@ -70,7 +70,7 @@ public class MailCategoryControllerTest {
   }
 
   @Test
-  public void 메일함_추가_실패_테스트1() throws Exception{
+  public void 메일함_추가_실패_테스트_완성되지_않은_한글() throws Exception{
     // given
     User user = new User(userId, pw, name, subEmail);
     MockHttpSession mockHttpSession = new MockHttpSession();
@@ -78,6 +78,33 @@ public class MailCategoryControllerTest {
 
     // when
     newCategory.setMailCategoryName("ㅁㄴㅇㄹ");
+    userService.register(user);
+    mockHttpSession.setAttribute("user", user);
+    ResultActions result = mockMvc.perform(post("/mail/category")
+      .session(mockHttpSession)
+      .content(objectMapper.writeValueAsString(newCategory))
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print())
+      .andExpect(status().isBadRequest());
+
+    // then
+    result
+      .andExpect(jsonPath("message").value("Invalid Input Value"))
+      .andExpect(jsonPath("status").value(400))
+      .andExpect(jsonPath("errors[0].field").value("mailCategoryName"))
+    ;
+  }
+
+  @Test
+  public void 메일함_추가_실패_테스트_길이() throws Exception{
+    // given
+    User user = new User(userId, pw, name, subEmail);
+    MockHttpSession mockHttpSession = new MockHttpSession();
+    MailCategoryDTO.MakeDTO newCategory = new MailCategoryDTO.MakeDTO();
+
+    // when
+    newCategory.setMailCategoryName("012345678901234567890");
     userService.register(user);
     mockHttpSession.setAttribute("user", user);
     ResultActions result = mockMvc.perform(post("/mail/category")
