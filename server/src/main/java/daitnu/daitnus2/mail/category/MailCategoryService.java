@@ -3,11 +3,14 @@ package daitnu.daitnus2.mail.category;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.database.repository.MailCategoryRepository;
+import daitnu.daitnus2.mail.category.exception.DuplicateName;
+import daitnu.daitnus2.mail.category.exception.NotFoundCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -26,11 +29,10 @@ public class MailCategoryService {
     }
 
     private void validateMakeDir(MailCategory mailCategory) {
-        // TODO: length validation
         List<MailCategory> mailCategories = mailCategoryRepository.
                 findAllByUserUserIdAndName(mailCategory.getUser().getUserId(), mailCategory.getName());
         if (!mailCategories.isEmpty()) {
-            throw new IllegalStateException("같은 이름의 메일함은 만들 수 없습니다!"); // TODO: retype sentence
+            throw new DuplicateName();
         }
     }
 
@@ -47,7 +49,32 @@ public class MailCategoryService {
         List<MailCategory> mailCategories = mailCategoryRepository.
                 findAllByUserUserIdAndNameAndId(user.getUserId(), mailCategory.getName(), mailCategory.getId());
         if (mailCategories.isEmpty()) {
-            throw new IllegalStateException("해당 메일함의 소유자이어야 합니다"); // TODO: retype sentence
+            throw new NotFoundCategory();
+        }
+    }
+
+    // 메일함 이름 수정
+    @Transactional
+    public MailCategory renameDir(Long mailCategoryId, String oldName, String newName, User user) {
+        validateRenameDir(mailCategoryId, oldName, newName, user);
+        MailCategory category = mailCategoryRepository.findById(mailCategoryId).get();
+        category.updateName(newName);
+        return category;
+    }
+
+    private void validateRenameDir(Long mailCategoryId, String oldName, String newName, User user) {
+        Optional<MailCategory> foundWithId = mailCategoryRepository.findById(mailCategoryId);
+        if (!foundWithId.isPresent()
+            || !foundWithId.get().getName().equals(oldName)
+            || !foundWithId.get().getUser().getUserId().equals(user.getUserId())
+            || !foundWithId.get().getUser().getId().equals(user.getId())) {
+            throw new NotFoundCategory();
+        }
+
+        List<MailCategory> foundWithNewName =
+            mailCategoryRepository.findAllByUserUserIdAndName(user.getUserId(), newName);
+        if (!foundWithNewName.isEmpty()) {
+            throw new DuplicateName();
         }
     }
 

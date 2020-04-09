@@ -23,15 +23,31 @@ public class MailCategoryController {
   private final ModelMapper modelMapper;
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> make(@RequestBody @Valid MailCategoryDTO.MakeDTO dto, HttpServletRequest req, BindingResult result) {
+  public ResponseEntity<?> make(@RequestBody @Valid MailCategoryDTO.MakeDTO dto,
+                                HttpServletRequest req,
+                                BindingResult result) {
     if (result.hasErrors()) {
-      ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_CATEGORY_NAME);
+      ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
       return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     User user = (User) req.getSession().getAttribute("user");
     MailCategory mailCategory = new MailCategory(dto.getMailCategoryName(), user);
     mailCategoryService.makeDir(mailCategory);
-    return new ResponseEntity<>(modelMapper.map(mailCategory, MailCategoryDTO.MakeDTO.class), HttpStatus.CREATED);
+    return new ResponseEntity<>(modelMapper.map(mailCategory, MailCategoryDTO.Response.class), HttpStatus.CREATED);
+  }
+
+  @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> rename(@RequestBody @Valid MailCategoryDTO.RenameDTO dto,
+                                  HttpServletRequest req,
+                                  BindingResult result) {
+    if (result.hasErrors()) {
+      ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
+      return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    User user = (User) req.getSession().getAttribute("user");
+    MailCategory renamedDir = mailCategoryService.renameDir(dto.getCategoryId(), dto.getOldName(), dto.getNewName(), user);
+    return new ResponseEntity<>(modelMapper.map(renamedDir, MailCategoryDTO.Response.class), HttpStatus.OK);
   }
 }
