@@ -55,23 +55,24 @@ public class MailCategoryService {
 
     // 메일함 이름 수정
     @Transactional
-    public MailCategory renameDir(Long mailCategoryId, String oldName, String newName, String userId) {
-        validateRenameDir(mailCategoryId, oldName, newName, userId);
+    public MailCategory renameDir(Long mailCategoryId, String oldName, String newName, User user) {
+        validateRenameDir(mailCategoryId, oldName, newName, user);
         MailCategory category = mailCategoryRepository.findById(mailCategoryId).get();
         category.updateName(newName);
         return category;
     }
 
-    private void validateRenameDir(Long mailCategoryId, String oldName, String newName, String userId) {
+    private void validateRenameDir(Long mailCategoryId, String oldName, String newName, User user) {
         Optional<MailCategory> foundWithId = mailCategoryRepository.findById(mailCategoryId);
         if (!foundWithId.isPresent()
             || !foundWithId.get().getName().equals(oldName)
-            || !foundWithId.get().getUser().getUserId().equals(userId)) {
+            || !foundWithId.get().getUser().getUserId().equals(user.getUserId())
+            || !foundWithId.get().getUser().getId().equals(user.getId())) {
             throw new NotFoundCategory();
         }
 
         List<MailCategory> foundWithNewName =
-            mailCategoryRepository.findAllByUserUserIdAndName(userId, newName);
+            mailCategoryRepository.findAllByUserUserIdAndName(user.getUserId(), newName);
         if (!foundWithNewName.isEmpty()) {
             throw new DuplicateName();
         }
