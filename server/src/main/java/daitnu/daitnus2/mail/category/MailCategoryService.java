@@ -3,6 +3,8 @@ package daitnu.daitnus2.mail.category;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.database.repository.MailCategoryRepository;
+import daitnu.daitnus2.mail.category.exception.DuplicateName;
+import daitnu.daitnus2.mail.category.exception.NotFoundCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,11 +28,10 @@ public class MailCategoryService {
     }
 
     private void validateMakeDir(MailCategory mailCategory) {
-        // TODO: length validation
         List<MailCategory> mailCategories = mailCategoryRepository.
                 findAllByUserUserIdAndName(mailCategory.getUser().getUserId(), mailCategory.getName());
         if (!mailCategories.isEmpty()) {
-            throw new IllegalStateException("같은 이름의 메일함은 만들 수 없습니다!"); // TODO: retype sentence
+            throw new DuplicateName();
         }
     }
 
@@ -47,7 +48,7 @@ public class MailCategoryService {
         List<MailCategory> mailCategories = mailCategoryRepository.
                 findAllByUserUserIdAndNameAndId(user.getUserId(), mailCategory.getName(), mailCategory.getId());
         if (mailCategories.isEmpty()) {
-            throw new IllegalStateException("해당 메일함의 소유자이어야 합니다"); // TODO: retype sentence
+            throw new NotFoundCategory();
         }
     }
 
