@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -49,6 +50,30 @@ public class MailCategoryService {
                 findAllByUserUserIdAndNameAndId(user.getUserId(), mailCategory.getName(), mailCategory.getId());
         if (mailCategories.isEmpty()) {
             throw new NotFoundCategory();
+        }
+    }
+
+    // 메일함 이름 수정
+    @Transactional
+    public MailCategory renameDir(Long mailCategoryId, String oldName, String newName, String userId) {
+        validateRenameDir(mailCategoryId, oldName, newName, userId);
+        MailCategory category = mailCategoryRepository.findById(mailCategoryId).get();
+        category.updateName(newName);
+        return category;
+    }
+
+    private void validateRenameDir(Long mailCategoryId, String oldName, String newName, String userId) {
+        Optional<MailCategory> foundWithId = mailCategoryRepository.findById(mailCategoryId);
+        if (!foundWithId.isPresent()
+            || !foundWithId.get().getName().equals(oldName)
+            || !foundWithId.get().getUser().getUserId().equals(userId)) {
+            throw new NotFoundCategory();
+        }
+
+        List<MailCategory> foundWithNewName =
+            mailCategoryRepository.findAllByUserUserIdAndName(userId, newName);
+        if (!foundWithNewName.isEmpty()) {
+            throw new DuplicateName();
         }
     }
 
