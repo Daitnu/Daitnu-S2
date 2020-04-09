@@ -33,11 +33,11 @@ public enum ErrorCode {
   CHATROOM_NOT_FOUND(404, "MESSAGE002", "접근할 수 없는 채팅방입니다."),
 
   // Mail
-  MAIL_NOT_FOUNT(404, "MAIL001", "존재하지 않는 메일입니다"),
+  MAIL_NOT_FOUNT(404, "MAIL001", "존재하지 않는 메일입니다."),
 
   // MailCategory
-  INVALID_CATEGORY_NAME(400, "CATEGORY001", "메일함 이름은 완성된 한글, 영문, 숫자로만 이루어질 수 있습니다"),
-  DUPLICATED_MAIL_CATEGORY_NAME(400, "CATEGORY002", "같은 이름의 메일함은 만들 수 없습니다."),
+  INVALID_CATEGORY_NAME(400, "CATEGORY001", "메일함 이름은 완성된 한글, 영문, 숫자로만 이루어질 수 있습니다."),
+  DUPLICATED_MAIL_CATEGORY_NAME(400, "CATEGORY002", "같은 이름의 메일함이 이미 존재합니다."),
   CATEGORY_NOT_FOUND(404, "CATEGORY003", "존재하지 않는 메일함입니다."),
 
   // Mypage
