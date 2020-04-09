@@ -10,6 +10,8 @@
   - 모니터링 시스템 구축
   - CI/CD
 
+## [Season1 Repository](https://github.com/connect-foundation/2019-06)
+
 ## 만들고 싶은 기능
 
 1. 다잇누 시즌1때 기능은 전부 만들어야함 ㅋ
