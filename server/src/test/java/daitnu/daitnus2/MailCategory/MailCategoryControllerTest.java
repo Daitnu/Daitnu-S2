@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -54,16 +55,15 @@ public class MailCategoryControllerTest {
     newCategory.setMailCategoryName("메일함이름1");
     userService.register(user);
     mockHttpSession.setAttribute("user", user);
-    mockMvc.perform(post("/mail/category")
+    ResultActions result = mockMvc.perform(post("/mail/category")
       .session(mockHttpSession)
       .content(objectMapper.writeValueAsString(newCategory))
       .contentType(MediaType.APPLICATION_JSON_VALUE)
       .accept(MediaType.APPLICATION_JSON_VALUE))
-      .andDo(print())
-      .andExpect(status().isCreated())
-    ;
+      .andDo(print());
 
     // then
+    result.andExpect(status().isCreated());
     List<MailCategory> categories = mailCategoryService.findAll("kimsoso");
     assertEquals(1, categories.size());
     assertEquals("메일함이름1", categories.get(0).getName());
@@ -85,11 +85,11 @@ public class MailCategoryControllerTest {
       .content(objectMapper.writeValueAsString(newCategory))
       .contentType(MediaType.APPLICATION_JSON_VALUE)
       .accept(MediaType.APPLICATION_JSON_VALUE))
-      .andDo(print())
-      .andExpect(status().isBadRequest());
+      .andDo(print());
 
     // then
     result
+      .andExpect(status().isBadRequest())
       .andExpect(jsonPath("message").value("Invalid Input Value"))
       .andExpect(jsonPath("status").value(400))
       .andExpect(jsonPath("errors[0].field").value("mailCategoryName"))
@@ -112,14 +112,47 @@ public class MailCategoryControllerTest {
       .content(objectMapper.writeValueAsString(newCategory))
       .contentType(MediaType.APPLICATION_JSON_VALUE)
       .accept(MediaType.APPLICATION_JSON_VALUE))
-      .andDo(print())
-      .andExpect(status().isBadRequest());
+      .andDo(print());
 
     // then
     result
+      .andExpect(status().isBadRequest())
       .andExpect(jsonPath("message").value("Invalid Input Value"))
       .andExpect(jsonPath("status").value(400))
       .andExpect(jsonPath("errors[0].field").value("mailCategoryName"))
+    ;
+  }
+
+  @Test
+  public void 메일함_이름_수정_성공_테스트() throws Exception {
+    // given
+    User user = new User(userId, pw, name, subEmail);
+    MockHttpSession mockHttpSession = new MockHttpSession();
+    MailCategoryDTO.RenameDTO renameDTO = new MailCategoryDTO.RenameDTO();
+    String oldName = "123456";
+    String newName = "하하호호히헤";
+
+    // when
+    userService.register(user);
+    MailCategory mailCategory = new MailCategory(oldName, user);
+    mailCategoryService.makeDir(mailCategory);
+    renameDTO.setCategoryId(mailCategory.getId());
+    renameDTO.setOldName(oldName);
+    renameDTO.setNewName(newName);
+
+    mockHttpSession.setAttribute("user", user);
+    ResultActions result = mockMvc.perform(patch("/mail/category")
+      .session(mockHttpSession)
+      .content(objectMapper.writeValueAsString(renameDTO))
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print());
+
+    // then
+    result
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("id").value(mailCategory.getId()))
+      .andExpect(jsonPath("name").value(newName))
     ;
   }
 }
