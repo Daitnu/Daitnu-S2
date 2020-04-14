@@ -2,3 +2,4 @@ node_modules
 public
 assets
 package-lock.json
+webpack.config.js
