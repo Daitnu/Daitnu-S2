@@ -7,7 +7,7 @@ export const Footer = styled.form`
   align-items: center;
 `;
 
-export const TextLink = styled.a`
+export const TextLink = styled.span`
   font-size: 0.7rem;
   margin: 10px;
   cursor: pointer;
