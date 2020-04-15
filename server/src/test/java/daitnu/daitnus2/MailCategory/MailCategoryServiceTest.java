@@ -1,5 +1,7 @@
 package daitnu.daitnus2.MailCategory;
 
+import daitnu.daitnus2.mail.category.exception.DuplicateCategoryName;
+import daitnu.daitnus2.mail.category.exception.NotFoundCategory;
 import daitnu.daitnus2.user.UserService;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.entity.User;
@@ -87,7 +89,7 @@ public class MailCategoryServiceTest {
         assertEquals(0, user.getMailCategories().size());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = NotFoundCategory.class)
     public void 타인의_메일함_삭제_불가() {
         // given
         User user1 = new User("kimsoso1", "1234", "kss1", "kimsoso1@gaver.com");
@@ -106,7 +108,7 @@ public class MailCategoryServiceTest {
         fail("타인의 메일함 삭제는 불가합니다");
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = DuplicateCategoryName.class)
     public void 유저는_메일함_이름_중복_생성_불가() {
         // given
         String mailboxName = "mailbox1";
