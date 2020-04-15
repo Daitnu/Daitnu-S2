@@ -3,7 +3,7 @@ package daitnu.daitnus2.mail.category;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.database.repository.MailCategoryRepository;
-import daitnu.daitnus2.mail.category.exception.DuplicateName;
+import daitnu.daitnus2.mail.category.exception.DuplicateCategoryName;
 import daitnu.daitnus2.mail.category.exception.NotFoundCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class MailCategoryService {
         List<MailCategory> mailCategories = mailCategoryRepository.
                 findAllByUserUserIdAndName(mailCategory.getUser().getUserId(), mailCategory.getName());
         if (!mailCategories.isEmpty()) {
-            throw new DuplicateName();
+            throw new DuplicateCategoryName();
         }
     }
 
@@ -74,7 +74,7 @@ public class MailCategoryService {
         List<MailCategory> foundWithNewName =
             mailCategoryRepository.findAllByUserUserIdAndName(user.getUserId(), newName);
         if (!foundWithNewName.isEmpty()) {
-            throw new DuplicateName();
+            throw new DuplicateCategoryName();
         }
     }
 
