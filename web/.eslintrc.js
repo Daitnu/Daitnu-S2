@@ -21,7 +21,13 @@ module.exports = {
     'arrow-parens': 0,
     'arrow-body-style': 0,
     'guard-for-in': 0,
+    '@typescript-eslint/interface-name-prefix': 0,
     camelcase: 0,
     // '@typescript-eslint/no-inferrable-types': 0,
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
   },
 };
