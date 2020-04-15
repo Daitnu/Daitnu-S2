@@ -16,6 +16,7 @@ module.exports = {
     alias: {
       '~': path.resolve(__dirname, 'src'),
       Assets: path.resolve(__dirname, 'assets'),
+      '@customTypes': path.resolve(__dirname, 'src/@types'),
     },
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },

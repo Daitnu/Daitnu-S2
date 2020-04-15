@@ -15,8 +15,12 @@
     "noEmit": true,
     "noImplicitAny": false, // any 타입 허용. true면 비허용. 논의 통해서 접점을 찾아야 할 듯
     "jsx": "react",
-    "baseUrl": "src",
-    "rootDirs": ["src"]
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["src/*"],
+      "@customTypes/*": ["src/@types/*"]
+    },
+    "sourceMap": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "build", "scripts"]
