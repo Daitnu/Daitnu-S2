@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { BusinessErrorResponse } from '@customTypes/response/error';
-import { CommonResponse } from '~/@types/response/success';
+import { HTTPResponse } from '~/@types/response/success';
 import { RequestParam } from '~/@types/request/common';
 
 const API_SERVER = 'http://localhost:8080';
@@ -8,13 +8,15 @@ const MEDIA_TYPE = {
   JSON: 'application/json',
 };
 
-const getHttpResponse = async <R>({ fn, url, data }): Promise<R | BusinessErrorResponse> => {
-  let response;
-
+const getHttpResponse = async <T>({
+  fn,
+  url,
+  data,
+}): Promise<HTTPResponse<T> | BusinessErrorResponse> => {
   try {
     const { status, data: resData } = await fn(url, data);
-    response = { status, data: resData };
-    return response as R;
+    const successResponse: HTTPResponse<T> = { status, data: resData };
+    return successResponse;
   } catch (err) {
     if (!err.response) {
       return {
@@ -25,8 +27,8 @@ const getHttpResponse = async <R>({ fn, url, data }): Promise<R | BusinessErrorR
       } as BusinessErrorResponse;
     }
     const { status, message, code, errors } = err.response.data;
-    response = { status, message, code, errors };
-    return response as BusinessErrorResponse;
+    const errResponse: BusinessErrorResponse = { status, message, code, errors };
+    return errResponse;
   }
 };
 
@@ -49,38 +51,35 @@ export class Api {
     });
   }
 
-  public async get<R extends CommonResponse, D = undefined>({
+  public async get<T, D = undefined>({
     url,
     data,
-  }: RequestParam<D>): Promise<R | BusinessErrorResponse> {
+  }: RequestParam<D>): Promise<HTTPResponse<T> | BusinessErrorResponse> {
     if (data !== undefined) {
       url += '?' + toQueryString(data);
       data = undefined;
     }
-    console.log(url);
-    // TODO: 아래의 경우 왜 타입 에러가 나는지 확인해봐야 함
-    // const response: R = { status: 100, data: { a: 1 } };
-    return getHttpResponse<R>({ fn: this.api.get, url, data });
+    return getHttpResponse<T>({ fn: this.api.get, url, data });
   }
 
-  public async post<R extends CommonResponse, D>({
+  public async post<T, D = undefined>({
     url,
     data,
-  }: RequestParam<D>): Promise<R | BusinessErrorResponse> {
-    return getHttpResponse<R>({ fn: this.api.post, url, data });
+  }: RequestParam<D>): Promise<HTTPResponse<T> | BusinessErrorResponse> {
+    return getHttpResponse<T>({ fn: this.api.post, url, data });
   }
 
-  public async patch<R extends CommonResponse, D>({
+  public async patch<T, D = undefined>({
     url,
     data,
-  }: RequestParam<D>): Promise<R | BusinessErrorResponse> {
-    return getHttpResponse<R>({ fn: this.api.patch, url, data });
+  }: RequestParam<D>): Promise<HTTPResponse<T> | BusinessErrorResponse> {
+    return getHttpResponse<T>({ fn: this.api.patch, url, data });
   }
 
-  public async delete<R extends CommonResponse, D>({
+  public async delete<T, D = undefined>({
     url,
     data,
-  }: RequestParam<D>): Promise<R | BusinessErrorResponse> {
-    return getHttpResponse<R>({ fn: this.api.delete, url, data });
+  }: RequestParam<D>): Promise<HTTPResponse<T> | BusinessErrorResponse> {
+    return getHttpResponse<T>({ fn: this.api.delete, url, data });
   }
 }
