@@ -1,7 +1,7 @@
 export interface BusinessErrorResponse {
   status: number;
   message: string;
-  code: string;
+  code: string | null;
   errors: Array<FieldError> | null;
 }
 
