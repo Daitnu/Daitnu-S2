@@ -58,6 +58,8 @@ export class Api {
       data = undefined;
     }
     console.log(url);
+    // TODO: 아래의 경우 왜 타입 에러가 나는지 확인해봐야 함
+    // const response: R = { status: 100, data: { a: 1 } };
     return getHttpResponse<R>({ fn: this.api.get, url, data });
   }
 
