@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import S from './styled';
 import { Api } from '~/library/request/Api';
-import { CommonResponse } from '~/@types/response/success';
 
 interface ILoginState {
   userId: string;
@@ -13,11 +12,9 @@ const loginInitState: ILoginState = {
   password: '',
 };
 
-interface ResponseType extends CommonResponse {
-  data: {
-    id: number;
-    name: string;
-  };
+interface ResponseType {
+  id: number;
+  name: string;
 }
 
 interface RequestType {
@@ -34,7 +31,9 @@ export const LoginForm: React.FC = () => {
     e.preventDefault();
 
     const api = new Api();
-    const response1 = await api.get<ResponseType>({ url: '/mail/category' });
+    const response1 = await api.get<ResponseType>({
+      url: '/mail/category',
+    });
     console.log(response1);
     const response2 = await api.get<ResponseType, RequestType>({
       url: '/mail/category',
