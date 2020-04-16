@@ -54,7 +54,7 @@ public class MailCategoryControllerTest {
     MailCategoryDTO.MakeDTO newCategory = new MailCategoryDTO.MakeDTO();
 
     // when
-    newCategory.setMailCategoryName("메일함이름1");
+    newCategory.setName("메일함이름1");
     userService.register(user);
     mockHttpSession.setAttribute("user", user);
     ResultActions result = mockMvc.perform(post("/mail/category")
@@ -79,7 +79,7 @@ public class MailCategoryControllerTest {
     MailCategoryDTO.MakeDTO newCategory = new MailCategoryDTO.MakeDTO();
 
     // when
-    newCategory.setMailCategoryName("ㅁㄴㅇㄹ");
+    newCategory.setName("ㅁㄴㅇㄹ");
     userService.register(user);
     mockHttpSession.setAttribute("user", user);
     ResultActions result = mockMvc.perform(post("/mail/category")
@@ -106,7 +106,7 @@ public class MailCategoryControllerTest {
     MailCategoryDTO.MakeDTO newCategory = new MailCategoryDTO.MakeDTO();
 
     // when
-    newCategory.setMailCategoryName("012345678901234567890");
+    newCategory.setName("012345678901234567890");
     userService.register(user);
     mockHttpSession.setAttribute("user", user);
     ResultActions result = mockMvc.perform(post("/mail/category")

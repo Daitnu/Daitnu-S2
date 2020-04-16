@@ -32,7 +32,7 @@ public class MailCategoryController {
     }
 
     User user = (User) req.getSession().getAttribute("user");
-    MailCategory mailCategory = new MailCategory(dto.getMailCategoryName(), user);
+    MailCategory mailCategory = new MailCategory(dto.getName(), user);
     mailCategoryService.makeDir(mailCategory);
     return new ResponseEntity<>(modelMapper.map(mailCategory, MailCategoryDTO.Response.class), HttpStatus.CREATED);
   }
