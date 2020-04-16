@@ -12,6 +12,7 @@ public enum ErrorCode {
   HANDLE_ACCESS_DENIED(403, "COMMON003", "Access is Denied"),
   NOT_FOUND_EXCEPTION(404, "COMMON004", "Page Not Found"),
   METHOD_NOT_ALLOWED(405, "COMMON005", " Method Not Allowed"),
+  UNAUTHORIZED(401, "COMMON006", "로그인 후 이용해 주세요."),
   UNSUPPORTED_MEDIA_TYPE(415,"COMMON015", "Unsupported Media Type"),
 
   // Auth
