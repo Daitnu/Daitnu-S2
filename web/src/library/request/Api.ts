@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { BusinessErrorResponse } from '@customTypes/response/error';
 
 const API_SERVER = 'http://localhost:8080';
-const TYPE = {
+const MEDIA_TYPE = {
   JSON: 'application/json',
 };
 
@@ -13,7 +13,7 @@ export class Api {
     this.api = axios.create({
       baseURL: API_SERVER,
       headers: {
-        'Content-Type': TYPE.JSON,
+        'Content-Type': MEDIA_TYPE.JSON,
       },
       timeout: 5000,
     });
