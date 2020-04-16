@@ -29,6 +29,11 @@ const getHttpResponse = async <R>({ fn, url, data }): Promise<R | BusinessErrorR
   }
 };
 
+const toQueryString = (obj): string =>
+  Object.entries(obj)
+    .map(([k, v]) => `${k}=${v}`)
+    .reduce((prev, cur) => `${prev}&${cur}`);
+
 export class Api {
   private api: AxiosInstance;
 
@@ -48,11 +53,7 @@ export class Api {
     data,
   }: RequestParam<D>): Promise<R | BusinessErrorResponse> {
     if (data !== undefined) {
-      url +=
-        '?' +
-        Object.entries(data)
-          .map(([k, v]) => `${k}=${v}`)
-          .reduce((prev, cur) => `${prev}&${cur}`);
+      url += '?' + toQueryString(data);
       data = undefined;
     }
     console.log(url);
