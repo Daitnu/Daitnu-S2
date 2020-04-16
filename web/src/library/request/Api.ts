@@ -51,6 +51,11 @@ export class Api {
     });
   }
 
+  /**
+   * @type T - Response Type
+   * @type D - Request Type. default: undefined
+   * @param - { url: string, data: D | undefined }
+   */
   public async get<T, D = undefined>({
     url,
     data,
@@ -62,6 +67,11 @@ export class Api {
     return getHttpResponse<T>({ fn: this.api.get, url, data });
   }
 
+  /**
+   * @type T - Response Type
+   * @type D - Request Type. default: undefined
+   * @param - { url: string, data: D | undefined }
+   */
   public async post<T, D = undefined>({
     url,
     data,
@@ -69,6 +79,11 @@ export class Api {
     return getHttpResponse<T>({ fn: this.api.post, url, data });
   }
 
+  /**
+   * @type T - Response Type
+   * @type D - Request Type. default: undefined
+   * @param - { url: string, data: D | undefined }
+   */
   public async patch<T, D = undefined>({
     url,
     data,
@@ -76,6 +91,11 @@ export class Api {
     return getHttpResponse<T>({ fn: this.api.patch, url, data });
   }
 
+  /**
+   * @type T - Response Type
+   * @type D - Request Type. default: undefined
+   * @param - { url: string, data: D | undefined }
+   */
   public async delete<T, D = undefined>({
     url,
     data,
