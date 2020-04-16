@@ -3,6 +3,8 @@ package daitnu.daitnus2.mail.category;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.database.repository.MailCategoryRepository;
+import daitnu.daitnus2.exception.BusinessException;
+import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.mail.category.exception.DuplicateCategoryName;
 import daitnu.daitnus2.mail.category.exception.NotFoundCategory;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,10 @@ public class MailCategoryService {
     }
 
     private void validateMakeDir(MailCategory mailCategory) {
+        if (mailCategory.getUser() == null) {
+            throw new BusinessException(ErrorCode.UNAUTHORIZED);
+        }
+
         List<MailCategory> mailCategories = mailCategoryRepository.
                 findAllByUserUserIdAndName(mailCategory.getUser().getUserId(), mailCategory.getName());
         if (!mailCategories.isEmpty()) {
@@ -46,6 +52,10 @@ public class MailCategoryService {
     }
 
     private void validateRemoveDir(MailCategory mailCategory, User user) {
+        if (mailCategory.getUser() == null || user == null) {
+            throw new BusinessException(ErrorCode.UNAUTHORIZED);
+        }
+
         List<MailCategory> mailCategories = mailCategoryRepository.
                 findAllByUserUserIdAndNameAndId(user.getUserId(), mailCategory.getName(), mailCategory.getId());
         if (mailCategories.isEmpty()) {
@@ -63,6 +73,10 @@ public class MailCategoryService {
     }
 
     private void validateRenameDir(Long mailCategoryId, String oldName, String newName, User user) {
+        if (user == null) {
+            throw new BusinessException(ErrorCode.UNAUTHORIZED);
+        }
+
         Optional<MailCategory> foundWithId = mailCategoryRepository.findById(mailCategoryId);
         if (!foundWithId.isPresent()
             || !foundWithId.get().getName().equals(oldName)
