@@ -1,10 +1,4 @@
-import { ResponseRegister } from './user';
-
-interface CommonResponse {
+export interface HTTPResponse<T> {
   status: number;
-  data: any;
-}
-
-interface ResponseRegisterSuccess extends CommonResponse {
-  data: ResponseRegister;
+  data: T;
 }
