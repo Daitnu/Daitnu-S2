@@ -50,4 +50,12 @@ public class MailCategoryController {
     MailCategory renamedDir = mailCategoryService.renameDir(dto.getCategoryId(), dto.getOldName(), dto.getNewName(), user);
     return new ResponseEntity<>(modelMapper.map(renamedDir, MailCategoryDTO.Response.class), HttpStatus.OK);
   }
+
+  // For Test
+  @GetMapping
+  public ResponseEntity<?> getCategories() {
+    User user = new User("dkdkdkdk123", "1234", "cocoa", "dkdkdk123@daitnu.com");
+    MailCategory mailCategory = new MailCategory("메일함23", user);
+    return new ResponseEntity<>(modelMapper.map(mailCategory, MailCategoryDTO.Response.class), HttpStatus.CREATED);
+  }
 }

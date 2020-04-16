@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import S from './styled';
+import { Api } from '~/library/request/Api';
+import { CommonResponse } from '~/@types/response/success';
 
 interface ILoginState {
   userId: string;
@@ -11,11 +13,35 @@ const loginInitState: ILoginState = {
   password: '',
 };
 
+interface ResponseType extends CommonResponse {
+  data: {
+    id: number;
+    name: string;
+  };
+}
+
+interface RequestType {
+  d: string;
+}
+
 export const LoginForm: React.FC = () => {
   const [loginState, setLoginState] = useState<ILoginState>(loginInitState);
 
   const handleOnChange = (key: string) => ({ target: { value } }): void =>
     setLoginState({ ...loginState, [key]: value }); // noImplicitAny옵션을 설정 안하면 value에서 빨간줄
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const api = new Api();
+    const response1 = await api.get<ResponseType>({ url: '/mail/category' });
+    console.log(response1);
+    const response2 = await api.get<ResponseType, RequestType>({
+      url: '/mail/category',
+      data: { d: '123' },
+    });
+    console.log(response2);
+  };
 
   return (
     <S.InputForm>
@@ -43,7 +69,9 @@ export const LoginForm: React.FC = () => {
         onChange={handleOnChange('password')}
       />
       <S.ErrorText></S.ErrorText>
-      <S.Button className="submit-btn max-width">로그인</S.Button>
+      <S.Button className="submit-btn max-width" onClick={handleSubmit}>
+        로그인
+      </S.Button>
     </S.InputForm>
   );
 };
