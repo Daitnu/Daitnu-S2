@@ -12,7 +12,8 @@ const getHttpResponse = async <R>({ fn, url, data }): Promise<R | BusinessErrorR
   let response;
 
   try {
-    response = await fn(url, data);
+    const { status, data: resData } = await fn(url, data);
+    response = { status, data: resData };
     return response as R;
   } catch (err) {
     if (!err.response) {
