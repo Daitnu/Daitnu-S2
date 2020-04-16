@@ -8,7 +8,7 @@ const MEDIA_TYPE = {
   JSON: 'application/json',
 };
 
-const getHttpResponse = async <D, R>({ fn, url, data }): Promise<R | BusinessErrorResponse> => {
+const getHttpResponse = async <R>({ fn, url, data }): Promise<R | BusinessErrorResponse> => {
   let response;
 
   try {
@@ -43,31 +43,40 @@ export class Api {
     });
   }
 
-  public async get<D, R extends CommonResponse>({
+  public async get<R extends CommonResponse, D = undefined>({
     url,
     data,
   }: RequestParam<D>): Promise<R | BusinessErrorResponse> {
-    return getHttpResponse<D, R>({ fn: this.api.get, url, data });
+    if (data !== undefined) {
+      url +=
+        '?' +
+        Object.entries(data)
+          .map(([k, v]) => `${k}=${v}`)
+          .reduce((prev, cur) => `${prev}&${cur}`);
+      data = undefined;
+    }
+    console.log(url);
+    return getHttpResponse<R>({ fn: this.api.get, url, data });
   }
 
-  public async post<D, R extends CommonResponse>({
+  public async post<R extends CommonResponse, D>({
     url,
     data,
   }: RequestParam<D>): Promise<R | BusinessErrorResponse> {
-    return getHttpResponse<D, R>({ fn: this.api.post, url, data });
+    return getHttpResponse<R>({ fn: this.api.post, url, data });
   }
 
-  public async patch<D, R extends CommonResponse>({
+  public async patch<R extends CommonResponse, D>({
     url,
     data,
   }: RequestParam<D>): Promise<R | BusinessErrorResponse> {
-    return getHttpResponse<D, R>({ fn: this.api.patch, url, data });
+    return getHttpResponse<R>({ fn: this.api.patch, url, data });
   }
 
-  public async delete<D, R extends CommonResponse>({
+  public async delete<R extends CommonResponse, D>({
     url,
     data,
   }: RequestParam<D>): Promise<R | BusinessErrorResponse> {
-    return getHttpResponse<D, R>({ fn: this.api.delete, url, data });
+    return getHttpResponse<R>({ fn: this.api.delete, url, data });
   }
 }
