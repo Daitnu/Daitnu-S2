@@ -96,11 +96,10 @@ public class MailCategoryService {
       return mailCategoryRepository.getOne(id);
     }
 
-    public List<MailCategory> findAll() {
-        return mailCategoryRepository.findAll();
-    }
-
-    public List<MailCategory> findAll(String userId) {
-        return mailCategoryRepository.findAllByUserUserId(userId);
+    public List<MailCategory> findAll(User user) {
+        if (user == null) {
+            throw new BusinessException(ErrorCode.UNAUTHORIZED);
+        }
+        return mailCategoryRepository.findAllByUserId(user.getId());
     }
 }
