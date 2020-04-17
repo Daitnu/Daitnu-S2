@@ -17,8 +17,7 @@
     "jsx": "react",
     "baseUrl": "./",
     "paths": {
-      "~/*": ["src/*"],
-      "@customTypes/*": ["src/@types/*"]
+      "~/*": ["src/*"]
     },
     "sourceMap": true
   },

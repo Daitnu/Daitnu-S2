@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { BusinessErrorResponse } from '@customTypes/response/error';
+import { BusinessErrorResponse } from '~/@types/response/error';
 import { HTTPResponse } from '~/@types/response/success';
 import { RequestParam } from '~/@types/request/common';
 
