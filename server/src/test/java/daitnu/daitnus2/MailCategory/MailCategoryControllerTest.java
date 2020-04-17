@@ -93,7 +93,7 @@ public class MailCategoryControllerTest {
       .andExpect(status().isBadRequest())
       .andExpect(jsonPath("message").value("Invalid Input Value"))
       .andExpect(jsonPath("status").value(400))
-      .andExpect(jsonPath("errors[0].field").value("mailCategoryName"))
+      .andExpect(jsonPath("errors[0].field").value("name"))
     ;
   }
 
@@ -120,7 +120,7 @@ public class MailCategoryControllerTest {
       .andExpect(status().isBadRequest())
       .andExpect(jsonPath("message").value("Invalid Input Value"))
       .andExpect(jsonPath("status").value(400))
-      .andExpect(jsonPath("errors[0].field").value("mailCategoryName"))
+      .andExpect(jsonPath("errors[0].field").value("name"))
     ;
   }
 
