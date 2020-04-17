@@ -12,7 +12,7 @@ public interface MailCategoryRepository extends JpaRepository<MailCategory, Long
    * @param userId string id of user
    * @return List of MailCategory
    */
-  List<MailCategory> findAllByUserUserId(String userId);
+  List<MailCategory> findAllByUserId(Long userId);
 
   /**
    * 메일함 생성할 때 사용할 예정
