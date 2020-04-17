@@ -328,7 +328,7 @@ public class MailCategoryControllerTest {
   }
 
   @Test
-  public void 메일함_전체_조회_성공_케이스() throws Exception {
+  public void 메일함_전체_조회_성공_테스트() throws Exception {
     // given
     String categoryName1 = "메일함1";
     String categoryName2 = "메일함2";
@@ -356,4 +356,29 @@ public class MailCategoryControllerTest {
     ;
   }
 
+  @Test
+  public void 메일함_전체_조회_실패_테스_로그인_하지_않았을_때() throws Exception {
+    // given
+    String categoryName1 = "메일함1";
+    String categoryName2 = "메일함2";
+    User user = new User(userId, pw, name, subEmail);
+    MailCategory mailCategory1 = new MailCategory(categoryName1, user);
+    MailCategory mailCategory2 = new MailCategory(categoryName2, user);
+    userService.register(user);
+    mailCategoryService.makeDir(mailCategory1);
+    mailCategoryService.makeDir(mailCategory2);
+
+    // when
+    ResultActions result = mockMvc.perform(get("/mail/category")
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print());
+
+    // then
+    result
+      .andExpect(status().isUnauthorized())
+      .andExpect(jsonPath("status").value(401))
+      .andExpect(jsonPath("code").value("AUTH004"))
+    ;
+  }
 }
