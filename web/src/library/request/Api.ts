@@ -18,16 +18,18 @@ const getHttpResponse = async <T>({
     const successResponse: HTTPResponse<T> = { status, data: resData };
     return successResponse;
   } catch (err) {
+    let errResponse: BusinessErrorResponse = { status: 0, message: '', code: '', errors: [] };
     if (!err.response) {
-      return {
+      errResponse = {
         status: 500,
         message: err.message,
         code: null,
         errors: null,
-      } as BusinessErrorResponse;
+      };
+      return errResponse;
     }
     const { status, message, code, errors } = err.response.data;
-    const errResponse: BusinessErrorResponse = { status, message, code, errors };
+    errResponse = { status, message, code, errors };
     return errResponse;
   }
 };
