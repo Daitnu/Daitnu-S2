@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,11 +52,10 @@ public class MailCategoryController {
     return new ResponseEntity<>(modelMapper.map(renamedDir, MailCategoryDTO.Response.class), HttpStatus.OK);
   }
 
-  // For Test
-  @GetMapping
-  public ResponseEntity<?> getCategories() {
-    User user = new User("dkdkdkdk123", "1234", "cocoa", "dkdkdk123@daitnu.com");
-    MailCategory mailCategory = new MailCategory("메일함23", user);
-    return new ResponseEntity<>(modelMapper.map(mailCategory, MailCategoryDTO.Response.class), HttpStatus.CREATED);
+  @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> getCategories(HttpServletRequest req) {
+    User user = (User) req.getSession().getAttribute("user");
+    List<MailCategory> userCategories = mailCategoryService.findAll(user);
+    return new ResponseEntity<>(modelMapper.map(userCategories, MailCategoryDTO.Response[].class), HttpStatus.OK);
   }
 }
