@@ -36,15 +36,4 @@ public class MailCategoryDTO {
     private Long id;
     private String name;
   }
-
-  @Getter @Setter
-  public static class ResponseCategories {
-    private List<ResponseCategory> categories;
-  }
-
-  @Getter @Setter
-  public static class ResponseCategory {
-    Long id;
-    String name;
-  }
 }
