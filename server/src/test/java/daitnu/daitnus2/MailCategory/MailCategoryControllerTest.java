@@ -21,8 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -66,7 +65,7 @@ public class MailCategoryControllerTest {
 
     // then
     result.andExpect(status().isCreated());
-    List<MailCategory> categories = mailCategoryService.findAll("kimsoso");
+    List<MailCategory> categories = mailCategoryService.findAll(user);
     assertEquals(1, categories.size());
     assertEquals("메일함이름1", categories.get(0).getName());
   }
@@ -325,6 +324,35 @@ public class MailCategoryControllerTest {
       .andExpect(status().isNotFound())
       .andExpect(jsonPath("message").value("존재하지 않는 메일함입니다."))
       .andExpect(jsonPath("status").value(404))
+    ;
+  }
+
+  @Test
+  public void 메일함_전체_조회_성공_케이스() throws Exception {
+    // given
+    String categoryName1 = "메일함1";
+    String categoryName2 = "메일함2";
+    User user = new User(userId, pw, name, subEmail);
+    MailCategory mailCategory1 = new MailCategory(categoryName1, user);
+    MailCategory mailCategory2 = new MailCategory(categoryName2, user);
+    MockHttpSession mockHttpSession = new MockHttpSession();
+    userService.register(user);
+    mailCategoryService.makeDir(mailCategory1);
+    mailCategoryService.makeDir(mailCategory2);
+
+    // when
+    mockHttpSession.setAttribute("user", user);
+    ResultActions result = mockMvc.perform(get("/mail/category")
+      .session(mockHttpSession)
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print());
+
+    // then
+    result
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("[0].name").value(categoryName1))
+      .andExpect(jsonPath("[1].name").value(categoryName2))
     ;
   }
 
