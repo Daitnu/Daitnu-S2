@@ -12,13 +12,13 @@ public enum ErrorCode {
   HANDLE_ACCESS_DENIED(403, "COMMON003", "Access is Denied"),
   NOT_FOUND_EXCEPTION(404, "COMMON004", "Page Not Found"),
   METHOD_NOT_ALLOWED(405, "COMMON005", " Method Not Allowed"),
-  UNAUTHORIZED(401, "COMMON006", "로그인 후 이용해 주세요."),
   UNSUPPORTED_MEDIA_TYPE(415,"COMMON015", "Unsupported Media Type"),
 
   // Auth
   EMAIL_DUPLICATION(400, "AUTH001", "이미 사용중인 이메일 입니다. 다른 이메일을 사용해주세요."),
   ID_DUPLICATION(400, "AUTH002", "이미 사용중인 아이디 입니다. 다른 아이디를 사용해주세요."),
   INVALID_LOGIN_INPUT(404, "AUTH003", "아이디 혹은 비밀번호가 올바르지 않습니다."),
+  UNAUTHORIZED(401, "AUTH004", "로그인 후 이용해 주세요."),
 
   // friend
   USER_NOT_FOUND(404, "FRIEND001", "검색한 아이디는 존재하지 않습니다."),
