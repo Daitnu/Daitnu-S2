@@ -73,7 +73,7 @@ public class MailRelatedIntegrationTest {
 
     // - Category Assert
     assertEquals(category.getId(), foundCategory.getId());
-    assertEquals(1, mailCategoryService.findAll().size());
+    assertEquals(1, mailCategoryService.findAll(user).size());
     assertEquals(foundUser.getId(), foundCategory.getUser().getId());
     assertEquals(foundCategory.getId(), foundUser.getMailCategories().get(0).getId());
 

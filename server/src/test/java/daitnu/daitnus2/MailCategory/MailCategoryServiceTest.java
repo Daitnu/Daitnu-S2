@@ -40,7 +40,7 @@ public class MailCategoryServiceTest {
         mailCategoryService.makeDir(mailCategory);
 
         // then
-        List<MailCategory> mailCategories = mailCategoryService.findAll(user.getUserId());
+        List<MailCategory> mailCategories = mailCategoryService.findAll(user);
         MailCategory madeMailCategory = mailCategories.get(0);
         User one = userService.findOne(newUserId);
 
@@ -82,7 +82,7 @@ public class MailCategoryServiceTest {
         Long removedMailboxId = mailCategoryService.removeDir(mailCategory, user);
 
         // then
-        List<MailCategory> mailCategories = mailCategoryService.findAll();
+        List<MailCategory> mailCategories = mailCategoryService.findAll(user);
 
         assertEquals(mailCategory.getId(), removedMailboxId);
         assertEquals(0, mailCategories.size());
