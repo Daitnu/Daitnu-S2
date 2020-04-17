@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 public class MailCategoryDTO {
 
@@ -34,5 +35,16 @@ public class MailCategoryDTO {
   public static class Response {
     private Long id;
     private String name;
+  }
+
+  @Getter @Setter
+  public static class ResponseCategories {
+    private List<ResponseCategory> categories;
+  }
+
+  @Getter @Setter
+  public static class ResponseCategory {
+    Long id;
+    String name;
   }
 }
