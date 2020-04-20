@@ -4,6 +4,8 @@ import daitnu.daitnus2.database.entity.Mail;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.repository.MailCategoryRepository;
 import daitnu.daitnus2.database.repository.MailRepository;
+import daitnu.daitnus2.exception.BusinessException;
+import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.mail.category.exception.NotFoundCategory;
 import daitnu.daitnus2.mail.exception.NotFoundMail;
 import lombok.RequiredArgsConstructor;
@@ -89,6 +91,9 @@ public class MailService {
   }
 
   public List<Mail> findAll(Long userId) {
+    if (userId == null) {
+      throw new BusinessException(ErrorCode.UNAUTHORIZED);
+    }
     return mailRepository.findAllByOwnerId(userId);
   }
 
