@@ -6,7 +6,7 @@ import lombok.Setter;
 public class MailDTO {
 
   @Getter @Setter
-  public static class ResponseMails {
+  public static class ResponseMailsDTO {
     private Long mailId;
     private Long categoryId;
     private Long mailTemplateId;
@@ -16,5 +16,11 @@ public class MailDTO {
     private boolean isImportant;
     private boolean isRead;
     private boolean isRemoved;
+  }
+
+  @Getter @Setter
+  public static class MoveMailDTO {
+    private Long mailId;
+    private Long categoryId;
   }
 }
