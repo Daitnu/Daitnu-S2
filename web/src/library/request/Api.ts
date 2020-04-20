@@ -54,9 +54,11 @@ export class Api {
   }
 
   /**
-   * @type T - Response Type
-   * @type D - Request Type. default: undefined
-   * @param - { url: string, data: D | undefined }
+   * @method
+   * @template T Response Type
+   * @template D Request Type. default: undefined
+   * @param {RequestParam<D>} param - { url: string, data: D | undefined }: RequestParam<D>
+   * @returns {Promise<HTTPResponse<T> | BusinessErrorResponse>}
    */
   public async get<T, D = undefined>({
     url,
@@ -70,9 +72,11 @@ export class Api {
   }
 
   /**
-   * @type T - Response Type
-   * @type D - Request Type. default: undefined
-   * @param - { url: string, data: D | undefined }
+   * @method
+   * @template T Response Type
+   * @template D Request Type. default: undefined
+   * @param {RequestParam<D>} param - { url: string, data: D | undefined }: RequestParam<D>
+   * @returns {Promise<HTTPResponse<T> | BusinessErrorResponse>}
    */
   public async post<T, D = undefined>({
     url,
@@ -82,9 +86,11 @@ export class Api {
   }
 
   /**
-   * @type T - Response Type
-   * @type D - Request Type. default: undefined
-   * @param - { url: string, data: D | undefined }
+   * @method
+   * @template T Response Type
+   * @template D Request Type. default: undefined
+   * @param {RequestParam<D>} param - { url: string, data: D | undefined }: RequestParam<D>
+   * @returns {Promise<HTTPResponse<T> | BusinessErrorResponse>}
    */
   public async patch<T, D = undefined>({
     url,
@@ -94,9 +100,11 @@ export class Api {
   }
 
   /**
-   * @type T - Response Type
-   * @type D - Request Type. default: undefined
-   * @param - { url: string, data: D | undefined }
+   * @method
+   * @template T Response Type
+   * @template D Request Type. default: undefined
+   * @param {RequestParam<D>} param - { url: string, data: D | undefined }: RequestParam<D>
+   * @returns {Promise<HTTPResponse<T> | BusinessErrorResponse>}
    */
   public async delete<T, D = undefined>({
     url,
