@@ -5,6 +5,7 @@ import daitnu.daitnus2.database.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class MailController {
     return new ResponseEntity<>(modelMapper.map(mails, MailDTO.ResponseMailsDTO[].class), HttpStatus.OK);
   }
 
-  @PatchMapping
+  @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> moveMails(@RequestBody @Valid MailDTO.MoveMailDTO dto, HttpServletRequest req) {
     User user = (User) req.getSession().getAttribute("user");
     mailService.updateCategory(dto.getMailId(), user.getId(), dto.getCategoryId());
