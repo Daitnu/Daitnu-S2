@@ -6,11 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,6 +24,14 @@ public class MailController {
   public ResponseEntity<?> getMails(HttpServletRequest req) {
     User user = (User) req.getSession().getAttribute("user");
     List<Mail> mails = mailService.findAll(user.getId()); // TODO: pagination
-    return new ResponseEntity<>(modelMapper.map(mails, MailDTO.ResponseMails[].class), HttpStatus.OK);
+    return new ResponseEntity<>(modelMapper.map(mails, MailDTO.ResponseMailsDTO[].class), HttpStatus.OK);
+  }
+
+  @PatchMapping
+  public ResponseEntity<?> moveMails(@RequestBody @Valid MailDTO.MoveMailDTO dto, HttpServletRequest req) {
+    User user = (User) req.getSession().getAttribute("user");
+    mailService.updateCategory(dto.getMailId(), user.getId(), dto.getCategoryId());
+    Mail mail = mailService.findOne(dto.getMailId());
+    return new ResponseEntity<>(modelMapper.map(mail, MailDTO.MoveMailDTO.class), HttpStatus.OK);
   }
 }
