@@ -6,6 +6,7 @@ import daitnu.daitnus2.database.repository.MailCategoryRepository;
 import daitnu.daitnus2.database.repository.MailRepository;
 import daitnu.daitnus2.exception.BusinessException;
 import daitnu.daitnus2.exception.ErrorCode;
+import daitnu.daitnus2.mail.category.MailCategoryService;
 import daitnu.daitnus2.mail.category.exception.NotFoundCategory;
 import daitnu.daitnus2.mail.exception.NotFoundMail;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MailService {
 
+  private final MailCategoryService mailCategoryService;
   private final MailRepository mailRepository;
   private final MailCategoryRepository mailCategoryRepository;
 
@@ -61,23 +63,21 @@ public class MailService {
 
   // 메일함(Category) 수정(== 메일 이동)
   @Transactional
-  public void updateCategory(Long mailId, Long userId, MailCategory mailCategory) {
-    validateCategory(userId, mailCategory.getId(), mailId);
-    Mail one = mailRepository.getOne(mailId);
-    one.updateCategory(mailCategory);
+  public void updateCategory(Long mailId, Long userId, Long mailCategoryId) {
+    if (userId == null) {
+      throw new BusinessException(ErrorCode.UNAUTHORIZED);
+    }
+    validateCategory(userId, mailCategoryId, mailId);
+    Mail mail = mailRepository.getOne(mailId);
+    MailCategory mailCategory = mailCategoryService.findOne(mailCategoryId);
+    mail.updateCategory(mailCategory);
   }
 
   private void validateCategory(Long userId, Long mailCategoryId, Long mailId) {
     Optional<MailCategory> mailCategory = mailCategoryRepository.findById(mailCategoryId);
-    if (!mailCategory.isPresent()) {
+    if (!mailCategory.isPresent()) { // 이동하기를 원하는 메일함이 없다면
       throw new NotFoundCategory();
     }
-
-    List<MailCategory> categories = mailCategoryRepository.findAllByIdAndUserId(userId, mailCategoryId);
-    if (categories.isEmpty()) {
-      throw new NotFoundCategory();
-    }
-
     validateMailOwner(mailId, userId);
   }
 
