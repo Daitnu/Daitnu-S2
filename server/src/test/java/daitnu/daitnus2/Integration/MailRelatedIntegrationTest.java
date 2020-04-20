@@ -8,8 +8,6 @@ import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.mail.category.MailCategoryService;
 import daitnu.daitnus2.database.entity.MailTemplate;
 import daitnu.daitnus2.mail.template.MailTemplateService;
-import daitnu.daitnus2.database.entity.MailReceiver;
-import daitnu.daitnus2.mail.template.receiver.MailReceiverService;
 import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.user.UserService;
 import org.junit.Test;
@@ -32,7 +30,6 @@ public class MailRelatedIntegrationTest {
   @Autowired MailService mailService;
   @Autowired MailCategoryService mailCategoryService;
   @Autowired MailTemplateService mailTemplateService;
-  @Autowired MailReceiverService mailReceiverService;
   @Autowired MailAttachmentService mailAttachmentService;
 
   @Test
@@ -40,8 +37,7 @@ public class MailRelatedIntegrationTest {
     // given
     User user = new User("kimsoso", "1234", "kss", "kimsoso@gaver.com");
     MailCategory category = new MailCategory("category1", user);
-    MailTemplate mailTemplate = new MailTemplate("kimgogo@daitnu2.com", "mail title1", "mail subject1");
-    MailReceiver mailReceiver = new MailReceiver(mailTemplate, "kimsoso@daitnu2.com");
+    MailTemplate mailTemplate = new MailTemplate("kimgogo@daitnu2.com", "kimsoso@daitnu2.com", "mail title1", "mail subject1");
     MailAttachment mailAttachment =
       new MailAttachment(mailTemplate, "png", "image1.png", "https://www.naver.com", 10L);
     Mail mail = new Mail(category, user, mailTemplate);
@@ -50,7 +46,6 @@ public class MailRelatedIntegrationTest {
     // when
     user.addMailCategory(category);
     mailTemplate.addMail(mail);
-    mailTemplate.addReceiver(mailReceiver);
     mailTemplate.addAttachment(mailAttachment);
 
     userService.register(user);
@@ -61,7 +56,6 @@ public class MailRelatedIntegrationTest {
     // then
     User foundUser = userService.findOne(user.getId());
     MailCategory foundCategory = mailCategoryService.findOne(category.getId());
-    MailReceiver foundReceiver = mailReceiverService.findOne(mailReceiver.getId());
     MailAttachment foundAttachment = mailAttachmentService.findOne(mailAttachment.getId());
     MailTemplate foundTemplate = mailTemplateService.findOne(mailTemplate.getId());
     Mail foundMail = mailService.findOne(mail.getId());
@@ -77,22 +71,15 @@ public class MailRelatedIntegrationTest {
     assertEquals(foundUser.getId(), foundCategory.getUser().getId());
     assertEquals(foundCategory.getId(), foundUser.getMailCategories().get(0).getId());
 
-    // - Mail Receiver
-    assertEquals(mailReceiver.getId(), foundReceiver.getId());
-    assertEquals(1, mailReceiverService.findAll().size());
-    assertEquals(foundTemplate.getId(), foundReceiver.getMailTemplate().getId());
-    assertEquals(foundReceiver.getId(), foundTemplate.getMailReceivers().get(0).getId());
-
     // - Mail Attachment
     assertEquals(mailAttachment.getId(), foundAttachment.getId());
-    assertEquals(1, foundAttachment.getMailTemplate().getMailReceivers().size());
     assertEquals(foundAttachment.getId(), foundTemplate.getMailAttachments().get(0).getId());
 
     // - Mail Template
     assertEquals(mailTemplate.getId(), foundTemplate.getId());
     assertEquals(1, mailTemplateService.findAll().size());
-    assertEquals(1, foundTemplate.getMailReceivers().size());
     assertEquals(1, foundTemplate.getMailAttachments().size());
+    assertEquals("kimsoso@daitnu2.com", mailTemplate.getMailReceivers());
 
     // - Mail
     assertEquals(mail.getId(), foundMail.getId());
