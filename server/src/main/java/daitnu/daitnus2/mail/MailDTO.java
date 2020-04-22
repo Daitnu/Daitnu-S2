@@ -1,5 +1,6 @@
 package daitnu.daitnus2.mail;
 
+import daitnu.daitnus2.validation.annotation.Enum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,8 +24,8 @@ public class MailDTO {
 
   @Getter @Setter
   public static class MoveMailDTO {
-    @Enumerated(value = EnumType.STRING)
-    private PatchType type;
+    @Enum(enumClass = PatchType.class)
+    private String type;
 
     // MOVE 일 경우 아래의 변수들이 넘어와야 함
     private Long mailId;
