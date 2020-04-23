@@ -1,5 +1,6 @@
 package daitnu.daitnus2.accounts;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -52,6 +53,13 @@ public class AccountsDTO {
     private String subEmail;
   }
 
+  @Getter @Setter
+  @AllArgsConstructor
+  public static class SessionUserDTO {
+    private Long id;
+    private String userId;
+    private String subEmail;
+  }
 
   @Setter
   @Getter
