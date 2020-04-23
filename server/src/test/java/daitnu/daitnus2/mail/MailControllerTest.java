@@ -29,7 +29,7 @@ public class MailControllerTest {
   @Autowired ObjectMapper objectMapper;
 
   @Test
-  public void 메일_정보_수정_실패_테스트() throws Exception { // TODO: 왜 Invalid Input Value로 message가 뜨는가?
+  public void 메일_정보_수정_실패_테스트() throws Exception {
     // given
     MailDTO.MoveMailDTO dto = new MailDTO.MoveMailDTO();
     dto.setType("LOTTOT");
@@ -44,7 +44,7 @@ public class MailControllerTest {
     // then
     result
       .andExpect(status().isBadRequest())
-      .andExpect(jsonPath("message").value("Invalid Type Value"))
+      .andExpect(jsonPath("message").value("Invalid Input Value"))
       .andExpect(jsonPath("status").value(400))
       .andExpect(jsonPath("errors[0].field").value("type"))
     ;

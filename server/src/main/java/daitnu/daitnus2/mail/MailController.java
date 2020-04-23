@@ -36,7 +36,7 @@ public class MailController {
                                      HttpServletRequest req,
                                      BindingResult result) {
     if (result.hasErrors()) {
-      ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_TYPE_VALUE);
+      ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
       return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     User user = (User) req.getSession().getAttribute("user");
