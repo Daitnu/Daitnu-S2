@@ -2,9 +2,9 @@ package daitnu.daitnus2.mail.category;
 
 import daitnu.daitnus2.accounts.AccountsDTO;
 import daitnu.daitnus2.database.entity.MailCategory;
-import daitnu.daitnus2.exception.BusinessException;
 import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.exception.ErrorResponse;
+import daitnu.daitnus2.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -25,19 +24,11 @@ public class MailCategoryController {
   private final MailCategoryService mailCategoryService;
   private final ModelMapper modelMapper;
 
-  public AccountsDTO.SessionUserDTO getSessionUser(HttpSession session) {
-    AccountsDTO.SessionUserDTO user = (AccountsDTO.SessionUserDTO) session.getAttribute("user");
-    if (user == null) {
-      throw new BusinessException(ErrorCode.UNAUTHORIZED);
-    }
-    return user;
-  }
-
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> make(@RequestBody @Valid MailCategoryDTO.MakeDTO dto,
                                 HttpServletRequest req,
                                 BindingResult result) {
-    AccountsDTO.SessionUserDTO user = getSessionUser(req.getSession());
+    AccountsDTO.SessionUserDTO user = ControllerUtil.getSessionUser(req.getSession());
 
     if (result.hasErrors()) {
       ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
@@ -52,7 +43,7 @@ public class MailCategoryController {
   public ResponseEntity<?> rename(@RequestBody @Valid MailCategoryDTO.RenameDTO dto,
                                   HttpServletRequest req,
                                   BindingResult result) {
-    AccountsDTO.SessionUserDTO user = getSessionUser(req.getSession());
+    AccountsDTO.SessionUserDTO user = ControllerUtil.getSessionUser(req.getSession());
 
     if (result.hasErrors()) {
       ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
@@ -68,7 +59,7 @@ public class MailCategoryController {
   public ResponseEntity<?> deleteCategory(@RequestBody @Valid MailCategoryDTO.DeleteDTO dto,
                                           HttpServletRequest req,
                                           BindingResult result) {
-    AccountsDTO.SessionUserDTO user = getSessionUser(req.getSession());
+    AccountsDTO.SessionUserDTO user = ControllerUtil.getSessionUser(req.getSession());
 
     if (result.hasErrors()) {
       ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
@@ -81,7 +72,7 @@ public class MailCategoryController {
 
   @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> getCategories(HttpServletRequest req) {
-    AccountsDTO.SessionUserDTO user = getSessionUser(req.getSession());
+    AccountsDTO.SessionUserDTO user = ControllerUtil.getSessionUser(req.getSession());
     List<MailCategory> userCategories = mailCategoryService.findAll(user.getId());
     return new ResponseEntity<>(modelMapper.map(userCategories, MailCategoryDTO.Response[].class), HttpStatus.OK);
   }
