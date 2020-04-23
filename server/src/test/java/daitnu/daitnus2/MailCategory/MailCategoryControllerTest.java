@@ -487,4 +487,33 @@ public class MailCategoryControllerTest {
       .andExpect(jsonPath("status").value(404))
     ;
   }
+
+  @Test
+  public void 메일함_삭제_실패_테스트_로그인_하지_않았을_때() throws Exception {
+    // given
+    String categoryName = "123456";
+
+    AccountsDTO.RegisterDTO registerDTO1 = new AccountsDTO.RegisterDTO();
+    registerDTO1.setId(userId); registerDTO1.setPassword(pw); registerDTO1.setPasswordCheck(pw);
+    registerDTO1.setName(name); registerDTO1.setSubEmail(subEmail);
+    MailCategoryDTO.DeleteDTO deleteDTO = new MailCategoryDTO.DeleteDTO();
+
+    // when
+    User user1 = accountsService.register(registerDTO1);
+    MailCategory mailCategory = mailCategoryService.makeDir(categoryName, user1.getId());
+    deleteDTO.setName(categoryName);
+    deleteDTO.setId(mailCategory.getId());
+
+    ResultActions result = mockMvc.perform(delete("/mail/category")
+      .content(objectMapper.writeValueAsString(deleteDTO))
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print());
+
+    // then
+    result
+      .andExpect(status().isUnauthorized())
+      .andExpect(jsonPath("status").value(401))
+    ;
+  }
 }
