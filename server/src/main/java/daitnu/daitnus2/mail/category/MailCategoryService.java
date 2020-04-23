@@ -1,5 +1,6 @@
 package daitnu.daitnus2.mail.category;
 
+import daitnu.daitnus2.accounts.AccountsService;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.database.repository.MailCategoryRepository;
@@ -20,10 +21,13 @@ import java.util.Optional;
 public class MailCategoryService {
 
     private final MailCategoryRepository mailCategoryRepository;
+    private final AccountsService accountsService;
 
     // 메일 폴더 만들기
     @Transactional
-    public MailCategory makeDir(MailCategory mailCategory) {
+    public MailCategory makeDir(String name, Long userId) {
+        User foundUser = accountsService.findOne(userId);
+        MailCategory mailCategory = new MailCategory(name, foundUser);
         validateMakeDir(mailCategory);
         mailCategory.getUser().addMailCategory(mailCategory);
         mailCategoryRepository.save(mailCategory);
@@ -31,10 +35,6 @@ public class MailCategoryService {
     }
 
     private void validateMakeDir(MailCategory mailCategory) {
-        if (mailCategory.getUser() == null) {
-            throw new BusinessException(ErrorCode.UNAUTHORIZED);
-        }
-
         List<MailCategory> mailCategories = mailCategoryRepository.
                 findAllByUserUserIdAndName(mailCategory.getUser().getUserId(), mailCategory.getName());
         if (!mailCategories.isEmpty()) {

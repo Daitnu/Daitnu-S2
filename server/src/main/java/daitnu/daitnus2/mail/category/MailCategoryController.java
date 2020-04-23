@@ -1,7 +1,9 @@
 package daitnu.daitnus2.mail.category;
 
+import daitnu.daitnus2.accounts.AccountsDTO;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.entity.User;
+import daitnu.daitnus2.exception.BusinessException;
 import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.exception.ErrorResponse;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +29,18 @@ public class MailCategoryController {
   public ResponseEntity<?> make(@RequestBody @Valid MailCategoryDTO.MakeDTO dto,
                                 HttpServletRequest req,
                                 BindingResult result) {
+
+    AccountsDTO.SessionUserDTO user = (AccountsDTO.SessionUserDTO) req.getSession().getAttribute("user");
+    if (user == null) {
+      throw new BusinessException(ErrorCode.UNAUTHORIZED);
+    }
+
     if (result.hasErrors()) {
       ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
       return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    User user = (User) req.getSession().getAttribute("user");
-    MailCategory mailCategory = new MailCategory(dto.getName(), user);
-    mailCategoryService.makeDir(mailCategory);
+    MailCategory mailCategory = mailCategoryService.makeDir(dto.getName(), user.getId());
     return new ResponseEntity<>(modelMapper.map(mailCategory, MailCategoryDTO.Response.class), HttpStatus.CREATED);
   }
 
