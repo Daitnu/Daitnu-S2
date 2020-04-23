@@ -1,11 +1,8 @@
 package daitnu.daitnus2.mail;
 
-import daitnu.daitnus2.validation.annotation.Enum;
+import daitnu.daitnus2.util.annotation.Enum;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 public class MailDTO {
 

@@ -1,6 +1,6 @@
-package daitnu.daitnus2.validation.validator;
+package daitnu.daitnus2.util.annotation.validator;
 
-import daitnu.daitnus2.validation.annotation.Enum;
+import daitnu.daitnus2.util.annotation.Enum;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
