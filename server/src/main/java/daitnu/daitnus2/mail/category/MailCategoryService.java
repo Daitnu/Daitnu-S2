@@ -44,7 +44,9 @@ public class MailCategoryService {
 
     // 메일 폴더 삭제
     @Transactional
-    public Long removeDir(MailCategory mailCategory, User user) {
+    public Long removeDir(Long mailCategoryId, Long userId) {
+        User user = accountsService.findOne(userId);
+        MailCategory mailCategory = findOne(mailCategoryId);
         validateRemoveDir(mailCategory, user);
         mailCategoryRepository.delete(mailCategory);
         user.removeMailCategory(mailCategory);
@@ -52,10 +54,6 @@ public class MailCategoryService {
     }
 
     private void validateRemoveDir(MailCategory mailCategory, User user) {
-        if (mailCategory.getUser() == null || user == null) {
-            throw new BusinessException(ErrorCode.UNAUTHORIZED);
-        }
-
         List<MailCategory> mailCategories = mailCategoryRepository.
                 findAllByUserUserIdAndNameAndId(user.getUserId(), mailCategory.getName(), mailCategory.getId());
         if (mailCategories.isEmpty()) {
@@ -75,9 +73,8 @@ public class MailCategoryService {
 
     private void validateRenameDir(Long mailCategoryId, String oldName, String newName, User user) {
         MailCategory mailCategory = findOne(mailCategoryId);
-        if (mailCategory.getName().equals(oldName)
-            || mailCategory.getUser().getUserId().equals(user.getUserId())
-            || mailCategory.getUser().getId().equals(user.getId())) {
+        if (!mailCategory.getUser().getId().equals(user.getId())
+            || !mailCategory.getName().equals(oldName)) {
             throw new NotFoundCategory();
         }
 
