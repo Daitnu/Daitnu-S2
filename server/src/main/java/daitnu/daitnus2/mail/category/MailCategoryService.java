@@ -44,19 +44,19 @@ public class MailCategoryService {
 
     // 메일 폴더 삭제
     @Transactional
-    public MailCategory removeDir(Long mailCategoryId, Long userId) {
+    public MailCategory removeDir(Long mailCategoryId, String name, Long userId) {
         User user = accountsService.findOne(userId);
         MailCategory mailCategory = findOne(mailCategoryId);
-        validateRemoveDir(mailCategory, user);
+        validateRemoveDir(mailCategory, user, name);
         mailCategoryRepository.delete(mailCategory);
         user.removeMailCategory(mailCategory);
         return mailCategory;
     }
 
-    private void validateRemoveDir(MailCategory mailCategory, User user) {
+    private void validateRemoveDir(MailCategory mailCategory, User user, String name) {
         List<MailCategory> mailCategories = mailCategoryRepository.
                 findAllByUserUserIdAndNameAndId(user.getUserId(), mailCategory.getName(), mailCategory.getId());
-        if (mailCategories.isEmpty()) {
+        if (mailCategories.isEmpty() || !mailCategory.getName().equals(name)) {
             throw new NotFoundCategory();
         }
     }

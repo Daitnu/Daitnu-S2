@@ -75,7 +75,7 @@ public class MailCategoryController {
       return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    MailCategory removedCategory = mailCategoryService.removeDir(dto.getId(), user.getId());
+    MailCategory removedCategory = mailCategoryService.removeDir(dto.getId(), dto.getName(), user.getId());
     return new ResponseEntity<>(modelMapper.map(removedCategory, MailCategoryDTO.DeleteDTO.class), HttpStatus.OK);
   }
 

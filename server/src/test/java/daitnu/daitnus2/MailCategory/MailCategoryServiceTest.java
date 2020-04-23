@@ -81,7 +81,7 @@ public class MailCategoryServiceTest {
         // when
         User user = accountsService.register(registerDTO);
         MailCategory mailCategory = mailCategoryService.makeDir(mailboxName, user.getId());
-        Long removedMailboxId = mailCategoryService.removeDir(mailCategory.getId(), user.getId()).getId();
+        Long removedMailboxId = mailCategoryService.removeDir(mailCategory.getId(), mailboxName, user.getId()).getId();
 
         // then
         List<MailCategory> mailCategories = mailCategoryService.findAll(user.getId());
@@ -106,7 +106,7 @@ public class MailCategoryServiceTest {
         User user1 = accountsService.register(registerDTO1);
         User user2 = accountsService.register(registerDTO2);
         MailCategory mailCategory1 = mailCategoryService.makeDir(mailboxName, user1.getId());
-        mailCategoryService.removeDir(mailCategory1.getId(), user2.getId());
+        mailCategoryService.removeDir(mailCategory1.getId(), mailboxName, user2.getId());
 
         // then
         fail("타인의 메일함 삭제는 불가합니다");
