@@ -1,9 +1,11 @@
 package daitnu.daitnus2.mail;
 
+import daitnu.daitnus2.accounts.AccountsDTO;
 import daitnu.daitnus2.database.entity.Mail;
 import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.exception.ErrorResponse;
+import daitnu.daitnus2.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -26,8 +28,8 @@ public class MailController {
 
   @GetMapping
   public ResponseEntity<?> getMails(HttpServletRequest req) {
-    User user = (User) req.getSession().getAttribute("user");
-    List<Mail> mails = mailService.findAll(user.getId()); // TODO: pagination
+    AccountsDTO.SessionUserDTO sessionUser = ControllerUtil.getSessionUser(req.getSession());
+    List<Mail> mails = mailService.findAll(sessionUser.getId()); // TODO: pagination
     return new ResponseEntity<>(modelMapper.map(mails, MailDTO.ResponseMailsDTO[].class), HttpStatus.OK);
   }
 
@@ -35,12 +37,12 @@ public class MailController {
   public ResponseEntity<?> patchMail(@RequestBody @Valid MailDTO.MoveMailDTO dto,
                                      HttpServletRequest req,
                                      BindingResult result) {
+    AccountsDTO.SessionUserDTO sessionUser = ControllerUtil.getSessionUser(req.getSession());
     if (result.hasErrors()) {
       ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
       return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
-    User user = (User) req.getSession().getAttribute("user");
-    mailService.patchMail(dto, user.getId());
+    mailService.patchMail(dto, sessionUser.getId());
     Mail mail = mailService.findOne(dto.getMailId());
     return new ResponseEntity<>(modelMapper.map(mail, MailDTO.MoveMailDTO.class), HttpStatus.OK);
   }
