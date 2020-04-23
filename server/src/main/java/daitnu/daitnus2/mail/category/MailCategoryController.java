@@ -64,6 +64,21 @@ public class MailCategoryController {
     return new ResponseEntity<>(modelMapper.map(renamedDir, MailCategoryDTO.Response.class), HttpStatus.OK);
   }
 
+  @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> deleteCategory(@RequestBody @Valid MailCategoryDTO.DeleteDTO dto,
+                                          HttpServletRequest req,
+                                          BindingResult result) {
+    AccountsDTO.SessionUserDTO user = getSessionUser(req.getSession());
+
+    if (result.hasErrors()) {
+      ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
+      return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    MailCategory removedCategory = mailCategoryService.removeDir(dto.getId(), user.getId());
+    return new ResponseEntity<>(modelMapper.map(removedCategory, MailCategoryDTO.DeleteDTO.class), HttpStatus.OK);
+  }
+
   @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> getCategories(HttpServletRequest req) {
     AccountsDTO.SessionUserDTO user = getSessionUser(req.getSession());

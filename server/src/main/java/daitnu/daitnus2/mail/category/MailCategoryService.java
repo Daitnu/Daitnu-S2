@@ -44,13 +44,13 @@ public class MailCategoryService {
 
     // 메일 폴더 삭제
     @Transactional
-    public Long removeDir(Long mailCategoryId, Long userId) {
+    public MailCategory removeDir(Long mailCategoryId, Long userId) {
         User user = accountsService.findOne(userId);
         MailCategory mailCategory = findOne(mailCategoryId);
         validateRemoveDir(mailCategory, user);
         mailCategoryRepository.delete(mailCategory);
         user.removeMailCategory(mailCategory);
-        return mailCategory.getId();
+        return mailCategory;
     }
 
     private void validateRemoveDir(MailCategory mailCategory, User user) {

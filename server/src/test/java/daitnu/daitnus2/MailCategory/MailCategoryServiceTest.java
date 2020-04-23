@@ -81,7 +81,7 @@ public class MailCategoryServiceTest {
         // when
         User user = accountsService.register(registerDTO);
         MailCategory mailCategory = mailCategoryService.makeDir(mailboxName, user.getId());
-        Long removedMailboxId = mailCategoryService.removeDir(mailCategory.getId(), user.getId());
+        Long removedMailboxId = mailCategoryService.removeDir(mailCategory.getId(), user.getId()).getId();
 
         // then
         List<MailCategory> mailCategories = mailCategoryService.findAll(user.getId());
