@@ -5,10 +5,9 @@ import daitnu.daitnus2.exception.BusinessException;
 import daitnu.daitnus2.exception.ErrorCode;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.NotNull;
 
 public class ControllerUtil {
-  public static AccountsDTO.SessionUserDTO getSessionUser(@NotNull HttpSession session) {
+  public static AccountsDTO.SessionUserDTO getSessionUser(HttpSession session) {
     AccountsDTO.SessionUserDTO user = (AccountsDTO.SessionUserDTO) session.getAttribute("user");
     if (user == null) {
       throw new BusinessException(ErrorCode.UNAUTHORIZED);
