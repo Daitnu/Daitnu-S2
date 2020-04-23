@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -23,7 +24,9 @@ public class AccountsController {
   private final ModelMapper modelMapper;
 
   @PostMapping(path = "/login", consumes = "application/json", produces = "application/json")
-  public ResponseEntity<?> login(@RequestBody @Valid AccountsDTO.LoginDTO dto, BindingResult result) {
+  public ResponseEntity<?> login(@RequestBody @Valid AccountsDTO.LoginDTO dto,
+                                 HttpServletRequest request,
+                                 BindingResult result) {
 
     if (result.hasErrors()) {
       ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, result);
@@ -31,6 +34,11 @@ public class AccountsController {
     }
 
     User user = service.login(dto);
+    AccountsDTO.SessionUserDTO sessionUserInfo =
+      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    final int SESSION_TIMEOUT = 30 * 60;
+    request.getSession().setAttribute("user", sessionUserInfo);
+    request.getSession().setMaxInactiveInterval(SESSION_TIMEOUT);
     return new ResponseEntity<>(modelMapper.map(user, AccountsDTO.ResponseLogin.class), HttpStatus.OK);
   }
 
