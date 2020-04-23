@@ -65,23 +65,19 @@ public class MailCategoryService {
 
     // 메일함 이름 수정
     @Transactional
-    public MailCategory renameDir(Long mailCategoryId, String oldName, String newName, User user) {
+    public MailCategory renameDir(Long mailCategoryId, String oldName, String newName, Long userId) {
+        User user = accountsService.findOne(userId);
         validateRenameDir(mailCategoryId, oldName, newName, user);
-        MailCategory category = mailCategoryRepository.findById(mailCategoryId).get();
+        MailCategory category = findOne(mailCategoryId);
         category.updateName(newName);
         return category;
     }
 
     private void validateRenameDir(Long mailCategoryId, String oldName, String newName, User user) {
-        if (user == null) {
-            throw new BusinessException(ErrorCode.UNAUTHORIZED);
-        }
-
-        Optional<MailCategory> foundWithId = mailCategoryRepository.findById(mailCategoryId);
-        if (!foundWithId.isPresent()
-            || !foundWithId.get().getName().equals(oldName)
-            || !foundWithId.get().getUser().getUserId().equals(user.getUserId())
-            || !foundWithId.get().getUser().getId().equals(user.getId())) {
+        MailCategory mailCategory = findOne(mailCategoryId);
+        if (mailCategory.getName().equals(oldName)
+            || mailCategory.getUser().getUserId().equals(user.getUserId())
+            || mailCategory.getUser().getId().equals(user.getId())) {
             throw new NotFoundCategory();
         }
 
@@ -93,13 +89,14 @@ public class MailCategoryService {
     }
 
     public MailCategory findOne(Long id) {
-      return mailCategoryRepository.getOne(id);
+      Optional<MailCategory> mailCategory = mailCategoryRepository.findById(id);
+      if (mailCategory.isPresent()) {
+        return mailCategory.get();
+      }
+      throw new NotFoundCategory();
     }
 
-    public List<MailCategory> findAll(User user) {
-        if (user == null) {
-            throw new BusinessException(ErrorCode.UNAUTHORIZED);
-        }
-        return mailCategoryRepository.findAllByUserId(user.getId());
+    public List<MailCategory> findAll(Long userId) {
+        return mailCategoryRepository.findAllByUserId(userId);
     }
 }
