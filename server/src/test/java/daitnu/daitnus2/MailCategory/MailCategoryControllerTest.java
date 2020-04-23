@@ -417,4 +417,34 @@ public class MailCategoryControllerTest {
       .andExpect(jsonPath("code").value("AUTH004"))
     ;
   }
+
+  @Test
+  public void 메일함_삭제_성공_테스트() throws Exception {
+    // given
+    MockHttpSession mockHttpSession = new MockHttpSession();
+    AccountsDTO.RegisterDTO registerDTO = new AccountsDTO.RegisterDTO();
+    registerDTO.setId(userId); registerDTO.setPassword(pw); registerDTO.setPasswordCheck(pw);
+    registerDTO.setName(name); registerDTO.setSubEmail(subEmail);
+    MailCategoryDTO.DeleteDTO deleteDTO = new MailCategoryDTO.DeleteDTO();
+
+    // when
+    User user = accountsService.register(registerDTO);
+    MailCategory mailCategory = mailCategoryService.makeDir("메일함이름1", user.getId());
+    deleteDTO.setId(mailCategory.getId());
+    deleteDTO.setName(mailCategory.getName());
+    AccountsDTO.SessionUserDTO sessionUserDTO =
+      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    mockHttpSession.setAttribute("user", sessionUserDTO);
+    ResultActions result = mockMvc.perform(delete("/mail/category")
+      .session(mockHttpSession)
+      .content(objectMapper.writeValueAsString(deleteDTO))
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print());
+
+    // then
+    result.andExpect(status().isOk());
+    List<MailCategory> categories = mailCategoryService.findAll(user.getId());
+    assertEquals(0, categories.size());
+  }
 }
