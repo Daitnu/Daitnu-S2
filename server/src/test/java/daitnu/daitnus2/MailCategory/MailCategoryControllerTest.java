@@ -447,4 +447,44 @@ public class MailCategoryControllerTest {
     List<MailCategory> categories = mailCategoryService.findAll(user.getId());
     assertEquals(0, categories.size());
   }
+
+  @Test
+  public void 메일함_삭제_실패_테스트_다른_유저의_메일함_삭제_불가() throws Exception {
+    // given
+    String categoryName = "123456";
+
+    AccountsDTO.RegisterDTO registerDTO1 = new AccountsDTO.RegisterDTO();
+    registerDTO1.setId(userId); registerDTO1.setPassword(pw); registerDTO1.setPasswordCheck(pw);
+    registerDTO1.setName(name); registerDTO1.setSubEmail(subEmail);
+
+    AccountsDTO.RegisterDTO registerDTO2 = new AccountsDTO.RegisterDTO();
+    registerDTO2.setId(userId2); registerDTO2.setPassword(pw); registerDTO2.setPasswordCheck(pw);
+    registerDTO2.setName(name); registerDTO2.setSubEmail(subEmail2);
+    MockHttpSession mockHttpSession = new MockHttpSession();
+    MailCategoryDTO.DeleteDTO deleteDTO = new MailCategoryDTO.DeleteDTO();
+
+    // when
+    User user1 = accountsService.register(registerDTO1);
+    User user2 = accountsService.register(registerDTO2);
+    MailCategory mailCategory = mailCategoryService.makeDir(categoryName, user1.getId());
+    deleteDTO.setName(categoryName);
+    deleteDTO.setId(mailCategory.getId());
+
+    AccountsDTO.SessionUserDTO sessionUserDTO =
+      new AccountsDTO.SessionUserDTO(user2.getId(), user2.getUserId(), user2.getSubEmail());
+    mockHttpSession.setAttribute("user", sessionUserDTO);
+    ResultActions result = mockMvc.perform(delete("/mail/category")
+      .session(mockHttpSession)
+      .content(objectMapper.writeValueAsString(deleteDTO))
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print());
+
+    // then
+    result
+      .andExpect(status().isNotFound())
+      .andExpect(jsonPath("message").value("존재하지 않는 메일함입니다."))
+      .andExpect(jsonPath("status").value(404))
+    ;
+  }
 }
