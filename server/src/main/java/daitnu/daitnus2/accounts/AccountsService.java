@@ -5,10 +5,14 @@ import daitnu.daitnus2.accounts.exception.DuplicateSubEmail;
 import daitnu.daitnus2.accounts.exception.InvalidLoginInput;
 import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.database.repository.UserRepository;
+import daitnu.daitnus2.exception.BusinessException;
+import daitnu.daitnus2.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -55,5 +59,13 @@ public class AccountsService {
     User userInstance = new User(userId, userPw, userName, userSubEmail);
     User newUser = userRepository.save(userInstance);
     return newUser;
+  }
+
+  public User findOne(Long id) {
+    Optional<User> user = userRepository.findById(id);
+    if (user.isPresent()) {
+      return user.get();
+    }
+    throw new BusinessException(ErrorCode.UNAUTHORIZED);
   }
 }
