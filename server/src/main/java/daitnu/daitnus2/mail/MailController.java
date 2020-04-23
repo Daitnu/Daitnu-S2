@@ -40,7 +40,7 @@ public class MailController {
       return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     User user = (User) req.getSession().getAttribute("user");
-    mailService.updateCategory(dto.getMailId(), user.getId(), dto.getCategoryId());
+    mailService.patchMail(dto, user.getId());
     Mail mail = mailService.findOne(dto.getMailId());
     return new ResponseEntity<>(modelMapper.map(mail, MailDTO.MoveMailDTO.class), HttpStatus.OK);
   }

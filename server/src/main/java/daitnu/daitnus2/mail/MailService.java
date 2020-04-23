@@ -81,6 +81,15 @@ public class MailService {
     validateMailOwner(mailId, userId);
   }
 
+  @Transactional
+  public void patchMail(MailDTO.MoveMailDTO dto, Long userId) {
+    if (dto.getType().equalsIgnoreCase(MailDTO.PatchType.MOVE.toString())) {
+      updateCategory(dto.getMailId(), userId, dto.getCategoryId());
+    } else if (dto.getType().equalsIgnoreCase(MailDTO.PatchType.ALTER.toString())) {
+      updateProperties(dto.getMailId(), userId, dto.isImportant(), dto.isRead(), dto.isRemoved());
+    }
+  }
+
   // 메일 find
   public Mail findOne(Long id) {
     return mailRepository.getOne(id);
