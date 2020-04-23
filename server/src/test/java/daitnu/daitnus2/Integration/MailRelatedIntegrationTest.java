@@ -1,5 +1,7 @@
 package daitnu.daitnus2.Integration;
 
+import daitnu.daitnus2.accounts.AccountsDTO;
+import daitnu.daitnus2.accounts.AccountsService;
 import daitnu.daitnus2.database.entity.Mail;
 import daitnu.daitnus2.mail.MailService;
 import daitnu.daitnus2.database.entity.MailAttachment;
@@ -9,7 +11,6 @@ import daitnu.daitnus2.mail.category.MailCategoryService;
 import daitnu.daitnus2.database.entity.MailTemplate;
 import daitnu.daitnus2.mail.template.MailTemplateService;
 import daitnu.daitnus2.database.entity.User;
-import daitnu.daitnus2.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ import static org.junit.Assert.*;
 @Transactional
 public class MailRelatedIntegrationTest {
 
-  @Autowired UserService userService;
+  @Autowired AccountsService accountsService;
   @Autowired MailService mailService;
   @Autowired MailCategoryService mailCategoryService;
   @Autowired MailTemplateService mailTemplateService;
@@ -35,26 +36,27 @@ public class MailRelatedIntegrationTest {
   @Test
   public void 메일_생성_통합테스트() {
     // given
-    User user = new User("kimsoso", "1234", "kss", "kimsoso@gaver.com");
-    MailCategory category = new MailCategory("category1", user);
-    MailTemplate mailTemplate = new MailTemplate("kimgogo@daitnu2.com", "kimsoso@daitnu2.com", "mail title1", "mail subject1");
+    AccountsDTO.RegisterDTO registerDTO = new AccountsDTO.RegisterDTO();
+    registerDTO.setId("kimsoso"); registerDTO.setPassword("12345"); registerDTO.setPasswordCheck("12345");
+    registerDTO.setName("kss"); registerDTO.setSubEmail("kimsoso@gaver.com");
+    MailTemplate mailTemplate =
+      new MailTemplate("kimgogo@daitnu2.com", "kimsoso@daitnu2.com", "mail title1", "mail subject1");
     MailAttachment mailAttachment =
       new MailAttachment(mailTemplate, "png", "image1.png", "https://www.naver.com", 10L);
-    Mail mail = new Mail(category, user, mailTemplate);
 
 
     // when
-    user.addMailCategory(category);
+    User user = accountsService.register(registerDTO);
+    MailCategory category = mailCategoryService.makeDir("category1", user.getId());
+    Mail mail = new Mail(category, user, mailTemplate);
     mailTemplate.addMail(mail);
     mailTemplate.addAttachment(mailAttachment);
-
-    userService.register(user);
     mailTemplateService.makeMailTemplate(mailTemplate);
     mailService.makeMail(mail);
 
 
     // then
-    User foundUser = userService.findOne(user.getId());
+    User foundUser = accountsService.findOne(user.getId());
     MailCategory foundCategory = mailCategoryService.findOne(category.getId());
     MailAttachment foundAttachment = mailAttachmentService.findOne(mailAttachment.getId());
     MailTemplate foundTemplate = mailTemplateService.findOne(mailTemplate.getId());
@@ -62,12 +64,11 @@ public class MailRelatedIntegrationTest {
 
     // - User Assert
     assertEquals(user.getId(), foundUser.getId());
-    assertEquals(1, userService.findAll().size());
     assertEquals(1, user.getMailCategories().size());
 
     // - Category Assert
     assertEquals(category.getId(), foundCategory.getId());
-    assertEquals(1, mailCategoryService.findAll(user).size());
+    assertEquals(1, mailCategoryService.findAll(user.getId()).size());
     assertEquals(foundUser.getId(), foundCategory.getUser().getId());
     assertEquals(foundCategory.getId(), foundUser.getMailCategories().get(0).getId());
 
