@@ -499,8 +499,8 @@ public class MailCategoryControllerTest {
     MailCategoryDTO.DeleteDTO deleteDTO = new MailCategoryDTO.DeleteDTO();
 
     // when
-    User user1 = accountsService.register(registerDTO1);
-    MailCategory mailCategory = mailCategoryService.makeDir(categoryName, user1.getId());
+    User user = accountsService.register(registerDTO1);
+    MailCategory mailCategory = mailCategoryService.makeDir(categoryName, user.getId());
     deleteDTO.setName(categoryName);
     deleteDTO.setId(mailCategory.getId());
 
@@ -514,6 +514,41 @@ public class MailCategoryControllerTest {
     result
       .andExpect(status().isUnauthorized())
       .andExpect(jsonPath("status").value(401))
+    ;
+  }
+
+  @Test
+  public void 메일함_삭제_실패_테스트_없는_메일함_삭제() throws Exception {
+    // given
+    String categoryName = "123456";
+
+    AccountsDTO.RegisterDTO registerDTO1 = new AccountsDTO.RegisterDTO();
+    registerDTO1.setId(userId); registerDTO1.setPassword(pw); registerDTO1.setPasswordCheck(pw);
+    registerDTO1.setName(name); registerDTO1.setSubEmail(subEmail);
+    MockHttpSession mockHttpSession = new MockHttpSession();
+    MailCategoryDTO.DeleteDTO deleteDTO = new MailCategoryDTO.DeleteDTO();
+
+    // when
+    User user = accountsService.register(registerDTO1);
+    MailCategory mailCategory = mailCategoryService.makeDir(categoryName, user.getId());
+    deleteDTO.setName("없는메일함임킼");
+    deleteDTO.setId(mailCategory.getId());
+
+    AccountsDTO.SessionUserDTO sessionUserDTO =
+      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    mockHttpSession.setAttribute("user", sessionUserDTO);
+
+    ResultActions result = mockMvc.perform(delete("/mail/category")
+      .session(mockHttpSession)
+      .content(objectMapper.writeValueAsString(deleteDTO))
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print());
+
+    // then
+    result
+      .andExpect(status().isNotFound())
+      .andExpect(jsonPath("status").value(404))
     ;
   }
 }
