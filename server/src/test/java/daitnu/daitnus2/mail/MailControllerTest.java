@@ -133,4 +133,26 @@ public class MailControllerTest {
       .andExpect(jsonPath("errors[0].field").value("type"))
     ;
   }
+
+  @Test
+  public void 메일_정보_수정_실패_테스트_로그인_하지_않음() throws Exception {
+    // given
+    MailDTO.PatchMailDTO dto = new MailDTO.PatchMailDTO();
+    dto.setType(MailDTO.PatchType.MOVE.toString());
+    dto.setCategoryId(mailCategoryId2);
+    dto.setMailId(mailId);
+
+    // when
+    ResultActions result = mockMvc.perform(patch("/mail")
+      .content(objectMapper.writeValueAsString(dto))
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print());
+
+    // then
+    result
+      .andExpect(status().isUnauthorized())
+      .andExpect(jsonPath("code").value("AUTH004"))
+    ;
+  }
 }
