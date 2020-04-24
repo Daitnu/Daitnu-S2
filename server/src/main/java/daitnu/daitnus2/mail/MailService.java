@@ -95,9 +95,13 @@ public class MailService {
     }
   }
 
-  // 메일 find
+  // 메일 find one
   public Mail findOne(Long id) {
-    return mailRepository.getOne(id);
+    Optional<Mail> mail = mailRepository.findById(id);
+    if (mail.isPresent()) {
+      return mail.get();
+    }
+    throw new NotFoundMail();
   }
 
   public List<Mail> findAll() {
