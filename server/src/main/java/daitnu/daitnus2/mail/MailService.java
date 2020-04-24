@@ -1,14 +1,16 @@
 package daitnu.daitnus2.mail;
 
+import daitnu.daitnus2.accounts.AccountsService;
 import daitnu.daitnus2.database.entity.Mail;
 import daitnu.daitnus2.database.entity.MailCategory;
-import daitnu.daitnus2.database.repository.MailCategoryRepository;
+import daitnu.daitnus2.database.entity.MailTemplate;
+import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.database.repository.MailRepository;
 import daitnu.daitnus2.exception.BusinessException;
 import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.mail.category.MailCategoryService;
-import daitnu.daitnus2.mail.category.exception.NotFoundCategory;
 import daitnu.daitnus2.mail.exception.NotFoundMail;
+import daitnu.daitnus2.mail.template.MailTemplateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,15 +24,21 @@ import java.util.Optional;
 public class MailService {
 
   private final MailCategoryService mailCategoryService;
+  private final MailTemplateService mailTemplateService;
+  private final AccountsService accountsService;
   private final MailRepository mailRepository;
-  private final MailCategoryRepository mailCategoryRepository;
 
   // 메일 생성
   @Transactional
-  public Long makeMail(Mail mail) {
+  public Mail makeMail(Long categoryId, Long userId, Long mailTemplateId) {
+    MailCategory mailCategory = mailCategoryService.findOne(categoryId);
+    User user = accountsService.findOne(userId);
+    MailTemplate mailTemplate = mailTemplateService.findOne(mailTemplateId);
+
+    Mail mail = new Mail(mailCategory, user, mailTemplate);
     mail.getMailTemplate().addMail(mail);
     mailRepository.save(mail);
-    return mail.getId();
+    return mail;
   }
 
   // 메일 삭제
@@ -74,10 +82,7 @@ public class MailService {
   }
 
   private void validateCategory(Long userId, Long mailCategoryId, Long mailId) {
-    Optional<MailCategory> mailCategory = mailCategoryRepository.findById(mailCategoryId);
-    if (!mailCategory.isPresent()) { // 이동하기를 원하는 메일함이 없다면
-      throw new NotFoundCategory();
-    }
+    mailCategoryService.findOne(mailCategoryId);
     validateMailOwner(mailId, userId);
   }
 
