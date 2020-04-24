@@ -2,11 +2,13 @@ package daitnu.daitnus2.mail.attachment;
 
 import daitnu.daitnus2.database.entity.MailAttachment;
 import daitnu.daitnus2.database.repository.MailAttachmentRepository;
+import daitnu.daitnus2.mail.template.exception.NotFoundMailTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -28,7 +30,11 @@ public class MailAttachmentService {
   }
 
   public MailAttachment findOne(Long id) {
-    return mailAttachmentRepository.getOne(id);
+    Optional<MailAttachment> mailAttachment = mailAttachmentRepository.findById(id);
+    if (mailAttachment.isPresent()) {
+      return mailAttachment.get();
+    }
+    throw new NotFoundMailTemplate();
   }
 
   public List<MailAttachment> findAll() {

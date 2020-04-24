@@ -44,6 +44,9 @@ public enum ErrorCode {
   // MailTemplate
   MAIL_TEMPLATE_NOT_FOUND(404, "MAIL_TEMPLATE001", "에러 코드와 함께 관리자에게 문의해주세요."),
 
+  // MailAttachment
+  MAIL_ATTACHMENT_NOT_FOUNT(404, "MAIL_ATTACHMENT001", "에러 코드와 함께 관리자에게 문의해주세요."),
+
   // Mypage
   PASSWORD_DID_NOT_MATCH(400, "MYPAGE001" , "비밀번호가 일치하지 않습니다.")
   ;
