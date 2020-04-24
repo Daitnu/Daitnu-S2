@@ -34,25 +34,24 @@ public class MailRelatedIntegrationTest {
   @Autowired MailAttachmentService mailAttachmentService;
 
   @Test
-  public void 메일_생성_통합테스트() {
+  public void 메일_생성_통합_테스트() {
     // given
     AccountsDTO.RegisterDTO registerDTO = new AccountsDTO.RegisterDTO();
     registerDTO.setId("kimsoso"); registerDTO.setPassword("12345"); registerDTO.setPasswordCheck("12345");
     registerDTO.setName("kss"); registerDTO.setSubEmail("kimsoso@gaver.com");
-    MailTemplate mailTemplate =
-      new MailTemplate("kimgogo@daitnu2.com", "kimsoso@daitnu2.com", "mail title1", "mail subject1");
-    MailAttachment mailAttachment =
-      new MailAttachment(mailTemplate, "png", "image1.png", "https://www.naver.com", 10L);
 
 
     // when
     User user = accountsService.register(registerDTO);
     MailCategory category = mailCategoryService.makeDir("category1", user.getId());
-    Mail mail = new Mail(category, user, mailTemplate);
+    MailTemplate mailTemplate =
+      mailTemplateService
+        .makeMailTemplate("kimgogo@daitnu2.com", "kimsoso@daitnu2.com", "mail title1", "mail subject1");
+    MailAttachment mailAttachment =
+      mailAttachmentService.makeMailAttachment(mailTemplate, "png", "image1.png", "https://www.naver.com", 10L);
+    Mail mail = mailService.makeMail(category.getId(), user.getId(), mailTemplate.getId());
     mailTemplate.addMail(mail);
     mailTemplate.addAttachment(mailAttachment);
-    mailTemplateService.makeMailTemplate(mailTemplate);
-    mailService.makeMail(mail);
 
 
     // then
