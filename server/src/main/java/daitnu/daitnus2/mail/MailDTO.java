@@ -36,25 +36,11 @@ public class MailDTO {
     private boolean isRemoved;
   }
 
-  public static class ResponsePatchMove {
-    @NotNull
+  public static class ResponsePatchDTO {
     private Long mailId;
-
-    @NotNull
     private Long categoryId;
-  }
-
-  public static class ResponsePatchAlter {
-    @NotNull
-    private Long mailId;
-
-    @NotNull
     private boolean isImportant;
-
-    @NotNull
     private boolean isRead;
-
-    @NotNull
     private boolean isRemoved;
   }
 
