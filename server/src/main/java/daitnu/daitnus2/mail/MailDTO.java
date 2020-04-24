@@ -7,7 +7,7 @@ import lombok.Setter;
 public class MailDTO {
 
   @Getter @Setter
-  public static class ResponseMailsDTO {
+  public static class ResponseMailDTO {
     private Long mailId;
     private Long categoryId;
     private Long mailTemplateId;
@@ -20,7 +20,7 @@ public class MailDTO {
   }
 
   @Getter @Setter
-  public static class MoveMailDTO {
+  public static class PatchMailDTO {
     @Enum(enumClass = PatchType.class)
     private String type;
 

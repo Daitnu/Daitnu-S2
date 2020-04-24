@@ -87,7 +87,7 @@ public class MailService {
   }
 
   @Transactional
-  public void patchMail(MailDTO.MoveMailDTO dto, Long userId) {
+  public void patchMail(MailDTO.PatchMailDTO dto, Long userId) {
     if (dto.getType().equalsIgnoreCase(MailDTO.PatchType.MOVE.toString())) {
       updateCategory(dto.getMailId(), userId, dto.getCategoryId());
     } else if (dto.getType().equalsIgnoreCase(MailDTO.PatchType.ALTER.toString())) {

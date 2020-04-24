@@ -2,7 +2,6 @@ package daitnu.daitnus2.mail;
 
 import daitnu.daitnus2.accounts.AccountsDTO;
 import daitnu.daitnus2.database.entity.Mail;
-import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.exception.ErrorResponse;
 import daitnu.daitnus2.util.ControllerUtil;
@@ -30,11 +29,11 @@ public class MailController {
   public ResponseEntity<?> getMails(HttpServletRequest req) {
     AccountsDTO.SessionUserDTO sessionUser = ControllerUtil.getSessionUser(req.getSession());
     List<Mail> mails = mailService.findAll(sessionUser.getId()); // TODO: pagination
-    return new ResponseEntity<>(modelMapper.map(mails, MailDTO.ResponseMailsDTO[].class), HttpStatus.OK);
+    return new ResponseEntity<>(modelMapper.map(mails, MailDTO.ResponseMailDTO[].class), HttpStatus.OK);
   }
 
   @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> patchMail(@RequestBody @Valid MailDTO.MoveMailDTO dto,
+  public ResponseEntity<?> patchMail(@RequestBody @Valid MailDTO.PatchMailDTO dto,
                                      HttpServletRequest req,
                                      BindingResult result) {
     AccountsDTO.SessionUserDTO sessionUser = ControllerUtil.getSessionUser(req.getSession());
@@ -44,6 +43,6 @@ public class MailController {
     }
     mailService.patchMail(dto, sessionUser.getId());
     Mail mail = mailService.findOne(dto.getMailId());
-    return new ResponseEntity<>(modelMapper.map(mail, MailDTO.MoveMailDTO.class), HttpStatus.OK);
+    return new ResponseEntity<>(modelMapper.map(mail, MailDTO.PatchMailDTO.class), HttpStatus.OK);
   }
 }

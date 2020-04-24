@@ -81,12 +81,12 @@ public class MailControllerTest {
   @Test
   public void 메일_정보_수정_실패_테스트_타입_잘못_지정() throws Exception {
     // given
-    MailDTO.MoveMailDTO dto = new MailDTO.MoveMailDTO();
+    MailDTO.PatchMailDTO dto = new MailDTO.PatchMailDTO();
     dto.setType("LOTTOT");
 
     // when
     ResultActions result = mockMvc.perform(patch("/mail")
-      .content(objectMapper.writeValueAsString((dto)))
+      .content(objectMapper.writeValueAsString(dto))
       .contentType(MediaType.APPLICATION_JSON_VALUE)
       .accept(MediaType.APPLICATION_JSON_VALUE))
       .andDo(print());
