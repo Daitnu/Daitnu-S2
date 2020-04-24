@@ -41,6 +41,9 @@ public enum ErrorCode {
   DUPLICATED_MAIL_CATEGORY_NAME(400, "CATEGORY002", "같은 이름의 메일함이 이미 존재합니다."),
   CATEGORY_NOT_FOUND(404, "CATEGORY003", "존재하지 않는 메일함입니다."),
 
+  // MailTemplate
+  MAIL_TEMPLATE_NOT_FOUND(404, "MAIL_TEMPLATE001", "에러 코드와 함께 관리자에게 문의해주세요."),
+
   // Mypage
   PASSWORD_DID_NOT_MATCH(400, "MYPAGE001" , "비밀번호가 일치하지 않습니다.")
   ;
