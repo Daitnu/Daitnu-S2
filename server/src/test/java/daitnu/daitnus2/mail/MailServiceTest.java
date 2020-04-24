@@ -34,7 +34,7 @@ public class MailServiceTest {
   @Autowired MailAttachmentService mailAttachmentService;
 
   @Test
-  public void 메일_생성_통합_테스트() {
+  public void 메일_생성_서비스_테스트() {
     // given
     AccountsDTO.RegisterDTO registerDTO = new AccountsDTO.RegisterDTO();
     registerDTO.setId("kimsoso"); registerDTO.setPassword("12345"); registerDTO.setPasswordCheck("12345");
