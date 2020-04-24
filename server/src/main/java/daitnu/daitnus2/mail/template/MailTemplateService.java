@@ -2,11 +2,13 @@ package daitnu.daitnus2.mail.template;
 
 import daitnu.daitnus2.database.entity.MailTemplate;
 import daitnu.daitnus2.database.repository.MailTemplateRepository;
+import daitnu.daitnus2.mail.template.exception.NotFoundMailTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,7 +34,11 @@ public class MailTemplateService {
 
   // find one
   public MailTemplate findOne(Long id) {
-    return mailTemplateRepository.getOne(id);
+    Optional<MailTemplate> mailTemplate = mailTemplateRepository.findById(id);
+    if (mailTemplate.isPresent()) {
+      return mailTemplate.get();
+    }
+    throw new NotFoundMailTemplate();
   }
 
   // find all
