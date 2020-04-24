@@ -3,6 +3,7 @@ package daitnu.daitnus2.mail.attachment;
 import daitnu.daitnus2.database.entity.MailAttachment;
 import daitnu.daitnus2.database.entity.MailTemplate;
 import daitnu.daitnus2.database.repository.MailAttachmentRepository;
+import daitnu.daitnus2.mail.template.MailTemplateService;
 import daitnu.daitnus2.mail.template.exception.NotFoundMailTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MailAttachmentService {
 
+  private final MailTemplateService mailTemplateService;
   private final MailAttachmentRepository mailAttachmentRepository;
 
   @Transactional
-  public MailAttachment makeMailAttachment(MailTemplate mailTemplate, String type, String name, String url, Long size) {
+  public MailAttachment makeMailAttachment(Long mailTemplateId, String type, String name, String url, Long size) {
+    MailTemplate mailTemplate = mailTemplateService.findOne(mailTemplateId);
     MailAttachment mailAttachment = new MailAttachment(mailTemplate, type, name, url, size);
     mailAttachmentRepository.save(mailAttachment);
     return mailAttachment;
