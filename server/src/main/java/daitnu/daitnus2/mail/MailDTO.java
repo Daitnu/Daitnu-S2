@@ -16,9 +16,9 @@ public class MailDTO {
     private String mailTemplateFrom;
     private String mailTemplateTitle;
     private String mailTemplateReceivers;
-    private boolean isImportant;
-    private boolean isRead;
-    private boolean isRemoved;
+    private boolean important;
+    private boolean read;
+    private boolean removed;
   }
 
   @Getter @Setter
@@ -31,18 +31,18 @@ public class MailDTO {
     private Long categoryId;
 
     // ALTER 일 경우 아래의 변수들이 넘어와야 함
-    private boolean isImportant;
-    private boolean isRead;
-    private boolean isRemoved;
+    private boolean important;
+    private boolean read;
+    private boolean removed;
   }
 
   @Getter @Setter
   public static class ResponsePatchDTO {
     private Long id; // mail id
     private Long categoryId;
-    private boolean isImportant;
-    private boolean isRead;
-    private boolean isRemoved;
+    private boolean important;
+    private boolean read;
+    private boolean removed;
   }
 
   public enum PatchType {
