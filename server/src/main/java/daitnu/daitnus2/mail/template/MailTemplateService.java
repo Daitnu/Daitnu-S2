@@ -17,7 +17,8 @@ public class MailTemplateService {
 
   // 메일 템플릿 추가
   @Transactional
-  public Long makeMailTemplate(MailTemplate mailTemplate) {
+  public Long makeMailTemplate(String from, String mailReceivers, String title, String subject) {
+    MailTemplate mailTemplate = new MailTemplate(from, mailReceivers, title, subject);
     mailTemplateRepository.save(mailTemplate);
     return mailTemplate.getId();
   }
