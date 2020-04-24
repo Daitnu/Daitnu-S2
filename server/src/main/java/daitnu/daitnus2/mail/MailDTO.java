@@ -4,6 +4,8 @@ import daitnu.daitnus2.util.annotation.Enum;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+
 public class MailDTO {
 
   @Getter @Setter
@@ -31,6 +33,28 @@ public class MailDTO {
     // ALTER 일 경우 아래의 변수들이 넘어와야 함
     private boolean isImportant;
     private boolean isRead;
+    private boolean isRemoved;
+  }
+
+  public static class ResponsePatchMove {
+    @NotNull
+    private Long mailId;
+
+    @NotNull
+    private Long categoryId;
+  }
+
+  public static class ResponsePatchAlter {
+    @NotNull
+    private Long mailId;
+
+    @NotNull
+    private boolean isImportant;
+
+    @NotNull
+    private boolean isRead;
+
+    @NotNull
     private boolean isRemoved;
   }
 
