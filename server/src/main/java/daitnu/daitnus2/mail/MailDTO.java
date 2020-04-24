@@ -36,8 +36,9 @@ public class MailDTO {
     private boolean isRemoved;
   }
 
+  @Getter @Setter
   public static class ResponsePatchDTO {
-    private Long mailId;
+    private Long id; // mail id
     private Long categoryId;
     private boolean isImportant;
     private boolean isRead;

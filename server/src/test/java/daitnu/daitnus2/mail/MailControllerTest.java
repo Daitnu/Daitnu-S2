@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -76,6 +78,38 @@ public class MailControllerTest {
       Mail mail = mailService.makeMail(mailCategoryId1, userId, mailTemplateId);
       mailId = mail.getId();
     }
+  }
+
+  @Test
+  @Rollback(value = false)
+  public void 메일_정보_수정_성공_테스트_메일함_이동() throws Exception {
+    // given
+    MailDTO.PatchMailDTO dto = new MailDTO.PatchMailDTO();
+    dto.setType(MailDTO.PatchType.MOVE.toString());
+    dto.setCategoryId(mailCategoryId2);
+    dto.setMailId(mailId);
+    MockHttpSession mockHttpSession = new MockHttpSession();
+
+    // when
+    AccountsDTO.SessionUserDTO sessionUserDTO =
+      new AccountsDTO.SessionUserDTO(userId, "ksss012", "ksss012@daitnu.com");
+    mockHttpSession.setAttribute("user", sessionUserDTO);
+    ResultActions result = mockMvc.perform(patch("/mail")
+      .session(mockHttpSession)
+      .content(objectMapper.writeValueAsString(dto))
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print());
+
+    // then
+    result
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("id").value(dto.getMailId()))
+      .andExpect(jsonPath("categoryId").value(dto.getCategoryId()))
+      .andExpect(jsonPath("important").value(false))
+      .andExpect(jsonPath("read").value(false))
+      .andExpect(jsonPath("removed").value(false))
+    ;
   }
 
   @Test

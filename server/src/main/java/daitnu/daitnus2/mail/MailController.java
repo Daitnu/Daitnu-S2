@@ -43,6 +43,6 @@ public class MailController {
     }
     mailService.patchMail(dto, sessionUser.getId());
     Mail mail = mailService.findOne(dto.getMailId());
-    return new ResponseEntity<>(modelMapper.map(mail, MailDTO.PatchMailDTO.class), HttpStatus.OK);
+    return new ResponseEntity<>(modelMapper.map(mail, MailDTO.ResponsePatchDTO.class), HttpStatus.OK);
   }
 }
