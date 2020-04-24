@@ -1,10 +1,10 @@
-package daitnu.daitnus2.Integration;
+package daitnu.daitnus2.Mail;
 
 import daitnu.daitnus2.accounts.AccountsDTO;
 import daitnu.daitnus2.accounts.AccountsService;
 import daitnu.daitnus2.database.entity.Mail;
-import daitnu.daitnus2.mail.MailService;
 import daitnu.daitnus2.database.entity.MailAttachment;
+import daitnu.daitnus2.mail.MailService;
 import daitnu.daitnus2.mail.attachment.MailAttachmentService;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.mail.category.MailCategoryService;
@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-public class MailRelatedIntegrationTest {
+public class MailServiceTest {
 
   @Autowired AccountsService accountsService;
   @Autowired MailService mailService;
@@ -44,11 +44,10 @@ public class MailRelatedIntegrationTest {
     // when
     User user = accountsService.register(registerDTO);
     MailCategory category = mailCategoryService.makeDir("category1", user.getId());
-    MailTemplate mailTemplate =
-      mailTemplateService
-        .makeMailTemplate("kimgogo@daitnu2.com", "kimsoso@daitnu2.com", "mail title1", "mail subject1");
-    MailAttachment mailAttachment =
-      mailAttachmentService.makeMailAttachment(mailTemplate, "png", "image1.png", "https://www.naver.com", 10L);
+    MailTemplate mailTemplate = mailTemplateService
+      .makeMailTemplate("kimgogo@daitnu2.com", "kimsoso@daitnu2.com", "mail title1", "mail subject1");
+    MailAttachment mailAttachment = mailAttachmentService
+      .makeMailAttachment(mailTemplate.getId(), "png", "image1.png", "https://www.naver.com", 10L);
     Mail mail = mailService.makeMail(category.getId(), user.getId(), mailTemplate.getId());
     mailTemplate.addMail(mail);
     mailTemplate.addAttachment(mailAttachment);
