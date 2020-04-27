@@ -4,8 +4,6 @@ import daitnu.daitnus2.util.annotation.Enum;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-
 public class MailDTO {
 
   @Getter @Setter
@@ -16,9 +14,9 @@ public class MailDTO {
     private String mailTemplateFrom;
     private String mailTemplateTitle;
     private String mailTemplateReceivers;
-    private boolean important;
-    private boolean read;
-    private boolean removed;
+    private Boolean important;
+    private Boolean read;
+    private Boolean removed;
   }
 
   @Getter @Setter
@@ -31,18 +29,18 @@ public class MailDTO {
     private Long categoryId;
 
     // ALTER 일 경우 아래의 변수들이 넘어와야 함
-    private boolean important;
-    private boolean read;
-    private boolean removed;
+    private Boolean important;
+    private Boolean read;
+    private Boolean removed;
   }
 
   @Getter @Setter
   public static class ResponsePatchDTO {
     private Long id; // mail id
     private Long categoryId;
-    private boolean important;
-    private boolean read;
-    private boolean removed;
+    private Boolean important;
+    private Boolean read;
+    private Boolean removed;
   }
 
   public enum PatchType {
