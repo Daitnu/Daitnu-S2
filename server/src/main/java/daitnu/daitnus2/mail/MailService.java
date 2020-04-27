@@ -97,7 +97,7 @@ public class MailService {
       if (dto.getMailId() == null || dto.getImportant() == null || dto.getRead() == null || dto.getRemoved() == null) {
         throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
       }
-      updateProperties(dto.getMailId(), userId, dto.getImportant(), dto.getRemoved(), dto.getRemoved());
+      updateProperties(dto.getMailId(), userId, dto.getImportant(), dto.getRead(), dto.getRemoved());
     }
   }
 

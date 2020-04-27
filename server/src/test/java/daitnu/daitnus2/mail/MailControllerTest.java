@@ -28,6 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import static org.junit.Assert.*;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
@@ -103,6 +105,43 @@ public class MailControllerTest {
       .andExpect(jsonPath("read").value(false))
       .andExpect(jsonPath("removed").value(false))
     ;
+  }
+
+  @Test
+  public void 메일_정보_수정_성공_테스트() throws Exception {
+    // given
+    MailDTO.PatchMailDTO dto = new MailDTO.PatchMailDTO();
+    dto.setType(MailDTO.PatchType.ALTER.toString());
+    dto.setMailId(mailId);
+    dto.setImportant(true);
+    dto.setRead(true);
+    dto.setRemoved(false);
+    MockHttpSession mockHttpSession = new MockHttpSession();
+
+    // when
+    AccountsDTO.SessionUserDTO sessionUserDTO =
+      new AccountsDTO.SessionUserDTO(userId, "ksss012", "ksss012@daitnu.com");
+    mockHttpSession.setAttribute("user", sessionUserDTO);
+    ResultActions result = mockMvc.perform(patch("/mail")
+      .session(mockHttpSession)
+      .content(objectMapper.writeValueAsString(dto))
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print());
+
+    // then
+    result
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("id").value(dto.getMailId()))
+      .andExpect(jsonPath("important").value(true))
+      .andExpect(jsonPath("read").value(true))
+      .andExpect(jsonPath("removed").value(false))
+    ;
+
+    Mail mail = mailService.findOne(mailId);
+    assertEquals(mail.isImportant(), true);
+    assertEquals(mail.isRead(), true);
+    assertEquals(mail.isRemoved(), false);
   }
 
   @Test
