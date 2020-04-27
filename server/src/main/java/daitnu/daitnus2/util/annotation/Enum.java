@@ -10,7 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Constraint(validatedBy = EnumValidator.class)
-@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME) // 이 annotation을 언제까지 유지시킬 것인가
 public @interface Enum {
   String message() default "Invalid value. Not supported type.";
