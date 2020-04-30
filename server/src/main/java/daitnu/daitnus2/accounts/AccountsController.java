@@ -22,6 +22,7 @@ public class AccountsController {
   private final AccountsService service;
   private final AccountsValidation accountsValidation;
   private final ModelMapper modelMapper;
+  private final int SESSION_TIMEOUT = 30 * 60;
 
   @PostMapping(path = "/login", consumes = "application/json", produces = "application/json")
   public ResponseEntity<?> login(@RequestBody @Valid AccountsDTO.LoginDTO dto,
@@ -34,9 +35,11 @@ public class AccountsController {
     }
 
     User user = service.login(dto);
-    AccountsDTO.SessionUserDTO sessionUserInfo =
-      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
-    final int SESSION_TIMEOUT = 30 * 60;
+    Long userUUID = user.getId();
+    String userId = user.getUserId();
+    String userSubEmail = user.getSubEmail();
+
+    AccountsDTO.SessionUserDTO sessionUserInfo = new AccountsDTO.SessionUserDTO(userUUID, userId, userSubEmail);
     request.getSession().setAttribute("user", sessionUserInfo);
     request.getSession().setMaxInactiveInterval(SESSION_TIMEOUT);
     return new ResponseEntity<>(modelMapper.map(user, AccountsDTO.ResponseLogin.class), HttpStatus.OK);
@@ -52,7 +55,7 @@ public class AccountsController {
     }
 
     User newUser = service.register(dto);
-    return new ResponseEntity<>(modelMapper.map(newUser,AccountsDTO.ResponseRegister.class), HttpStatus.CREATED);
+    return new ResponseEntity<>(modelMapper.map(newUser, AccountsDTO.ResponseRegister.class), HttpStatus.CREATED);
   }
 
   @GetMapping("/password")
