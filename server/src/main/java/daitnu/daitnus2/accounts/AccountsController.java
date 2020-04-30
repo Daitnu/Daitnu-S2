@@ -39,7 +39,7 @@ public class AccountsController {
     String userId = user.getUserId();
     String userSubEmail = user.getSubEmail();
 
-    AccountsDTO.SessionUserDTO sessionUserInfo = new AccountsDTO.SessionUserDTO(userUUID, userId, userSubEmail);
+    AccountsSession sessionUserInfo = new AccountsSession(userUUID, userId, userSubEmail);
     session.setAttribute("user", sessionUserInfo);
     session.setMaxInactiveInterval(SESSION_TIMEOUT);
     return new ResponseEntity<>(modelMapper.map(user, AccountsDTO.ResponseLogin.class), HttpStatus.OK);
