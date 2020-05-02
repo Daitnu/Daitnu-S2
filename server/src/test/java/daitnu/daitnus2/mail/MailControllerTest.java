@@ -1,14 +1,13 @@
-package daitnu.daitnus2.Mail;
+package daitnu.daitnus2.mail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import daitnu.daitnus2.accounts.AccountsDTO;
-import daitnu.daitnus2.accounts.AccountsService;
-import daitnu.daitnus2.database.entity.*;
-import daitnu.daitnus2.mail.MailDTO;
-import daitnu.daitnus2.mail.MailService;
 import daitnu.daitnus2.mail.attachment.MailAttachmentService;
 import daitnu.daitnus2.mail.category.MailCategoryService;
 import daitnu.daitnus2.mail.template.MailTemplateService;
+import daitnu.daitnus2.accounts.AccountsDTO;
+import daitnu.daitnus2.accounts.AccountsService;
+import daitnu.daitnus2.accounts.AccountsSession;
+import daitnu.daitnus2.database.entity.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,12 +22,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.junit.Assert.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,13 +34,20 @@ import static org.junit.Assert.*;
 @ActiveProfiles("test")
 @Transactional
 public class MailControllerTest {
-  @Autowired AccountsService accountsService;
-  @Autowired MailCategoryService mailCategoryService;
-  @Autowired MailTemplateService mailTemplateService;
-  @Autowired MailService mailService;
-  @Autowired MailAttachmentService mailAttachmentService;
-  @Autowired MockMvc mockMvc;
-  @Autowired ObjectMapper objectMapper;
+  @Autowired
+  AccountsService accountsService;
+  @Autowired
+  MailCategoryService mailCategoryService;
+  @Autowired
+  MailTemplateService mailTemplateService;
+  @Autowired
+  MailService mailService;
+  @Autowired
+  MailAttachmentService mailAttachmentService;
+  @Autowired
+  MockMvc mockMvc;
+  @Autowired
+  ObjectMapper objectMapper;
 
   private Long userId;
   private Long mailCategoryId1;
@@ -54,8 +59,11 @@ public class MailControllerTest {
   @Before
   public void init() {
     AccountsDTO.RegisterDTO registerDTO = new AccountsDTO.RegisterDTO();
-    registerDTO.setId("ksss012"); registerDTO.setPassword("pwpw123123");  registerDTO.setPasswordCheck("pwpw123123");
-    registerDTO.setName("ksss");  registerDTO.setSubEmail("ksss012@daitnu.com");
+    registerDTO.setId("ksss012");
+    registerDTO.setPassword("pwpw123123");
+    registerDTO.setPasswordCheck("pwpw123123");
+    registerDTO.setName("ksss");
+    registerDTO.setSubEmail("ksss012@daitnu.com");
     User user = accountsService.register(registerDTO);
     userId = user.getId();
 
@@ -86,8 +94,9 @@ public class MailControllerTest {
     MockHttpSession mockHttpSession = new MockHttpSession();
 
     // when
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(userId, "ksss012", "ksss012@daitnu.com");
+    AccountsSession sessionUserDTO =
+      new AccountsSession(userId, "ksss012", "ksss012@daitnu.com");
+
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(patch("/mail")
       .session(mockHttpSession)
@@ -119,8 +128,8 @@ public class MailControllerTest {
     MockHttpSession mockHttpSession = new MockHttpSession();
 
     // when
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(userId, "ksss012", "ksss012@daitnu.com");
+    AccountsSession sessionUserDTO =
+      new AccountsSession(userId, "ksss012", "ksss012@daitnu.com");
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(patch("/mail")
       .session(mockHttpSession)
@@ -149,10 +158,17 @@ public class MailControllerTest {
     // given
     MailDTO.PatchMailDTO dto = new MailDTO.PatchMailDTO();
     dto.setType("LOTTOT");
+    MockHttpSession mockHttpSession = new MockHttpSession();
+
+    // when
+    AccountsSession sessionUserDTO =
+      new AccountsSession(userId, "ksss012", "ksss012@daitnu.com");
+    mockHttpSession.setAttribute("user", sessionUserDTO);
 
     // when
     ResultActions result = mockMvc.perform(patch("/mail")
       .content(objectMapper.writeValueAsString(dto))
+      .session(mockHttpSession)
       .contentType(MediaType.APPLICATION_JSON_VALUE)
       .accept(MediaType.APPLICATION_JSON_VALUE))
       .andDo(print());
@@ -198,8 +214,8 @@ public class MailControllerTest {
     MockHttpSession mockHttpSession = new MockHttpSession();
 
     // when
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(userId, "ksss012", "ksss012@daitnu.com");
+    AccountsSession sessionUserDTO =
+      new AccountsSession(userId, "ksss012", "ksss012@daitnu.com");
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(patch("/mail")
       .session(mockHttpSession)
@@ -226,8 +242,8 @@ public class MailControllerTest {
     MockHttpSession mockHttpSession = new MockHttpSession();
 
     // when
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(userId, "ksss012", "ksss012@daitnu.com");
+    AccountsSession sessionUserDTO =
+      new AccountsSession(userId, "ksss012", "ksss012@daitnu.com");
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(patch("/mail")
       .session(mockHttpSession)
@@ -256,8 +272,8 @@ public class MailControllerTest {
     MockHttpSession mockHttpSession = new MockHttpSession();
 
     // when
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(userId, "ksss012", "ksss012@daitnu.com");
+    AccountsSession sessionUserDTO =
+      new AccountsSession(userId, "ksss012", "ksss012@daitnu.com");
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(patch("/mail")
       .session(mockHttpSession)
@@ -286,8 +302,8 @@ public class MailControllerTest {
     MockHttpSession mockHttpSession = new MockHttpSession();
 
     // when
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(userId, "ksss012", "ksss012@daitnu.com");
+    AccountsSession sessionUserDTO =
+      new AccountsSession(userId, "ksss012", "ksss012@daitnu.com");
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(patch("/mail")
       .session(mockHttpSession)

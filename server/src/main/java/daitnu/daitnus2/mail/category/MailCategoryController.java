@@ -1,11 +1,9 @@
 package daitnu.daitnus2.mail.category;
 
-import daitnu.daitnus2.accounts.AccountsDTO;
 import daitnu.daitnus2.accounts.AccountsSession;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.exception.ErrorResponse;
-import daitnu.daitnus2.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -14,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;

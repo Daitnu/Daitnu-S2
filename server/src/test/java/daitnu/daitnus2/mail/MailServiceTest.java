@@ -1,10 +1,9 @@
-package daitnu.daitnus2.Mail;
+package daitnu.daitnus2.mail;
 
 import daitnu.daitnus2.accounts.AccountsDTO;
 import daitnu.daitnus2.accounts.AccountsService;
 import daitnu.daitnus2.database.entity.Mail;
 import daitnu.daitnus2.database.entity.MailAttachment;
-import daitnu.daitnus2.mail.MailService;
 import daitnu.daitnus2.mail.attachment.MailAttachmentService;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.mail.category.MailCategoryService;

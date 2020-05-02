@@ -4,8 +4,6 @@ import daitnu.daitnus2.accounts.AccountsService;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.database.repository.MailCategoryRepository;
-import daitnu.daitnus2.exception.BusinessException;
-import daitnu.daitnus2.exception.ErrorCode;
 import daitnu.daitnus2.mail.category.exception.DuplicateCategoryName;
 import daitnu.daitnus2.mail.category.exception.NotFoundCategory;
 import lombok.RequiredArgsConstructor;
