@@ -1,5 +1,5 @@
 export interface ResponseRegister {
-  no: number;
+  id: number;
   email: string;
   name: string;
   subEmail: string;
