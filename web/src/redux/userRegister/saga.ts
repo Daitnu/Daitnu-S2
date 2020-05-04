@@ -4,7 +4,8 @@ import { REGISTER_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST } from './actions'
 
 function* register$(action) {
   try {
-    const payload = yield call(new UserApi().register, action.payload);
+    const api = new UserApi();
+    const payload = yield call(api.register.bind(api), action.payload);
     yield put({ type: REGISTER_SUCCESS, payload });
   } catch (err) {
     yield put({ type: REGISTER_FAILURE, payload: err });
