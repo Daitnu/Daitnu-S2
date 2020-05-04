@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import S from './styled';
 import Api from '~/library/request/Api';
+import { RootState } from '~/redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { registerRequest } from '~/redux/userRegister';
 
 interface ILoginState {
   userId: string;
@@ -23,13 +26,15 @@ interface RequestType {
 
 export const LoginForm: React.FC = () => {
   const [loginState, setLoginState] = useState<ILoginState>(loginInitState);
+  const state = useSelector((state: RootState) => state.userRegister);
+  const dispatch = useDispatch();
 
   const handleOnChange = (key: string) => ({ target: { value } }): void =>
     setLoginState({ ...loginState, [key]: value }); // noImplicitAny옵션을 설정 안하면 value에서 빨간줄
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    // TODO: 삭제
     const api = new Api();
     const response1 = await api.get<ResponseType>({
       url: '/mail/category',
@@ -41,6 +46,19 @@ export const LoginForm: React.FC = () => {
     });
     console.log(response2);
   };
+
+  // TODO: 삭제
+  useEffect(() => {
+    dispatch(
+      registerRequest({
+        id: 'idid123',
+        password: '12341234',
+        passwordCheck: '12341234',
+        name: 'namegg',
+        subEmail: 'idid123@daitnu.com',
+      }),
+    );
+  }, []);
 
   return (
     <S.InputForm>
