@@ -4,3 +4,7 @@ export interface ResponseRegister {
   name: string;
   subEmail: string;
 }
+
+export interface ResponseLogin {
+  id: string;
+}

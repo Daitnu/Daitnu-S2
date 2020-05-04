@@ -5,3 +5,8 @@ export interface RegisterParam {
   name: string;
   subEmail: string;
 }
+
+export interface LoginParam {
+  id: string;
+  password: string;
+}
