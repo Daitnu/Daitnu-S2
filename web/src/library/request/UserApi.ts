@@ -6,7 +6,7 @@ import { RequestParam } from '~/@types/request/common';
 import { RegisterParam, LoginParam } from '~/@types/request/user';
 import URL from './url';
 
-export class UserApi extends Api {
+export default class UserApi extends Api {
   constructor() {
     super();
   }
