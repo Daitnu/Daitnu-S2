@@ -39,7 +39,7 @@ const toQueryString = (obj): string =>
     .map(([k, v]) => `${k}=${v}`)
     .reduce((prev, cur) => `${prev}&${cur}`);
 
-export class Api {
+export default class Api {
   private api: AxiosInstance;
 
   constructor() {
