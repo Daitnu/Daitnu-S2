@@ -40,10 +40,10 @@ const toQueryString = (obj): string =>
     .reduce((prev, cur) => `${prev}&${cur}`);
 
 export default class Api {
-  private api: AxiosInstance;
+  private axiosInstance: AxiosInstance;
 
   constructor() {
-    this.api = axios.create({
+    this.axiosInstance = axios.create({
       baseURL: API_SERVER,
       headers: {
         'Content-Type': MEDIA_TYPE.JSON,
@@ -68,7 +68,7 @@ export default class Api {
       url += '?' + toQueryString(data);
       data = undefined;
     }
-    return getHttpResponse<T>({ fn: this.api.get, url, data });
+    return getHttpResponse<T>({ fn: this.axiosInstance.get, url, data });
   }
 
   /**
@@ -82,7 +82,7 @@ export default class Api {
     url,
     data,
   }: RequestParam<D>): Promise<HTTPResponse<T> | BusinessErrorResponse> {
-    return getHttpResponse<T>({ fn: this.api.post, url, data });
+    return getHttpResponse<T>({ fn: this.axiosInstance.post, url, data });
   }
 
   /**
@@ -96,7 +96,7 @@ export default class Api {
     url,
     data,
   }: RequestParam<D>): Promise<HTTPResponse<T> | BusinessErrorResponse> {
-    return getHttpResponse<T>({ fn: this.api.patch, url, data });
+    return getHttpResponse<T>({ fn: this.axiosInstance.patch, url, data });
   }
 
   /**
@@ -110,6 +110,6 @@ export default class Api {
     url,
     data,
   }: RequestParam<D>): Promise<HTTPResponse<T> | BusinessErrorResponse> {
-    return getHttpResponse<T>({ fn: this.api.delete, url, data });
+    return getHttpResponse<T>({ fn: this.axiosInstance.delete, url, data });
   }
 }
