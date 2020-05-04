@@ -3,6 +3,7 @@ package daitnu.daitnus2.MailCategory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import daitnu.daitnus2.accounts.AccountsDTO;
 import daitnu.daitnus2.accounts.AccountsService;
+import daitnu.daitnus2.accounts.AccountsSession;
 import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.mail.category.MailCategoryDTO;
@@ -58,8 +59,8 @@ public class MailCategoryControllerTest {
     // when
     newCategory.setName("메일함이름1");
     User user = accountsService.register(registerDTO);
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    AccountsSession sessionUserDTO =
+      new AccountsSession(user.getId(), user.getUserId(), user.getSubEmail());
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(post("/mail/category")
       .session(mockHttpSession)
@@ -87,8 +88,8 @@ public class MailCategoryControllerTest {
     // when
     newCategory.setName("ㅁㄴㅇㄹ");
     User user = accountsService.register(registerDTO);
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    AccountsSession sessionUserDTO =
+      new AccountsSession(user.getId(), user.getUserId(), user.getSubEmail());
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(post("/mail/category")
       .session(mockHttpSession)
@@ -118,8 +119,8 @@ public class MailCategoryControllerTest {
     // when
     newCategory.setName("012345678901234567890");
     User user = accountsService.register(registerDTO);
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    AccountsSession sessionUserDTO =
+      new AccountsSession(user.getId(), user.getUserId(), user.getSubEmail());
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(post("/mail/category")
       .session(mockHttpSession)
@@ -155,8 +156,8 @@ public class MailCategoryControllerTest {
     renameDTO.setOldName(oldName);
     renameDTO.setNewName(newName);
 
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    AccountsSession sessionUserDTO =
+      new AccountsSession(user.getId(), user.getUserId(), user.getSubEmail());
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(patch("/mail/category")
       .session(mockHttpSession)
@@ -191,8 +192,8 @@ public class MailCategoryControllerTest {
     renameDTO.setOldName(oldName);
     renameDTO.setNewName(newName);
 
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    AccountsSession sessionUserDTO =
+      new AccountsSession(user.getId(), user.getUserId(), user.getSubEmail());
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(patch("/mail/category")
       .session(mockHttpSession)
@@ -228,8 +229,8 @@ public class MailCategoryControllerTest {
     renameDTO.setOldName(oldName);
     renameDTO.setNewName(newName);
 
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    AccountsSession sessionUserDTO =
+      new AccountsSession(user.getId(), user.getUserId(), user.getSubEmail());
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(patch("/mail/category")
       .session(mockHttpSession)
@@ -265,8 +266,8 @@ public class MailCategoryControllerTest {
     renameDTO.setOldName(oldName);
     renameDTO.setNewName(newName);
 
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    AccountsSession sessionUserDTO =
+      new AccountsSession(user.getId(), user.getUserId(), user.getSubEmail());
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(patch("/mail/category")
       .session(mockHttpSession)
@@ -306,8 +307,8 @@ public class MailCategoryControllerTest {
     renameDTO.setOldName(oldName);
     renameDTO.setNewName(newName);
 
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(user2.getId(), user2.getUserId(), user2.getSubEmail());
+    AccountsSession sessionUserDTO =
+      new AccountsSession(user2.getId(), user2.getUserId(), user2.getSubEmail());
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(patch("/mail/category")
       .session(mockHttpSession)
@@ -343,8 +344,8 @@ public class MailCategoryControllerTest {
     renameDTO.setOldName(oldName + "7");
     renameDTO.setNewName(newName);
 
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    AccountsSession sessionUserDTO =
+      new AccountsSession(user.getId(), user.getUserId(), user.getSubEmail());
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(patch("/mail/category")
       .session(mockHttpSession)
@@ -375,8 +376,8 @@ public class MailCategoryControllerTest {
     User user = accountsService.register(registerDTO);
     mailCategoryService.makeDir(categoryName1, user.getId());
     mailCategoryService.makeDir(categoryName2, user.getId());
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    AccountsSession sessionUserDTO =
+      new AccountsSession(user.getId(), user.getUserId(), user.getSubEmail());
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(get("/mail/category")
       .session(mockHttpSession)
@@ -432,8 +433,8 @@ public class MailCategoryControllerTest {
     MailCategory mailCategory = mailCategoryService.makeDir("메일함이름1", user.getId());
     deleteDTO.setId(mailCategory.getId());
     deleteDTO.setName(mailCategory.getName());
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    AccountsSession sessionUserDTO =
+      new AccountsSession(user.getId(), user.getUserId(), user.getSubEmail());
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(delete("/mail/category")
       .session(mockHttpSession)
@@ -470,8 +471,8 @@ public class MailCategoryControllerTest {
     deleteDTO.setName(categoryName);
     deleteDTO.setId(mailCategory.getId());
 
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(user2.getId(), user2.getUserId(), user2.getSubEmail());
+    AccountsSession sessionUserDTO =
+      new AccountsSession(user2.getId(), user2.getUserId(), user2.getSubEmail());
     mockHttpSession.setAttribute("user", sessionUserDTO);
     ResultActions result = mockMvc.perform(delete("/mail/category")
       .session(mockHttpSession)
@@ -534,8 +535,8 @@ public class MailCategoryControllerTest {
     deleteDTO.setName("없는메일함임킼");
     deleteDTO.setId(mailCategory.getId());
 
-    AccountsDTO.SessionUserDTO sessionUserDTO =
-      new AccountsDTO.SessionUserDTO(user.getId(), user.getUserId(), user.getSubEmail());
+    AccountsSession sessionUserDTO =
+      new AccountsSession(user.getId(), user.getUserId(), user.getSubEmail());
     mockHttpSession.setAttribute("user", sessionUserDTO);
 
     ResultActions result = mockMvc.perform(delete("/mail/category")
