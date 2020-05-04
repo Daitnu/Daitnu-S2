@@ -23,6 +23,7 @@ module.exports = {
     'guard-for-in': 0,
     '@typescript-eslint/interface-name-prefix': 0,
     camelcase: 0,
+    '@typescript-eslint/explicit-function-return-type': 0,
     // '@typescript-eslint/no-inferrable-types': 0,
   },
   settings: {

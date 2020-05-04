@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import S from './styled';
-import { Api } from '~/library/request/Api';
+import Api from '~/library/request/Api';
 
 interface ILoginState {
   userId: string;
