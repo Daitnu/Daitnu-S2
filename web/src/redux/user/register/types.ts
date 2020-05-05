@@ -9,7 +9,7 @@ export interface UserRegisterApiState {
   error: null | Promise<BusinessErrorResponse>;
 }
 
-export type UserActionTypes =
+export type UserRegisterActionTypes =
   | ReturnType<typeof registerRequest>
   | ReturnType<typeof registerSuccess>
   | ReturnType<typeof registerFailure>;

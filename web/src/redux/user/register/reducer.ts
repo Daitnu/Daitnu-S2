@@ -1,11 +1,11 @@
 import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from './actions';
-import { UserRegisterApiState, UserActionTypes } from './types';
+import { UserRegisterApiState, UserRegisterActionTypes } from './types';
 
 const initialState: UserRegisterApiState = { loading: false, data: null, error: null };
 
 const userRegisterReducer = (
   state = initialState,
-  action: UserActionTypes,
+  action: UserRegisterActionTypes,
 ): UserRegisterApiState => {
   switch (action.type) {
     case REGISTER_REQUEST:
