@@ -26,11 +26,11 @@ const getHttpResponse = async <T>({
         code: null,
         errors: null,
       };
-      return errResponse;
+      throw errResponse;
     }
     const { status, message, code, errors } = err.response.data;
     errResponse = { status, message, code, errors };
-    return errResponse;
+    throw errResponse;
   }
 };
 
