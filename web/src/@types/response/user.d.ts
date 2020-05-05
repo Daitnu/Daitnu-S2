@@ -6,5 +6,6 @@ export interface ResponseRegister {
 }
 
 export interface ResponseLogin {
-  id: string;
+  userId: string;
+  name: string;
 }
