@@ -72,6 +72,7 @@ public class AccountsDTO {
   @Setter
   public static class ResponseRegister {
     private Long id;
+    private String userId;
     private String email;
     private String name;
     private String subEmail;
