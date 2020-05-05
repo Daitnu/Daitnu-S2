@@ -1,16 +1,8 @@
-import { call, put, all, takeLatest } from 'redux-saga/effects';
-import UserApi from '~/library/request/UserApi';
-import { REGISTER_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST } from './actions';
+import { all, takeLatest } from 'redux-saga/effects';
+import { REGISTER_REQUEST, REGISTER } from './actions';
+import { makeApiCallSagaFunc } from '~/redux/util';
 
-function* register$(action) {
-  try {
-    const api = new UserApi();
-    const payload = yield call(api.register.bind(api), action.payload);
-    yield put({ type: REGISTER_SUCCESS, payload });
-  } catch (err) {
-    yield put({ type: REGISTER_FAILURE, payload: err });
-  }
-}
+const register$ = makeApiCallSagaFunc(REGISTER);
 
 export function* userRegisterSaga() {
   yield all([takeLatest(REGISTER_REQUEST, register$)]);

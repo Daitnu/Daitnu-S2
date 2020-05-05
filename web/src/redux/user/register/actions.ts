@@ -3,6 +3,7 @@ import { HTTPResponse } from '~/@types/response/success';
 import { ResponseRegister } from '~/@types/response/user';
 import { BusinessErrorResponse } from '~/@types/response/error';
 
+export const REGISTER = 'REGISTER' as const;
 export const REGISTER_REQUEST = 'REGISTER_REQUEST' as const;
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS' as const;
 export const REGISTER_FAILURE = 'REGISTER_FAILURE' as const;
