@@ -3,7 +3,7 @@ import S from './styled';
 import Api from '~/library/request/Api';
 import { RootState } from '~/redux';
 import { useSelector, useDispatch } from 'react-redux';
-import { registerRequest } from '~/redux/userRegister';
+import { registerRequest } from '~/redux/user/register';
 
 interface ILoginState {
   userId: string;

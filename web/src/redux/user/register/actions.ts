@@ -21,8 +21,3 @@ export const registerFailure = (payload: Promise<BusinessErrorResponse>) => ({
   type: REGISTER_FAILURE,
   payload,
 });
-
-export type UserActions =
-  | ReturnType<typeof registerRequest>
-  | ReturnType<typeof registerSuccess>
-  | ReturnType<typeof registerFailure>;
