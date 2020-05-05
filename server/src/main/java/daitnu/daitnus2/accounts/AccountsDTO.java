@@ -64,7 +64,8 @@ public class AccountsDTO {
   @Setter
   @Getter
   public static class ResponseLogin {
-    private String id;
+    private String userId;
+    private String name;
   }
 
   @Getter
