@@ -1,12 +1,14 @@
-import { UserLoginApiState, UserLoginActionTypes } from './types';
 import { LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAILURE } from './actions';
+import { UserLoginActionTypes } from './types';
+import { ApiState } from '~/redux/util';
+import { ResponseLogin } from '~/@types/response/user';
 
-const initialState: UserLoginApiState = { loading: false, data: null, error: null };
+const initialState: ApiState<ResponseLogin> = { loading: false, data: null, error: null };
 
 const userLoginReducer = (
-  state: UserLoginApiState = initialState,
+  state: ApiState<ResponseLogin> = initialState,
   action: UserLoginActionTypes,
-) => {
+): ApiState<ResponseLogin> => {
   switch (action.type) {
     case LOGIN_REQUEST:
       return {

@@ -1,5 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import UserApi from '~/library/request/UserApi';
+import { HTTPResponse } from '~/@types/response/success';
+import { BusinessErrorResponse } from '~/@types/response/error';
 
 export const makeApiCallSagaFunc = (type: string) =>
   function* (action) {
@@ -12,3 +14,9 @@ export const makeApiCallSagaFunc = (type: string) =>
       yield put({ type: FAILURE, payload: err });
     }
   };
+
+export interface ApiState<T> {
+  loading: boolean;
+  data: null | Promise<HTTPResponse<T>>;
+  error: null | Promise<BusinessErrorResponse>;
+}

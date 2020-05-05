@@ -1,12 +1,14 @@
 import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from './actions';
-import { UserRegisterApiState, UserRegisterActionTypes } from './types';
+import { UserRegisterActionTypes } from './types';
+import { ApiState } from '~/redux/util';
+import { ResponseRegister } from '~/@types/response/user';
 
-const initialState: UserRegisterApiState = { loading: false, data: null, error: null };
+const initialState: ApiState<ResponseRegister> = { loading: false, data: null, error: null };
 
 const userRegisterReducer = (
-  state = initialState,
+  state: ApiState<ResponseRegister> = initialState,
   action: UserRegisterActionTypes,
-): UserRegisterApiState => {
+): ApiState<ResponseRegister> => {
   switch (action.type) {
     case REGISTER_REQUEST:
       return {
