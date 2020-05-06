@@ -1,14 +1,12 @@
 import { call, put } from 'redux-saga/effects';
-import UserApi from '~/library/request/UserApi';
 import { HTTPResponse } from '~/@types/response/success';
 import { BusinessErrorResponse } from '~/@types/response/error';
 
-export const makeApiCallSagaFunc = (type: string) =>
+export const makeApiCallSagaFunc = (type: string, apiFunc) =>
   function* (action) {
     const [SUCCESS, FAILURE] = [`${type}_SUCCESS`, `${type}_FAILURE`];
     try {
-      const api = new UserApi();
-      const payload = yield call(api.register.bind(api), action.payload);
+      const payload = yield call(apiFunc, action.payload);
       yield put({ type: SUCCESS, payload });
     } catch (err) {
       yield put({ type: FAILURE, payload: err });
