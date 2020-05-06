@@ -13,12 +13,12 @@ export const registerRequest = (payload: RegisterParam) => ({
   payload: { data: payload },
 });
 
-export const registerSuccess = (payload: Promise<HTTPResponse<ResponseRegister>>) => ({
+export const registerSuccess = (payload: HTTPResponse<ResponseRegister>) => ({
   type: REGISTER_SUCCESS,
   payload,
 });
 
-export const registerFailure = (payload: Promise<BusinessErrorResponse>) => ({
+export const registerFailure = (payload: BusinessErrorResponse) => ({
   type: REGISTER_FAILURE,
   payload,
 });

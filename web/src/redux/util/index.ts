@@ -15,8 +15,8 @@ export const makeApiCallSagaFunc = (type: string, apiFunc) =>
 
 export interface ApiState<T> {
   loading: boolean;
-  data: null | Promise<HTTPResponse<T>>;
-  error: null | Promise<BusinessErrorResponse>;
+  data: null | HTTPResponse<T>;
+  error: null | BusinessErrorResponse;
 }
 
 const initialState = { loading: false, data: null, error: null };
@@ -31,11 +31,11 @@ export const makeReducer = <T, R>(type: string) => {
   };
   type Success = {
     type: typeof SUCCESS;
-    payload: Promise<HTTPResponse<T>>;
+    payload: HTTPResponse<T>;
   };
   type Failure = {
     type: typeof FAILURE;
-    payload: Promise<BusinessErrorResponse>;
+    payload: BusinessErrorResponse;
   };
   type Action = Request | Success | Failure;
 

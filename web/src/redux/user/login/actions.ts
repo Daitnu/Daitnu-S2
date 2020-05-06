@@ -13,12 +13,12 @@ export const loginRequest = (payload: LoginParam) => ({
   payload: { data: payload },
 });
 
-export const loginSuccess = (payload: Promise<HTTPResponse<ResponseLogin>>) => ({
+export const loginSuccess = (payload: HTTPResponse<ResponseLogin>) => ({
   type: LOGIN_SUCCESS,
   payload,
 });
 
-export const loginFailure = (payload: Promise<BusinessErrorResponse>) => ({
+export const loginFailure = (payload: BusinessErrorResponse) => ({
   type: LOGIN_FAILURE,
   payload,
 });
