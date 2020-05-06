@@ -2,14 +2,21 @@ import { call, put } from 'redux-saga/effects';
 import { HTTPResponse } from '~/@types/response/success';
 import { BusinessErrorResponse } from '~/@types/response/error';
 
-export const makeApiCallSagaFunc = (type: string, apiFunc) =>
+export const makeApiCallSagaFunc = (
+  type: string,
+  apiFunc: any,
+  successCb: Function,
+  failCb: Function,
+) =>
   function* (action) {
     const [SUCCESS, FAILURE] = [`${type}_SUCCESS`, `${type}_FAILURE`];
     try {
       const payload = yield call(apiFunc, action.payload);
       yield put({ type: SUCCESS, payload });
+      successCb(payload);
     } catch (err) {
       yield put({ type: FAILURE, payload: err });
+      failCb(err);
     }
   };
 
