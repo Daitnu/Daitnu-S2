@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import S from './styled';
-import Api from '~/library/request/Api';
 import { RootState } from '~/redux';
 import { useSelector, useDispatch } from 'react-redux';
-import { registerRequest } from '~/redux/user/register';
+import { loginRequest } from '~/redux/user/login';
 
 interface ILoginState {
   userId: string;
@@ -15,50 +14,39 @@ const loginInitState: ILoginState = {
   password: '',
 };
 
-interface ResponseType {
-  id: number;
-  name: string;
-}
-
-interface RequestType {
-  d: string;
-}
-
 export const LoginForm: React.FC = () => {
   const [loginState, setLoginState] = useState<ILoginState>(loginInitState);
-  const state = useSelector((state: RootState) => state.userRegister);
+  const { loading, data, error } = useSelector((state: RootState) => state.userLogin);
+  const { id, email, name } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
   const handleOnChange = (key: string) => ({ target: { value } }): void =>
     setLoginState({ ...loginState, [key]: value }); // noImplicitAny옵션을 설정 안하면 value에서 빨간줄
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: 삭제
-    const api = new Api();
-    const response1 = await api.get<ResponseType>({
-      url: '/mail/category',
-    });
-    console.log(response1);
-    const response2 = await api.get<ResponseType, RequestType>({
-      url: '/mail/category',
-      data: { d: '123' },
-    });
-    console.log(response2);
+    dispatch(loginRequest({ id: loginState.userId, password: loginState.password }));
   };
 
   // TODO: 삭제
   useEffect(() => {
-    dispatch(
-      registerRequest({
-        id: 'idid123',
-        password: '12341234',
-        passwordCheck: '12341234',
-        name: 'namegg',
-        subEmail: 'idid123@daitnu.com',
-      }),
-    );
-  }, []);
+    console.log(data);
+    console.log(error);
+    console.log({ id, email, name });
+    // dispatch(
+    //   registerRequest({
+    //     id: 'idid123',
+    //     password: '12341234',
+    //     passwordCheck: '12341234',
+    //     name: 'namegg',
+    //     subEmail: 'idid123@daitnu.com',
+    //   }),
+    // );
+  }, [data, error, id, name, email]);
+
+  if (loading) {
+    return <S.Loading />;
+  }
 
   return (
     <S.InputForm>
