@@ -17,12 +17,12 @@ export const makeApiCallSagaFunc = ({ type, apiFunc, successCb, failCb }: ApiCal
       const payload = yield call(apiFunc, action.payload);
       yield put({ type: SUCCESS, payload });
       if (successCb !== undefined) {
-        successCb(payload);
+        yield call(successCb, payload);
       }
     } catch (err) {
       yield put({ type: FAILURE, payload: err });
       if (failCb !== undefined) {
-        failCb(err);
+        yield call(failCb, err);
       }
     }
   };
