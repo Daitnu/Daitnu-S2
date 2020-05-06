@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import LoadingGif from '~/assets/gif/loading.gif';
 
 const Input = styled.input`
   width: 100%;
@@ -38,9 +39,19 @@ const ErrorText = styled.span`
   margin-bottom: 5px;
 `;
 
+const Loading = styled.div`
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  width: 50px;
+  height: 50px;
+  background-image: url(${LoadingGif});
+`;
+
 export default {
   Input,
   InputForm,
   Button,
   ErrorText,
+  Loading,
 };
