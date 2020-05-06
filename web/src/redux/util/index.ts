@@ -2,6 +2,12 @@ import { call, put } from 'redux-saga/effects';
 import { HTTPResponse } from '~/@types/response/success';
 import { BusinessErrorResponse } from '~/@types/response/error';
 
+/**
+ * @param type login인지, register인지 등을 나타내는 상수
+ * @param apiFunc Api 클래스의 상속을 받는 자식 클래스의 메소드
+ * @param successCb payload(HTTPResponse)를 인자로 받는 cb
+ * @param failCb err(BusinessErrorResponse)를 인자로 받는 cb
+ */
 export const makeApiCallSagaFunc = (
   type: string,
   apiFunc: any,
@@ -28,6 +34,12 @@ export interface ApiState<T> {
 
 const initialState = { loading: false, data: null, error: null };
 
+/**
+ *
+ * @param T API Response type
+ * @param R API Request type
+ * @param type login인지, register인지 등을 나타내는 상수
+ */
 export const makeApiReducer = <T, R>(type: string) => {
   const REQUEST = `${type}_REQUEST` as 'REQUEST';
   const SUCCESS = `${type}_SUCCESS` as 'SUCCESS';
