@@ -56,6 +56,7 @@ public class AccountsService {
       throw isDuplicateUserId ? new DuplicatUserId() : new DuplicateSubEmail();
     }
 
+    userPw = passwordEncoder.encode(userPw);
     User userInstance = new User(userId, userPw, userName, userSubEmail);
     User newUser = userRepository.save(userInstance);
     return newUser;
