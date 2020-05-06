@@ -1,6 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { HTTPResponse } from '~/@types/response/success';
 import { BusinessErrorResponse } from '~/@types/response/error';
+import { ApiState } from '~/@types/state/api';
 
 /**
  * @param type login인지, register인지 등을 나타내는 상수
@@ -29,12 +30,6 @@ export const makeApiCallSagaFunc = (
       }
     }
   };
-
-export interface ApiState<T> {
-  loading: boolean;
-  data: null | HTTPResponse<T>;
-  error: null | BusinessErrorResponse;
-}
 
 const initialState = { loading: false, data: null, error: null };
 
