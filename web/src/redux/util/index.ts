@@ -21,7 +21,7 @@ export interface ApiState<T> {
 
 const initialState = { loading: false, data: null, error: null };
 
-export const makeReducer = <T, R>(type: string) => {
+export const makeApiReducer = <T, R>(type: string) => {
   const REQUEST = `${type}_REQUEST` as 'REQUEST';
   const SUCCESS = `${type}_SUCCESS` as 'SUCCESS';
   const FAILURE = `${type}_FAILURE` as 'FAILURE';
