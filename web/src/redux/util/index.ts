@@ -2,6 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import { HTTPResponse } from '~/@types/response/success';
 import { BusinessErrorResponse } from '~/@types/response/error';
 import { ApiState } from '~/@types/state/api';
+import { ApiCallSagaFunc } from '~/@types/redux/util/makeFuncParam';
 
 /**
  * @param type login인지, register인지 등을 나타내는 상수
@@ -9,12 +10,7 @@ import { ApiState } from '~/@types/state/api';
  * @param successCb payload(HTTPResponse)를 인자로 받는 cb
  * @param failCb err(BusinessErrorResponse)를 인자로 받는 cb
  */
-export const makeApiCallSagaFunc = (
-  type: string,
-  apiFunc: any,
-  successCb?: Function,
-  failCb?: Function,
-) =>
+export const makeApiCallSagaFunc = ({ type, apiFunc, successCb, failCb }: ApiCallSagaFunc) =>
   function* (action) {
     const [SUCCESS, FAILURE] = [`${type}_SUCCESS`, `${type}_FAILURE`];
     try {
