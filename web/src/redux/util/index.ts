@@ -11,18 +11,22 @@ import { BusinessErrorResponse } from '~/@types/response/error';
 export const makeApiCallSagaFunc = (
   type: string,
   apiFunc: any,
-  successCb: Function,
-  failCb: Function,
+  successCb?: Function,
+  failCb?: Function,
 ) =>
   function* (action) {
     const [SUCCESS, FAILURE] = [`${type}_SUCCESS`, `${type}_FAILURE`];
     try {
       const payload = yield call(apiFunc, action.payload);
       yield put({ type: SUCCESS, payload });
-      successCb(payload);
+      if (successCb !== undefined) {
+        successCb(payload);
+      }
     } catch (err) {
       yield put({ type: FAILURE, payload: err });
-      failCb(err);
+      if (failCb !== undefined) {
+        failCb(err);
+      }
     }
   };
 
