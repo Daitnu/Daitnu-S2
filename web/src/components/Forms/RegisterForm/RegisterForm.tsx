@@ -37,8 +37,12 @@ export const RegisterForm: React.FC = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const handleRegister = () => {
+  const handleRegister = (e) => {
     // TODO: Validation
+    e.preventDefault();
+    if (loading) {
+      return;
+    }
     dispatch(registerRequest({ ...formState }));
   };
 
@@ -95,8 +99,8 @@ export const RegisterForm: React.FC = () => {
       <S.InputContainer>
         <S.ErrorText>{/* errors.register || errors.email */}</S.ErrorText>
       </S.InputContainer>
-      <S.Button disabled={loading} onClick={handleRegister}>
-        가입하기
+      <S.Button requesting={loading} onClick={handleRegister}>
+        {loading ? '잠시만 기다려주세요' : '가입하기'}
       </S.Button>
       <S.Button onClick={() => history.push('/login')}>
         아이디가 있으신가요? 로그인하러 가시죠!

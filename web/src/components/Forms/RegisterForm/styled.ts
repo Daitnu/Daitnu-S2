@@ -12,6 +12,10 @@ interface VisibleIconProps {
   visible: boolean;
 }
 
+interface ButtonProps {
+  requesting?: boolean;
+}
+
 const InputForm = styled.form`
   width: 400px;
   display: flex;
@@ -56,7 +60,7 @@ const PasswordContainer = styled.div`
   justify-content: space-between;
 `;
 
-const Button = styled.button`
+const Button = styled.button<ButtonProps>`
   width: 100%;
   height: 40px;
   background-color: ${COLOR.MAIN};
@@ -66,7 +70,8 @@ const Button = styled.button`
   padding: 10px;
   margin: 10px 10px 0 auto;
   border: 0;
-  cursor: pointer;
+  cursor: ${({ requesting }) => !requesting && 'pointer'};
+  opacity: ${({ requesting }) => requesting && '0.4'};
 `;
 
 const ErrorText = styled.span`
