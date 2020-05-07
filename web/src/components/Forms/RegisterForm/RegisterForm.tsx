@@ -12,10 +12,16 @@ const initialState: RegisterParam = {
 
 export const RegisterForm: React.FC = () => {
   const [formState, setFormState] = useState<RegisterParam>(initialState);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
   const handleInputChange = (key: string) => ({
     target: { value },
   }: ChangeEvent<HTMLInputElement>) => {
     setFormState({ ...formState, [key]: value });
+  };
+
+  const handlePasswordVisible = () => {
+    setPasswordVisible(!passwordVisible);
   };
 
   return (
@@ -51,19 +57,19 @@ export const RegisterForm: React.FC = () => {
         <S.PasswordContainer>
           <S.Input
             id="password"
-            type="password"
+            type={passwordVisible ? 'type' : 'password'}
             placeholder="비밀번호"
             value={formState.password}
             onChange={handleInputChange('password')}
           />
           <S.Input
             id="passwordCheck"
-            type="password"
+            type={passwordVisible ? 'type' : 'password'}
             placeholder="확인"
             value={formState.passwordCheck}
             onChange={handleInputChange('passwordCheck')}
           />
-          <S.PasswordVisibleBtn visible={false} />
+          <S.PasswordVisibleBtn visible={passwordVisible} onClick={handlePasswordVisible} />
         </S.PasswordContainer>
       </S.InputContainer>
       <S.InputContainer>
