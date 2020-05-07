@@ -52,7 +52,12 @@ export const RegisterForm: React.FC = () => {
         <S.Title>Daitnu 계정 만들기</S.Title>
       </S.InputContainer>
       <S.InputContainer>
-        <S.Input placeholder="이름" value={formState.name} onChange={handleInputChange(NAME)} />
+        <S.Input
+          placeholder="이름"
+          maxLength={10}
+          value={formState.name}
+          onChange={handleInputChange(NAME)}
+        />
       </S.InputContainer>
       <S.InputContainer>
         <S.ErrorText>{/* errors.name */}</S.ErrorText>
@@ -75,12 +80,14 @@ export const RegisterForm: React.FC = () => {
             type={passwordVisible ? 'text' : PASSWORD}
             placeholder="비밀번호"
             value={formState.password}
+            maxLength={30}
             onChange={handleInputChange(PASSWORD)}
           />
           <S.Input
             type={passwordVisible ? 'text' : PASSWORD}
             placeholder="확인"
             value={formState.passwordCheck}
+            maxLength={30}
             onChange={handleInputChange(PASSWORD_CHECK)}
           />
           <S.PasswordVisibleBtn visible={passwordVisible} onClick={handlePasswordVisible} />
@@ -94,6 +101,7 @@ export const RegisterForm: React.FC = () => {
           placeholder="이메일"
           value={formState.subEmail}
           onChange={handleInputChange(SUB_EMAIL)}
+          maxLength={50}
         />
       </S.InputContainer>
       <S.InputContainer>
