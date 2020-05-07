@@ -20,7 +20,7 @@ public class AccountsDTO {
 
     @NotBlank(message = "비밀번호는 반드시 입력해야 합니다.")
     @Length(min = 5, message = "비밀번호는 최소 5자리 이상입니다.")
-    @Length(max = 100, message = "비밀번호는 최대 30자리 입니다.")
+    @Length(max = 30, message = "비밀번호는 최대 30자리 입니다.")
     private String password;
   }
 
@@ -34,12 +34,12 @@ public class AccountsDTO {
 
     @NotBlank(message = "비밀번호는 반드시 입력해야 합니다.")
     @Length(min = 5, message = "비밀번호는 최소 5자리 이상입니다.")
-    @Length(max = 100, message = "비밀번호는 최대 30자리 입니다.")
+    @Length(max = 30, message = "비밀번호는 최대 30자리 입니다.")
     private String password;
 
     @NotBlank(message = "비밀번호 확인은 반드시 입력해야 합니다.")
     @Length(min = 5, message = "비밀번호 확인은 최소 5자리 이상입니다.")
-    @Length(max = 100, message = "비밀번호 확인은 최대 30자리 입니다.")
+    @Length(max = 30, message = "비밀번호 확인은 최대 30자리 입니다.")
     private String passwordCheck;
 
     @NotBlank(message = "이름은 반드시 입력해야 합니다.")
