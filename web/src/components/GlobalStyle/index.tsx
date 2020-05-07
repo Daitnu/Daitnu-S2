@@ -93,3 +93,9 @@ export const AlignLeftContainer = styled.div`
   width: 60%;
   justify-content: flex-start;
 `;
+
+export const BackgroundImgDiv = styled.div`
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+`;

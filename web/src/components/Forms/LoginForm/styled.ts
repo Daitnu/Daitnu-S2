@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import LoadingGif from '~/assets/gif/loading.gif';
+import { BackgroundImgDiv } from '~/components/GlobalStyle';
 
 const Input = styled.input`
   width: 100%;
@@ -39,10 +40,7 @@ const ErrorText = styled.span`
   margin-bottom: 5px;
 `;
 
-const Loading = styled.div`
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+const Loading = styled(BackgroundImgDiv)`
   width: 50px;
   height: 50px;
   background-image: url(${LoadingGif});
