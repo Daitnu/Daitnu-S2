@@ -25,6 +25,7 @@ export const LoginForm: React.FC = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoginState({ ...loginInitState });
     dispatch(loginRequest({ id: loginState.userId, password: loginState.password }));
   };
 
