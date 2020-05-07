@@ -2,14 +2,9 @@ import React, { useState, ChangeEvent } from 'react';
 import { useHistory } from 'react-router';
 import S from './styled';
 import { RegisterParam } from '~/@types/request/user';
-
-const initialState: RegisterParam = {
-  id: '',
-  password: '',
-  passwordCheck: '',
-  name: '',
-  subEmail: '',
-};
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '~/redux';
+import { registerRequest } from '~/redux/user/register';
 
 const ID = 'id' as const;
 const PASSWORD = 'password' as const;
@@ -17,10 +12,20 @@ const PASSWORD_CHECK = 'passwordCheck' as const;
 const NAME = 'name' as const;
 const SUB_EMAIL = 'subEmail' as const;
 
+const initialState: RegisterParam = {
+  [ID]: '',
+  [PASSWORD]: '',
+  [PASSWORD_CHECK]: '',
+  [NAME]: '',
+  [SUB_EMAIL]: '',
+};
+
 export const RegisterForm: React.FC = () => {
   const history = useHistory();
   const [formState, setFormState] = useState<RegisterParam>(initialState);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const { loading, data, error } = useSelector((state: RootState) => state.userRegister);
+  const dispatch = useDispatch();
 
   const handleInputChange = (key: string) => ({
     target: { value },
@@ -30,6 +35,11 @@ export const RegisterForm: React.FC = () => {
 
   const handlePasswordVisible = () => {
     setPasswordVisible(!passwordVisible);
+  };
+
+  const handleRegister = () => {
+    // TODO: Validation
+    dispatch(registerRequest({ ...formState }));
   };
 
   return (
@@ -85,7 +95,9 @@ export const RegisterForm: React.FC = () => {
       <S.InputContainer>
         <S.ErrorText>{/* errors.register || errors.email */}</S.ErrorText>
       </S.InputContainer>
-      <S.Button>가입하기</S.Button>
+      <S.Button disabled={loading} onClick={handleRegister}>
+        가입하기
+      </S.Button>
       <S.Button onClick={() => history.push('/login')}>
         아이디가 있으신가요? 로그인하러 가시죠!
       </S.Button>
