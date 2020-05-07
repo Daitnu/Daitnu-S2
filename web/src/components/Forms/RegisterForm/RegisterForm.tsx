@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent } from 'react';
+import { useHistory } from 'react-router';
 import S from './styled';
 import { RegisterParam } from '~/@types/request/user';
 
@@ -17,6 +18,7 @@ const NAME = 'name' as const;
 const SUB_EMAIL = 'subEmail' as const;
 
 export const RegisterForm: React.FC = () => {
+  const history = useHistory();
   const [formState, setFormState] = useState<RegisterParam>(initialState);
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -84,7 +86,9 @@ export const RegisterForm: React.FC = () => {
         <S.ErrorText>{/* errors.register || errors.email */}</S.ErrorText>
       </S.InputContainer>
       <S.Button>가입하기</S.Button>
-      <S.Button>아이디가 있으신가요? 로그인하러 가시죠!</S.Button>
+      <S.Button onClick={() => history.push('/login')}>
+        아이디가 있으신가요? 로그인하러 가시죠!
+      </S.Button>
     </S.InputForm>
   );
 };
