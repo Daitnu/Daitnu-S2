@@ -1,6 +1,9 @@
+import { BusinessErrorResponse } from '~/@types/response/error';
+import { HTTPResponse } from '~/@types/response/success';
+
 export interface ApiCallSagaFunc {
   type: string;
-  apiFunc: any;
-  successCb?: any; // TODO: Generator인데.. Generator하면 saga call함수랑 type error ㅠ
-  failCb?: any; // TODO: Generator인데.. Generator하면 saga call함수랑 type error ㅠ
+  apiFunc: (...args: any[]) => Promise<HTTPResponse<any> | BusinessErrorResponse>;
+  successCb?: (arg: HTTPResponse<any>) => Generator | Function;
+  failCb?: (arg: BusinessErrorResponse) => Generator | Function;
 }
