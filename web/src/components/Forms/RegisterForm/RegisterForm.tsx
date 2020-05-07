@@ -10,6 +10,12 @@ const initialState: RegisterParam = {
   subEmail: '',
 };
 
+const ID = 'id' as const;
+const PASSWORD = 'password' as const;
+const PASSWORD_CHECK = 'passwordCheck' as const;
+const NAME = 'name' as const;
+const SUB_EMAIL = 'subEmail' as const;
+
 export const RegisterForm: React.FC = () => {
   const [formState, setFormState] = useState<RegisterParam>(initialState);
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -30,23 +36,17 @@ export const RegisterForm: React.FC = () => {
         <S.Title>Daitnu 계정 만들기</S.Title>
       </S.InputContainer>
       <S.InputContainer>
-        <S.Input
-          id="name"
-          placeholder="이름"
-          value={formState.name}
-          onChange={handleInputChange('name')}
-        />
+        <S.Input placeholder="이름" value={formState.name} onChange={handleInputChange(NAME)} />
       </S.InputContainer>
       <S.InputContainer>
         <S.ErrorText>{/* errors.name */}</S.ErrorText>
       </S.InputContainer>
       <S.InputContainer>
         <S.Input
-          id="id"
           placeholder="아이디"
           maxLength={20}
           value={formState.id}
-          onChange={handleInputChange('id')}
+          onChange={handleInputChange(ID)}
         />
         <S.InputEndText>@daitnu2.com</S.InputEndText>
       </S.InputContainer>
@@ -56,18 +56,16 @@ export const RegisterForm: React.FC = () => {
       <S.InputContainer>
         <S.PasswordContainer>
           <S.Input
-            id="password"
-            type={passwordVisible ? 'type' : 'password'}
+            type={passwordVisible ? 'text' : PASSWORD}
             placeholder="비밀번호"
             value={formState.password}
-            onChange={handleInputChange('password')}
+            onChange={handleInputChange(PASSWORD)}
           />
           <S.Input
-            id="passwordCheck"
-            type={passwordVisible ? 'type' : 'password'}
+            type={passwordVisible ? 'text' : PASSWORD}
             placeholder="확인"
             value={formState.passwordCheck}
-            onChange={handleInputChange('passwordCheck')}
+            onChange={handleInputChange(PASSWORD_CHECK)}
           />
           <S.PasswordVisibleBtn visible={passwordVisible} onClick={handlePasswordVisible} />
         </S.PasswordContainer>
@@ -77,10 +75,9 @@ export const RegisterForm: React.FC = () => {
       </S.InputContainer>
       <S.InputContainer>
         <S.Input
-          id="email"
           placeholder="이메일"
           value={formState.subEmail}
-          onChange={handleInputChange('email')}
+          onChange={handleInputChange(SUB_EMAIL)}
         />
       </S.InputContainer>
       <S.InputContainer>
