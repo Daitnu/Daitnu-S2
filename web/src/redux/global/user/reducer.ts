@@ -5,12 +5,13 @@ import { SAVE_USER, CLEAR_USER } from './actions';
 const initialState: User = { id: '', name: '', email: '' };
 
 const userReducer = (state: User = initialState, action: UserActionTypes): User => {
-  switch (action.type) {
+  const { payload, type } = action;
+  switch (type) {
     case SAVE_USER:
       return {
-        id: action.payload.id,
-        name: action.payload.name,
-        email: action.payload.email,
+        id: payload.id,
+        name: payload.name,
+        email: payload.email,
       };
     case CLEAR_USER:
       return {
