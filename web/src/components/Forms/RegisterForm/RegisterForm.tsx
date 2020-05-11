@@ -5,6 +5,7 @@ import { RegisterParam } from '~/@types/request/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '~/redux';
 import { registerRequest } from '~/redux/user/register';
+import { validate, LENGTH, equalValidate } from '~/library/validate';
 
 const ID = 'id' as const;
 const PASSWORD = 'password' as const;
@@ -23,6 +24,7 @@ const initialState: RegisterParam = {
 export const RegisterForm: React.FC = () => {
   const history = useHistory();
   const [formState, setFormState] = useState<RegisterParam>(initialState);
+  const [formErrState, setFormErrState] = useState<RegisterParam>(initialState);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { loading, data, error } = useSelector((state: RootState) => state.userRegister);
   const dispatch = useDispatch();
@@ -38,12 +40,28 @@ export const RegisterForm: React.FC = () => {
   };
 
   const handleRegister = (e) => {
-    // TODO: Validation
     e.preventDefault();
     if (loading) {
       return;
     }
+    setFormErrState({ ...initialState });
+
+    const { id, name, password, passwordCheck, subEmail } = formState;
+    const errResult: RegisterParam = {
+      [ID]: validate({ val: id, min: LENGTH.ID.MIN, max: LENGTH.ID.MAX }),
+      [PASSWORD]: validate({ val: password, min: LENGTH.PASSWORD.MIN, max: LENGTH.PASSWORD.MAX }),
+      [PASSWORD_CHECK]: equalValidate(password, passwordCheck),
+      [NAME]: validate({ val: name, min: LENGTH.NAME.MIN, max: LENGTH.NAME.MAX }),
+      [SUB_EMAIL]: validate({ val: subEmail, max: LENGTH.EMAIL.MAX }),
+    };
+
+    if (Object.values(errResult).some((v) => v !== '')) {
+      setFormErrState({ ...errResult });
+      return;
+    }
+
     dispatch(registerRequest({ ...formState }));
+    console.log({ data, error });
   };
 
   return (
@@ -60,7 +78,7 @@ export const RegisterForm: React.FC = () => {
         />
       </S.InputContainer>
       <S.InputContainer>
-        <S.ErrorText>{/* errors.name */}</S.ErrorText>
+        <S.ErrorText>{formErrState.name}</S.ErrorText>
       </S.InputContainer>
       <S.InputContainer>
         <S.Input
@@ -72,7 +90,7 @@ export const RegisterForm: React.FC = () => {
         <S.InputEndText>@daitnu2.com</S.InputEndText>
       </S.InputContainer>
       <S.InputContainer>
-        <S.ErrorText>{/* errors.id */}</S.ErrorText>
+        <S.ErrorText>{formErrState.id}</S.ErrorText>
       </S.InputContainer>
       <S.InputContainer>
         <S.PasswordContainer>
@@ -94,7 +112,7 @@ export const RegisterForm: React.FC = () => {
         </S.PasswordContainer>
       </S.InputContainer>
       <S.InputContainer>
-        <S.ErrorText>{/* errors.password || errors.checkPassword */}</S.ErrorText>
+        <S.ErrorText>{formErrState.password || formErrState.passwordCheck}</S.ErrorText>
       </S.InputContainer>
       <S.InputContainer>
         <S.Input
@@ -105,7 +123,7 @@ export const RegisterForm: React.FC = () => {
         />
       </S.InputContainer>
       <S.InputContainer>
-        <S.ErrorText>{/* errors.register || errors.email */}</S.ErrorText>
+        <S.ErrorText>{formErrState.subEmail /* || error.message*/}</S.ErrorText>
       </S.InputContainer>
       <S.Button requesting={loading} onClick={handleRegister}>
         {loading ? '잠시만 기다려주세요' : '가입하기'}
