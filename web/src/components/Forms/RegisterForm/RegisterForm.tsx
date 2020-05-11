@@ -8,7 +8,6 @@ import { registerRequest } from '~/redux/user/register';
 import {
   validate,
   equalValidate,
-  LENGTH,
   ID,
   PASSWORD,
   PASSWORD_CHECK,
@@ -32,10 +31,10 @@ export const RegisterForm: React.FC = () => {
   const { loading, data, error } = useSelector((state: RootState) => state.userRegister);
   const dispatch = useDispatch();
 
-  const getErr = (key: string, value: string) => {
+  const getErr = ({ key, value }) => {
     const { password } = formState;
     if (key === PASSWORD_CHECK) return equalValidate(password, value);
-    else return validate({ val: value, min: LENGTH[key].MIN, max: LENGTH[key].MAX });
+    else return validate({ key, value });
   };
 
   const handleInputChange = (key: string) => ({
@@ -44,7 +43,7 @@ export const RegisterForm: React.FC = () => {
     setFormState({ ...formState, [key]: value });
     setFormErrState({
       ...formErrState,
-      [key]: getErr(key, value),
+      [key]: getErr({ key, value }),
     });
   };
 
@@ -61,11 +60,11 @@ export const RegisterForm: React.FC = () => {
 
     const { id, name, password, passwordCheck, subEmail } = formState;
     const errResult: RegisterParam = {
-      [ID]: getErr(ID, id),
-      [PASSWORD]: getErr(PASSWORD, password),
-      [PASSWORD_CHECK]: getErr(PASSWORD_CHECK, passwordCheck),
-      [NAME]: getErr(NAME, name),
-      [SUB_EMAIL]: getErr(SUB_EMAIL, subEmail),
+      [ID]: getErr({ key: ID, value: id }),
+      [PASSWORD]: getErr({ key: PASSWORD, value: password }),
+      [PASSWORD_CHECK]: getErr({ key: PASSWORD_CHECK, value: passwordCheck }),
+      [NAME]: getErr({ key: NAME, value: name }),
+      [SUB_EMAIL]: getErr({ key: SUB_EMAIL, value: subEmail }),
     };
 
     if (Object.values(errResult).some((v) => v !== '')) {
@@ -74,7 +73,6 @@ export const RegisterForm: React.FC = () => {
     }
 
     dispatch(registerRequest({ ...formState }));
-    console.log({ data, error });
   };
 
   return (
