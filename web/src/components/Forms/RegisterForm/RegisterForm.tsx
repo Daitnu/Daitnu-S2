@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent } from 'react';
-import { useHistory, Redirect } from 'react-router';
-import HTTP_STATUS from 'http-status';
+import { useHistory } from 'react-router';
 import S from './styled';
 import { RegisterParam } from '~/@types/request/user';
 import { useSelector, useDispatch } from 'react-redux';
@@ -29,12 +28,8 @@ export const RegisterForm: React.FC = () => {
   const [formState, setFormState] = useState<RegisterParam>(initialState);
   const [formErrState, setFormErrState] = useState<RegisterParam>(initialState);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { loading, data, error } = useSelector((state: RootState) => state.userRegister);
+  const { loading, error } = useSelector((state: RootState) => state.userRegister);
   const dispatch = useDispatch();
-
-  if (data && data.status === HTTP_STATUS.CREATED) {
-    return <Redirect to="/login" />;
-  }
 
   const getErr = ({ key, value }) => {
     const { password } = formState;
@@ -141,7 +136,7 @@ export const RegisterForm: React.FC = () => {
       <S.InputContainer>
         <S.ErrorText>{formErrState.subEmail || (error && error.message)}</S.ErrorText>
       </S.InputContainer>
-      <S.Button requesting={loading} onClick={handleRegister}>
+      <S.Button disabled={loading} requesting={loading} onClick={handleRegister}>
         {loading ? '잠시만 기다려주세요' : '가입하기'}
       </S.Button>
       <S.Button onClick={() => history.push('/login')}>
