@@ -5,13 +5,16 @@ import { RegisterParam } from '~/@types/request/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '~/redux';
 import { registerRequest } from '~/redux/user/register';
-import { validate, LENGTH, equalValidate } from '~/library/validate';
-
-const ID = 'id' as const;
-const PASSWORD = 'password' as const;
-const PASSWORD_CHECK = 'passwordCheck' as const;
-const NAME = 'name' as const;
-const SUB_EMAIL = 'subEmail' as const;
+import {
+  validate,
+  equalValidate,
+  LENGTH,
+  ID,
+  PASSWORD,
+  PASSWORD_CHECK,
+  NAME,
+  SUB_EMAIL,
+} from '~/library/validate';
 
 const initialState: RegisterParam = {
   [ID]: '',
@@ -28,6 +31,12 @@ export const RegisterForm: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { loading, data, error } = useSelector((state: RootState) => state.userRegister);
   const dispatch = useDispatch();
+
+  const getErr = (key: string, value: string) => {
+    const { password } = formState;
+    if (key === PASSWORD_CHECK) return equalValidate(password, value);
+    else return validate({ val: value, min: LENGTH[key].MIN, max: LENGTH[key].MAX });
+  };
 
   const handleInputChange = (key: string) => ({
     target: { value },
@@ -48,11 +57,11 @@ export const RegisterForm: React.FC = () => {
 
     const { id, name, password, passwordCheck, subEmail } = formState;
     const errResult: RegisterParam = {
-      [ID]: validate({ val: id, min: LENGTH.ID.MIN, max: LENGTH.ID.MAX }),
-      [PASSWORD]: validate({ val: password, min: LENGTH.PASSWORD.MIN, max: LENGTH.PASSWORD.MAX }),
-      [PASSWORD_CHECK]: equalValidate(password, passwordCheck),
-      [NAME]: validate({ val: name, min: LENGTH.NAME.MIN, max: LENGTH.NAME.MAX }),
-      [SUB_EMAIL]: validate({ val: subEmail, max: LENGTH.EMAIL.MAX }),
+      [ID]: getErr(ID, id),
+      [PASSWORD]: getErr(PASSWORD, password),
+      [PASSWORD_CHECK]: getErr(PASSWORD_CHECK, passwordCheck),
+      [NAME]: getErr(NAME, name),
+      [SUB_EMAIL]: getErr(SUB_EMAIL, subEmail),
     };
 
     if (Object.values(errResult).some((v) => v !== '')) {
@@ -123,7 +132,7 @@ export const RegisterForm: React.FC = () => {
         />
       </S.InputContainer>
       <S.InputContainer>
-        <S.ErrorText>{formErrState.subEmail /* || error.message*/}</S.ErrorText>
+        <S.ErrorText>{formErrState.subEmail || (error && error.message)}</S.ErrorText>
       </S.InputContainer>
       <S.Button requesting={loading} onClick={handleRegister}>
         {loading ? '잠시만 기다려주세요' : '가입하기'}

@@ -1,5 +1,5 @@
 export interface ValidateParam {
   val: string;
-  min?: number;
+  min: number;
   max: number;
 }
