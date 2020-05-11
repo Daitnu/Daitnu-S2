@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, Redirect } from 'react-router';
+import HTTP_STATUS from 'http-status';
 import S from './styled';
 import { RegisterParam } from '~/@types/request/user';
 import { useSelector, useDispatch } from 'react-redux';
@@ -30,6 +31,10 @@ export const RegisterForm: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { loading, data, error } = useSelector((state: RootState) => state.userRegister);
   const dispatch = useDispatch();
+
+  if (data && data.status === HTTP_STATUS.CREATED) {
+    return <Redirect to="/login" />;
+  }
 
   const getErr = ({ key, value }) => {
     const { password } = formState;
