@@ -42,6 +42,10 @@ export const RegisterForm: React.FC = () => {
     target: { value },
   }: ChangeEvent<HTMLInputElement>) => {
     setFormState({ ...formState, [key]: value });
+    setFormErrState({
+      ...formErrState,
+      [key]: getErr(key, value),
+    });
   };
 
   const handlePasswordVisible = () => {
