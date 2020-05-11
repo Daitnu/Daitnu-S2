@@ -10,7 +10,7 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE' as const;
 
 export const loginRequest = (payload: LoginParam) => ({
   type: LOGIN_REQUEST,
-  payload: { data: payload },
+  payload,
 });
 
 export const loginSuccess = (payload: HTTPResponse<ResponseLogin>) => ({
