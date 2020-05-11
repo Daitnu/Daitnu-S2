@@ -9,9 +9,7 @@ const userReducer = (state: User = initialState, action: UserActionTypes): User 
   switch (type) {
     case SAVE_USER:
       return {
-        id: payload.id,
-        name: payload.name,
-        email: payload.email,
+        ...payload,
       };
     case CLEAR_USER:
       return {
