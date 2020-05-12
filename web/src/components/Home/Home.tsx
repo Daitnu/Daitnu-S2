@@ -9,5 +9,5 @@ export const Home: React.FC = () => {
   if (user.id === '') {
     history.push('/login');
   }
-  return <div>하위 ㅋㅋ</div>;
+  return <div>하위 {user.name} ㅋㅋ</div>;
 };
