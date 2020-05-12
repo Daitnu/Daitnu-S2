@@ -4,20 +4,16 @@ import { RootState } from '~/redux';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginRequest } from '~/redux/user/login';
 import { validate, ID, PASSWORD } from '~/library/validate';
+import { LoginParam } from '~/@types/request/user';
 
-interface ILoginState {
-  [ID]: string;
-  [PASSWORD]: string;
-}
-
-const loginInitState: ILoginState = {
+const loginInitState: LoginParam = {
   [ID]: '',
   [PASSWORD]: '',
 };
 
 export const LoginForm: React.FC = () => {
-  const [loginState, setLoginState] = useState<ILoginState>(loginInitState);
-  const [errState, setErrState] = useState<ILoginState>(loginInitState);
+  const [loginState, setLoginState] = useState<LoginParam>(loginInitState);
+  const [errState, setErrState] = useState<LoginParam>(loginInitState);
   const { loading, error } = useSelector((state: RootState) => state.userLogin);
   const dispatch = useDispatch();
 
@@ -33,7 +29,7 @@ export const LoginForm: React.FC = () => {
     }
     setErrState({ ...loginInitState });
 
-    const errResult: ILoginState = {
+    const errResult: LoginParam = {
       [ID]: validate({ key: [ID], value: loginState[ID] }),
       [PASSWORD]: validate({ key: [PASSWORD], value: loginState[PASSWORD] }),
     };
