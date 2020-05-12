@@ -1,3 +1,9 @@
 import React from 'react';
+import * as S from '../../components/GlobalStyle';
+import { Home } from '~/components/Home';
 
-export const HomePage: React.FC = () => <div>Home page kk</div>;
+export const HomePage: React.FC = () => (
+  <S.FlexCenterWrap>
+    <Home />
+  </S.FlexCenterWrap>
+);
