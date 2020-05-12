@@ -10,7 +10,7 @@ export const REGISTER_FAILURE = 'REGISTER_FAILURE' as const;
 
 export const registerRequest = (payload: RegisterParam) => ({
   type: REGISTER_REQUEST,
-  payload: { data: payload },
+  payload,
 });
 
 export const registerSuccess = (payload: HTTPResponse<ResponseRegister>) => ({

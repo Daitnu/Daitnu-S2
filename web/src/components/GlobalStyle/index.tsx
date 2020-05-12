@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+export const FlexCenter = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const FlexWrap = styled.div`
   height: 100vh;
   display: flex;
@@ -14,23 +20,17 @@ export const FlexColumnWrap = styled.div`
   overflow: hidden;
 `;
 
-export const FlexRowWrap = styled.div`
+export const FlexRowWrap = styled(FlexCenter)`
   height: 100%;
-  display: flex;
   flex-direction: row;
   overflow: hidden;
-  justify-content: center;
-  align-items: center;
 `;
 
-export const FlexWidthFullWrap = styled.div`
+export const FlexWidthFullWrap = styled(FlexCenter)`
   height: 100vh;
   width: 100%;
-  display: flex;
   flex-direction: column;
   overflow: hidden;
-  justify-content: center;
-  align-items: center;
 `;
 
 export const FlexCenterWrap = styled(FlexWrap)`
@@ -39,18 +39,12 @@ export const FlexCenterWrap = styled(FlexWrap)`
   background-color: #f5f6fa;
 `;
 
-export const FlexRowCenterWrap = styled.div`
+export const FlexRowCenterWrap = styled(FlexCenter)`
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
-export const SmallBoard = styled.div`
+export const SmallBoard = styled(FlexCenter)`
   height: 600px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border: 1px solid #a4b0be;
   border-radius: 15px;
   width: 800px;
@@ -60,11 +54,8 @@ export const TinyBoard = styled(SmallBoard)`
   width: 650px;
 `;
 
-export const SmallColumnBoard = styled.div`
+export const SmallColumnBoard = styled(FlexCenter)`
   height: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
   width: 800px;
 `;

@@ -5,12 +5,15 @@ import { RegisterParam } from '~/@types/request/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '~/redux';
 import { registerRequest } from '~/redux/user/register';
-
-const ID = 'id' as const;
-const PASSWORD = 'password' as const;
-const PASSWORD_CHECK = 'passwordCheck' as const;
-const NAME = 'name' as const;
-const SUB_EMAIL = 'subEmail' as const;
+import {
+  validate,
+  equalValidate,
+  ID,
+  PASSWORD,
+  PASSWORD_CHECK,
+  NAME,
+  SUB_EMAIL,
+} from '~/library/validate';
 
 const initialState: RegisterParam = {
   [ID]: '',
@@ -23,14 +26,25 @@ const initialState: RegisterParam = {
 export const RegisterForm: React.FC = () => {
   const history = useHistory();
   const [formState, setFormState] = useState<RegisterParam>(initialState);
+  const [formErrState, setFormErrState] = useState<RegisterParam>(initialState);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { loading, data, error } = useSelector((state: RootState) => state.userRegister);
+  const { loading, error } = useSelector((state: RootState) => state.userRegister);
   const dispatch = useDispatch();
+
+  const getErr = ({ key, value }) => {
+    const { password } = formState;
+    if (key === PASSWORD_CHECK) return equalValidate(password, value);
+    else return validate({ key, value });
+  };
 
   const handleInputChange = (key: string) => ({
     target: { value },
   }: ChangeEvent<HTMLInputElement>) => {
     setFormState({ ...formState, [key]: value });
+    setFormErrState({
+      ...formErrState,
+      [key]: getErr({ key, value }),
+    });
   };
 
   const handlePasswordVisible = () => {
@@ -38,11 +52,26 @@ export const RegisterForm: React.FC = () => {
   };
 
   const handleRegister = (e) => {
-    // TODO: Validation
     e.preventDefault();
     if (loading) {
       return;
     }
+    setFormErrState({ ...initialState });
+
+    const { id, name, password, passwordCheck, subEmail } = formState;
+    const errResult: RegisterParam = {
+      [ID]: getErr({ key: ID, value: id }),
+      [PASSWORD]: getErr({ key: PASSWORD, value: password }),
+      [PASSWORD_CHECK]: getErr({ key: PASSWORD_CHECK, value: passwordCheck }),
+      [NAME]: getErr({ key: NAME, value: name }),
+      [SUB_EMAIL]: getErr({ key: SUB_EMAIL, value: subEmail }),
+    };
+
+    if (Object.values(errResult).some((v) => v !== '')) {
+      setFormErrState({ ...errResult });
+      return;
+    }
+
     dispatch(registerRequest({ ...formState }));
   };
 
@@ -60,7 +89,7 @@ export const RegisterForm: React.FC = () => {
         />
       </S.InputContainer>
       <S.InputContainer>
-        <S.ErrorText>{/* errors.name */}</S.ErrorText>
+        <S.ErrorText>{formErrState.name}</S.ErrorText>
       </S.InputContainer>
       <S.InputContainer>
         <S.Input
@@ -72,7 +101,7 @@ export const RegisterForm: React.FC = () => {
         <S.InputEndText>@daitnu2.com</S.InputEndText>
       </S.InputContainer>
       <S.InputContainer>
-        <S.ErrorText>{/* errors.id */}</S.ErrorText>
+        <S.ErrorText>{formErrState.id}</S.ErrorText>
       </S.InputContainer>
       <S.InputContainer>
         <S.PasswordContainer>
@@ -94,7 +123,7 @@ export const RegisterForm: React.FC = () => {
         </S.PasswordContainer>
       </S.InputContainer>
       <S.InputContainer>
-        <S.ErrorText>{/* errors.password || errors.checkPassword */}</S.ErrorText>
+        <S.ErrorText>{formErrState.password || formErrState.passwordCheck}</S.ErrorText>
       </S.InputContainer>
       <S.InputContainer>
         <S.Input
@@ -105,9 +134,9 @@ export const RegisterForm: React.FC = () => {
         />
       </S.InputContainer>
       <S.InputContainer>
-        <S.ErrorText>{/* errors.register || errors.email */}</S.ErrorText>
+        <S.ErrorText>{formErrState.subEmail || (error && error.message)}</S.ErrorText>
       </S.InputContainer>
-      <S.Button requesting={loading} onClick={handleRegister}>
+      <S.Button disabled={loading} requesting={loading} onClick={handleRegister}>
         {loading ? '잠시만 기다려주세요' : '가입하기'}
       </S.Button>
       <S.Button onClick={() => history.push('/login')}>
