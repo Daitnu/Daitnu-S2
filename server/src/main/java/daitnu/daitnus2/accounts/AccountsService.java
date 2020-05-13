@@ -7,6 +7,7 @@ import daitnu.daitnus2.database.entity.User;
 import daitnu.daitnus2.database.repository.UserRepository;
 import daitnu.daitnus2.exception.BusinessException;
 import daitnu.daitnus2.exception.ErrorCode;
+import daitnu.daitnus2.mail.category.MailCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class AccountsService {
 
   private final UserRepository userRepository;
+  private final MailCategoryService mailCategoryService;
   private final PasswordEncoder passwordEncoder;
 
 
@@ -59,6 +61,10 @@ public class AccountsService {
     userPw = passwordEncoder.encode(userPw);
     User userInstance = new User(userId, userPw, userName, userSubEmail);
     User newUser = userRepository.save(userInstance);
+    mailCategoryService.makeDir("받은메일함", newUser.getId());
+    mailCategoryService.makeDir("보낸메일함", newUser.getId());
+    mailCategoryService.makeDir("내게쓴메일함", newUser.getId());
+    mailCategoryService.makeDir("휴지통", newUser.getId());
     return newUser;
   }
 
