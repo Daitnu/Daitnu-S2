@@ -35,13 +35,13 @@ const initialState = { loading: false, data: null, error: null };
  * @param R API Request type
  * @param type login인지, register인지 등을 나타내는 상수
  */
-export const makeApiReducer = <T, R>(type: string) => {
+export const makeApiReducer = <T, R = undefined>(type: string) => {
   const REQUEST = `${type}_REQUEST` as 'REQUEST';
   const SUCCESS = `${type}_SUCCESS` as 'SUCCESS';
   const FAILURE = `${type}_FAILURE` as 'FAILURE';
   type Request = {
     type: typeof REQUEST;
-    payload: { data: R };
+    payload: R;
   };
   type Success = {
     type: typeof SUCCESS;
