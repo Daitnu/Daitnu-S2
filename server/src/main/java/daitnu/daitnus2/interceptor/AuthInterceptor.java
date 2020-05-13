@@ -3,7 +3,6 @@ package daitnu.daitnus2.interceptor;
 import daitnu.daitnus2.accounts.AccountsSession;
 import daitnu.daitnus2.exception.BusinessException;
 import daitnu.daitnus2.exception.ErrorCode;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
