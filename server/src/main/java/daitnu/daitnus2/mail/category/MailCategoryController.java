@@ -66,7 +66,7 @@ public class MailCategoryController {
     return new ResponseEntity<>(modelMapper.map(removedCategory, MailCategoryDTO.DeleteDTO.class), HttpStatus.OK);
   }
 
-  @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping
   public ResponseEntity<?> getCategories(HttpSession session) {
     AccountsSession sessionUser = (AccountsSession) session.getAttribute("user");
     List<MailCategory> userCategories = mailCategoryService.findAll(sessionUser.getId());
