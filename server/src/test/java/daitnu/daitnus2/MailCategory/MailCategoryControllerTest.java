@@ -152,7 +152,7 @@ public class MailCategoryControllerTest {
     // when
     User user = accountsService.register(registerDTO);
     MailCategory mailCategory = mailCategoryService.makeDir(oldName, user.getId());
-    renameDTO.setCategoryId(mailCategory.getId());
+    renameDTO.setId(mailCategory.getId());
     renameDTO.setOldName(oldName);
     renameDTO.setNewName(newName);
 
@@ -188,7 +188,7 @@ public class MailCategoryControllerTest {
     // when
     User user = accountsService.register(registerDTO);
     MailCategory mailCategory = mailCategoryService.makeDir(oldName, user.getId());
-    renameDTO.setCategoryId(mailCategory.getId());
+    renameDTO.setId(mailCategory.getId());
     renameDTO.setOldName(oldName);
     renameDTO.setNewName(newName);
 
@@ -225,7 +225,7 @@ public class MailCategoryControllerTest {
     // when
     User user = accountsService.register(registerDTO);
     MailCategory mailCategory = mailCategoryService.makeDir(oldName, user.getId());
-    renameDTO.setCategoryId(mailCategory.getId());
+    renameDTO.setId(mailCategory.getId());
     renameDTO.setOldName(oldName);
     renameDTO.setNewName(newName);
 
@@ -262,7 +262,7 @@ public class MailCategoryControllerTest {
     // when
     User user = accountsService.register(registerDTO);
     MailCategory mailCategory = mailCategoryService.makeDir(oldName, user.getId());
-    renameDTO.setCategoryId(mailCategory.getId());
+    renameDTO.setId(mailCategory.getId());
     renameDTO.setOldName(oldName);
     renameDTO.setNewName(newName);
 
@@ -303,7 +303,7 @@ public class MailCategoryControllerTest {
     User user1 = accountsService.register(registerDTO1);
     User user2 = accountsService.register(registerDTO2);
     MailCategory mailCategory = mailCategoryService.makeDir(oldName, user1.getId());
-    renameDTO.setCategoryId(mailCategory.getId());
+    renameDTO.setId(mailCategory.getId());
     renameDTO.setOldName(oldName);
     renameDTO.setNewName(newName);
 
@@ -340,7 +340,7 @@ public class MailCategoryControllerTest {
     // when
     User user = accountsService.register(registerDTO);
     MailCategory mailCategory = mailCategoryService.makeDir(oldName, user.getId());
-    renameDTO.setCategoryId(mailCategory.getId());
+    renameDTO.setId(mailCategory.getId());
     renameDTO.setOldName(oldName + "7");
     renameDTO.setNewName(newName);
 

@@ -30,7 +30,7 @@ public class MailCategoryDTO {
     private String newName;
 
     @NotNull
-    private Long categoryId;
+    private Long id;
   }
 
   @Getter @Setter

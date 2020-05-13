@@ -48,7 +48,7 @@ public class MailCategoryController {
     }
     AccountsSession sessionUser = (AccountsSession) session.getAttribute("user");
     MailCategory renamedDir =
-      mailCategoryService.renameDir(dto.getCategoryId(), dto.getOldName(), dto.getNewName(), sessionUser.getId());
+      mailCategoryService.renameDir(dto.getId(), dto.getOldName(), dto.getNewName(), sessionUser.getId());
     return new ResponseEntity<>(modelMapper.map(renamedDir, MailCategoryDTO.Response.class), HttpStatus.OK);
   }
 
