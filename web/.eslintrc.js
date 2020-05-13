@@ -1,11 +1,7 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['react', '@typescript-eslint'],
-  extends: [
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['plugin:react/recommended', 'plugin:@typescript-eslint/recommended'],
   parserOptions: {
     ecmaVersion: 2018,
   },
@@ -24,7 +20,6 @@ module.exports = {
     '@typescript-eslint/interface-name-prefix': 0,
     camelcase: 0,
     '@typescript-eslint/explicit-function-return-type': 0,
-    // '@typescript-eslint/no-inferrable-types': 0,
   },
   settings: {
     react: {
