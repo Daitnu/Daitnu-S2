@@ -1,10 +1,10 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import S from './styled';
 import { RegisterParam } from '~/@types/request/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '~/redux';
-import { registerRequest } from '~/redux/user/register';
+import { registerRequest, registerClear } from '~/redux/user/register';
 import {
   validate,
   equalValidate,
@@ -36,6 +36,10 @@ export const RegisterForm: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { loading, error } = useSelector((state: RootState) => state.user.register);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(registerClear);
+  });
 
   const handleInputChange = (key: string) => ({
     target: { value },

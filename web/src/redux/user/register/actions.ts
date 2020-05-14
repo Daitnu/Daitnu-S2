@@ -7,6 +7,7 @@ export const REGISTER = 'REGISTER' as const;
 export const REGISTER_REQUEST = 'REGISTER_REQUEST' as const;
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS' as const;
 export const REGISTER_FAILURE = 'REGISTER_FAILURE' as const;
+export const REGISTER_CLEAR = 'REGISTER_CLEAR' as const;
 
 export const registerRequest = (payload: RegisterParam) => ({
   type: REGISTER_REQUEST,
@@ -22,3 +23,5 @@ export const registerFailure = (payload: BusinessErrorResponse) => ({
   type: REGISTER_FAILURE,
   payload,
 });
+
+export const registerClear = () => ({ type: REGISTER_CLEAR });
