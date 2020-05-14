@@ -16,7 +16,9 @@ export const Home: React.FC = () => {
   }
 
   useEffect(() => {
-    dispatch(categoryGetRequest());
+    if (user.id !== '') {
+      dispatch(categoryGetRequest());
+    }
   }, []);
 
   return (
