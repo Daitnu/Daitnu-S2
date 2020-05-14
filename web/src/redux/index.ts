@@ -5,13 +5,27 @@ import userRegister, { userRegisterSaga } from './user/register';
 import userLogin, { userLoginSaga } from './user/login';
 import categoryGet, { categoryGetSaga } from './category/get';
 import categoryAdd, { categoryAddSaga } from './category/add';
+import categoryDelete, { categoryDeleteSaga } from './category/delete';
 
-const rootReducer = combineReducers({ user, userRegister, userLogin, categoryGet, categoryAdd });
+const rootReducer = combineReducers({
+  user,
+  userRegister,
+  userLogin,
+  categoryGet,
+  categoryAdd,
+  categoryDelete,
+});
 
 export default rootReducer;
 
 export type RootState = ReturnType<typeof rootReducer>;
 
 export function* rootSaga() {
-  yield all([userRegisterSaga(), userLoginSaga(), categoryGetSaga(), categoryAddSaga()]);
+  yield all([
+    userRegisterSaga(),
+    userLoginSaga(),
+    categoryGetSaga(),
+    categoryAddSaga(),
+    categoryDeleteSaga(),
+  ]);
 }
