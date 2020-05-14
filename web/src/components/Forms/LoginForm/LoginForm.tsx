@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import S from './styled';
 import { RootState } from '~/redux';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginRequest } from '~/redux/user/login';
+import { loginRequest, loginClear } from '~/redux/user/login';
 import { validate, ID, PASSWORD } from '~/library/validate';
 import { LoginParam } from '~/@types/request/user';
 
@@ -16,6 +16,14 @@ export const LoginForm: React.FC = () => {
   const [errState, setErrState] = useState<LoginParam>(loginInitState);
   const { loading, error } = useSelector((state: RootState) => state.user.login);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loginClear());
+  }, []);
+
+  if (loading) {
+    return <S.Loading />;
+  }
 
   const handleOnChange = (key: string) => ({ target: { value } }) => {
     setLoginState({ ...loginState, [key]: value });
@@ -41,10 +49,6 @@ export const LoginForm: React.FC = () => {
 
     dispatch(loginRequest({ [ID]: loginState[ID], [PASSWORD]: loginState[PASSWORD] }));
   };
-
-  if (loading) {
-    return <S.Loading />;
-  }
 
   return (
     <S.InputForm autoComplete="off">

@@ -39,6 +39,7 @@ export const makeApiReducer = <T, R = undefined>(type: string) => {
   const REQUEST = `${type}_REQUEST` as 'REQUEST';
   const SUCCESS = `${type}_SUCCESS` as 'SUCCESS';
   const FAILURE = `${type}_FAILURE` as 'FAILURE';
+  const CLEAR = `${type}_CLEAR` as 'CLEAR';
   type Request = {
     type: typeof REQUEST;
     payload: R;
@@ -51,7 +52,10 @@ export const makeApiReducer = <T, R = undefined>(type: string) => {
     type: typeof FAILURE;
     payload: BusinessErrorResponse;
   };
-  type Action = Request | Success | Failure;
+  type Clear = {
+    type: typeof CLEAR;
+  };
+  type Action = Request | Success | Failure | Clear;
 
   return (state: ApiState<T> = initialState, action: Action): ApiState<T> => {
     switch (action.type) {
@@ -73,6 +77,10 @@ export const makeApiReducer = <T, R = undefined>(type: string) => {
           loading: false,
           data: null,
           error: action.payload,
+        };
+      case CLEAR:
+        return {
+          ...initialState,
         };
       default:
         return state;

@@ -7,6 +7,7 @@ export const LOGIN = 'LOGIN' as const;
 export const LOGIN_REQUEST = 'LOGIN_REQUEST' as const;
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS' as const;
 export const LOGIN_FAILURE = 'LOGIN_FAILURE' as const;
+export const LOGIN_CLEAR = 'LOGIN_CLEAR' as const;
 
 export const loginRequest = (payload: LoginParam) => ({
   type: LOGIN_REQUEST,
@@ -22,3 +23,5 @@ export const loginFailure = (payload: BusinessErrorResponse) => ({
   type: LOGIN_FAILURE,
   payload,
 });
+
+export const loginClear = () => ({ type: LOGIN_CLEAR });
