@@ -6,6 +6,7 @@ import userLogin, { userLoginSaga } from './user/login';
 import categoryGet, { categoryGetSaga } from './category/get';
 import categoryAdd, { categoryAddSaga } from './category/add';
 import categoryDelete, { categoryDeleteSaga } from './category/delete';
+import categoryRename, { categoryRenameSaga } from './category/rename';
 
 const rootReducer = combineReducers({
   user,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   categoryGet,
   categoryAdd,
   categoryDelete,
+  categoryRename,
 });
 
 export default rootReducer;
@@ -27,5 +29,6 @@ export function* rootSaga() {
     categoryGetSaga(),
     categoryAddSaga(),
     categoryDeleteSaga(),
+    categoryRenameSaga(),
   ]);
 }
