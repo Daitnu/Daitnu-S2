@@ -23,6 +23,12 @@ const initialState: RegisterParam = {
   [SUB_EMAIL]: '',
 };
 
+const getErr = ({ key, value, formState }) => {
+  const { password } = formState;
+  if (key === PASSWORD_CHECK) return equalValidate(password, value);
+  else return validate({ key, value });
+};
+
 export const RegisterForm: React.FC = () => {
   const history = useHistory();
   const [formState, setFormState] = useState<RegisterParam>(initialState);
@@ -31,19 +37,13 @@ export const RegisterForm: React.FC = () => {
   const { loading, error } = useSelector((state: RootState) => state.user.register);
   const dispatch = useDispatch();
 
-  const getErr = ({ key, value }) => {
-    const { password } = formState;
-    if (key === PASSWORD_CHECK) return equalValidate(password, value);
-    else return validate({ key, value });
-  };
-
   const handleInputChange = (key: string) => ({
     target: { value },
   }: ChangeEvent<HTMLInputElement>) => {
     setFormState({ ...formState, [key]: value });
     setFormErrState({
       ...formErrState,
-      [key]: getErr({ key, value }),
+      [key]: getErr({ key, value, formState }),
     });
   };
 
@@ -60,11 +60,11 @@ export const RegisterForm: React.FC = () => {
 
     const { id, name, password, passwordCheck, subEmail } = formState;
     const errResult: RegisterParam = {
-      [ID]: getErr({ key: ID, value: id }),
-      [PASSWORD]: getErr({ key: PASSWORD, value: password }),
-      [PASSWORD_CHECK]: getErr({ key: PASSWORD_CHECK, value: passwordCheck }),
-      [NAME]: getErr({ key: NAME, value: name }),
-      [SUB_EMAIL]: getErr({ key: SUB_EMAIL, value: subEmail }),
+      [ID]: getErr({ key: ID, value: id, formState }),
+      [PASSWORD]: getErr({ key: PASSWORD, value: password, formState }),
+      [PASSWORD_CHECK]: getErr({ key: PASSWORD_CHECK, value: passwordCheck, formState }),
+      [NAME]: getErr({ key: NAME, value: name, formState }),
+      [SUB_EMAIL]: getErr({ key: SUB_EMAIL, value: subEmail, formState }),
     };
 
     if (Object.values(errResult).some((v) => v !== '')) {
