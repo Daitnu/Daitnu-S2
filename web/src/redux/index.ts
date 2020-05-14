@@ -3,19 +3,13 @@ import { all } from 'redux-saga/effects';
 import user from './global/user';
 import userRegister, { userRegisterSaga } from './user/register';
 import userLogin, { userLoginSaga } from './user/login';
-import categoryGet, { categoryGetSaga } from './category/get';
-import categoryAdd, { categoryAddSaga } from './category/add';
-import categoryDelete, { categoryDeleteSaga } from './category/delete';
-import categoryRename, { categoryRenameSaga } from './category/rename';
+import category, { categorySaga } from './category';
 
 const rootReducer = combineReducers({
   user,
   userRegister,
   userLogin,
-  categoryGet,
-  categoryAdd,
-  categoryDelete,
-  categoryRename,
+  category,
 });
 
 export default rootReducer;
@@ -23,12 +17,5 @@ export default rootReducer;
 export type RootState = ReturnType<typeof rootReducer>;
 
 export function* rootSaga() {
-  yield all([
-    userRegisterSaga(),
-    userLoginSaga(),
-    categoryGetSaga(),
-    categoryAddSaga(),
-    categoryDeleteSaga(),
-    categoryRenameSaga(),
-  ]);
+  yield all([userRegisterSaga(), userLoginSaga(), categorySaga()]);
 }
