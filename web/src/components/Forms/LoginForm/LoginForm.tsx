@@ -14,7 +14,7 @@ const loginInitState: LoginParam = {
 export const LoginForm: React.FC = () => {
   const [loginState, setLoginState] = useState<LoginParam>(loginInitState);
   const [errState, setErrState] = useState<LoginParam>(loginInitState);
-  const { loading, error } = useSelector((state: RootState) => state.userLogin);
+  const { loading, error } = useSelector((state: RootState) => state.user.login);
   const dispatch = useDispatch();
 
   const handleOnChange = (key: string) => ({ target: { value } }) => {

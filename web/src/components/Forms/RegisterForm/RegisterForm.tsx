@@ -28,7 +28,7 @@ export const RegisterForm: React.FC = () => {
   const [formState, setFormState] = useState<RegisterParam>(initialState);
   const [formErrState, setFormErrState] = useState<RegisterParam>(initialState);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { loading, error } = useSelector((state: RootState) => state.userRegister);
+  const { loading, error } = useSelector((state: RootState) => state.user.register);
   const dispatch = useDispatch();
 
   const getErr = ({ key, value }) => {

@@ -6,8 +6,8 @@ import { categoryGetRequest } from '~/redux/category/get';
 import * as S from './styled';
 
 export const Home: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user);
-  const { loading, data, error } = useSelector((state: RootState) => state.categoryGet);
+  const user = useSelector((state: RootState) => state.global.user);
+  const { loading, data, error } = useSelector((state: RootState) => state.category.get);
   const dispatch = useDispatch();
   const history = useHistory();
 
