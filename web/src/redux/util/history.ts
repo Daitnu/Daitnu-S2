@@ -1,5 +1,5 @@
 import { history } from '~/router';
 
-export const push = (url: string) => {
+export const historyPush = (url: string) => {
   history.push(url);
 };
