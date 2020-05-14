@@ -3,16 +3,19 @@ package daitnu.daitnus2.accounts;
 import daitnu.daitnus2.accounts.exception.DuplicatUserId;
 import daitnu.daitnus2.accounts.exception.DuplicateSubEmail;
 import daitnu.daitnus2.accounts.exception.InvalidLoginInput;
+import daitnu.daitnus2.database.entity.MailCategory;
 import daitnu.daitnus2.database.entity.User;
+import daitnu.daitnus2.database.repository.MailCategoryRepository;
 import daitnu.daitnus2.database.repository.UserRepository;
 import daitnu.daitnus2.exception.BusinessException;
 import daitnu.daitnus2.exception.ErrorCode;
-import daitnu.daitnus2.mail.category.MailCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +24,7 @@ import java.util.Optional;
 public class AccountsService {
 
   private final UserRepository userRepository;
-  private final MailCategoryService mailCategoryService;
+  private final MailCategoryRepository mailCategoryRepository;
   private final PasswordEncoder passwordEncoder;
 
 
@@ -61,10 +64,13 @@ public class AccountsService {
     userPw = passwordEncoder.encode(userPw);
     User userInstance = new User(userId, userPw, userName, userSubEmail);
     User newUser = userRepository.save(userInstance);
-    mailCategoryService.makeDir("받은메일함", newUser.getId());
-    mailCategoryService.makeDir("보낸메일함", newUser.getId());
-    mailCategoryService.makeDir("내게쓴메일함", newUser.getId());
-    mailCategoryService.makeDir("휴지통", newUser.getId());
+
+    String[] defaultCategoryNames = {"받은메일함", "보낸메일함", "내게쓴메일함", "휴지통"};
+    List<MailCategory> mailCategories = new ArrayList<>();
+    for (String name: defaultCategoryNames) {
+      mailCategories.add(new MailCategory(name, newUser));
+    }
+    mailCategoryRepository.saveAll(mailCategories);
     return newUser;
   }
 
