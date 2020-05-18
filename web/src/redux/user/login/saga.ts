@@ -7,9 +7,14 @@ import { HTTPResponse } from '~/@types/response/success';
 import { saveUser } from '~/redux/global/user';
 import { historyPush } from '~/redux/util/history';
 
+const USER_ID = 'userId' as const;
+const USER_NAME = 'userName' as const;
+
 const api = new UserApi();
 const successCb = function* ({ data: { userId, name } }: HTTPResponse<ResponseLogin>) {
   yield put(saveUser({ id: userId, name, email: `${userId}@daitnu2.com` }));
+  yield call([sessionStorage, 'setItem'], USER_ID, userId);
+  yield call([sessionStorage, 'setItem'], USER_NAME, name);
   yield call(historyPush, '/');
 };
 
