@@ -89,14 +89,8 @@ public class MailService {
   @Transactional
   public void patchMail(MailDTO.PatchMailDTO dto, Long userId) {
     if (dto.getType().equalsIgnoreCase(MailDTO.PatchType.MOVE.toString())) {
-      if (dto.getMailId() == null || dto.getCategoryId() == null) {
-        throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
-      }
       updateCategory(dto.getMailId(), userId, dto.getCategoryId());
     } else if (dto.getType().equalsIgnoreCase(MailDTO.PatchType.ALTER.toString())) {
-      if (dto.getMailId() == null || dto.getImportant() == null || dto.getRead() == null || dto.getRemoved() == null) {
-        throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
-      }
       updateProperties(dto.getMailId(), userId, dto.getImportant(), dto.getRead(), dto.getRemoved());
     }
   }
