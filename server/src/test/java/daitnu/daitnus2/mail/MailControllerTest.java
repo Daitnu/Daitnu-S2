@@ -261,12 +261,72 @@ public class MailControllerTest {
   }
 
   @Test
+  public void 메일_정보_수정_실패_테스트_메일함_이동_케이스_다른_값_null_아님() throws Exception {
+    // given
+    MailDTO.PatchMailDTO dto = new MailDTO.PatchMailDTO();
+    dto.setType(MailDTO.PatchType.MOVE.toString());
+    dto.setMailId(mailId);
+    dto.setCategoryId(mailCategoryId2);
+    dto.setRemoved(false);
+    MockHttpSession mockHttpSession = new MockHttpSession();
+
+    // when
+    AccountsSession sessionUserDTO =
+      new AccountsSession(userId, "ksss012", "ksss012@daitnu.com");
+    mockHttpSession.setAttribute("user", sessionUserDTO);
+    ResultActions result = mockMvc.perform(patch("/mail")
+      .session(mockHttpSession)
+      .content(objectMapper.writeValueAsString(dto))
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print());
+
+    // then
+    result
+      .andExpect(status().isBadRequest())
+      .andExpect(jsonPath("message").value("Invalid Input Value"))
+      .andExpect(jsonPath("status").value(400))
+    ;
+  }
+
+  @Test
   public void 메일_정보_수정_실패_테스트_세개의_특성중_하나라도_null() throws Exception {
     // given
     MailDTO.PatchMailDTO dto = new MailDTO.PatchMailDTO();
     dto.setType(MailDTO.PatchType.ALTER.toString());
     dto.setMailId(mailId);
     dto.setImportant(null);
+    dto.setRead(true);
+    dto.setRemoved(true);
+    MockHttpSession mockHttpSession = new MockHttpSession();
+
+    // when
+    AccountsSession sessionUserDTO =
+      new AccountsSession(userId, "ksss012", "ksss012@daitnu.com");
+    mockHttpSession.setAttribute("user", sessionUserDTO);
+    ResultActions result = mockMvc.perform(patch("/mail")
+      .session(mockHttpSession)
+      .content(objectMapper.writeValueAsString(dto))
+      .contentType(MediaType.APPLICATION_JSON_VALUE)
+      .accept(MediaType.APPLICATION_JSON_VALUE))
+      .andDo(print());
+
+    // then
+    result
+      .andExpect(status().isBadRequest())
+      .andExpect(jsonPath("message").value("Invalid Input Value"))
+      .andExpect(jsonPath("status").value(400))
+    ;
+  }
+
+  @Test
+  public void 메일_정보_수정_실패_테스트_메일함_아이디가_null_아님() throws Exception {
+    // given
+    MailDTO.PatchMailDTO dto = new MailDTO.PatchMailDTO();
+    dto.setType(MailDTO.PatchType.ALTER.toString());
+    dto.setMailId(mailId);
+    dto.setCategoryId(mailCategoryId2);
+    dto.setImportant(true);
     dto.setRead(true);
     dto.setRemoved(true);
     MockHttpSession mockHttpSession = new MockHttpSession();
