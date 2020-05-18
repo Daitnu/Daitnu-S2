@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import * as GS from '../GlobalStyle';
+import LoadingGif from '~/assets/gif/loading.gif';
 
 export const EntireWrapper = styled(GS.FlexCenter)`
   width: 100%;
@@ -29,4 +30,10 @@ export const Body = styled(GS.FlexCenter)`
   width: 80%;
   height: 100%;
   border: 1px solid black;
+`;
+
+export const Loading = styled(GS.BackgroundImgDiv)`
+  width: 50px;
+  height: 50px;
+  background-image: url(${LoadingGif});
 `;
