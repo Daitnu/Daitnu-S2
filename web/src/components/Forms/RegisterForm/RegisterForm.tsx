@@ -55,7 +55,7 @@ export const RegisterForm: React.FC = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (loading) {
       return;
