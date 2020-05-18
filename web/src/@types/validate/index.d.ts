@@ -1,4 +1,3 @@
-import { User } from '../state/user';
 import { BusinessErrorResponse } from '../response/error';
 
 export interface ValidateParam {
@@ -8,6 +7,7 @@ export interface ValidateParam {
 }
 
 export interface IsLoginParam {
-  user: User;
+  userId: string | null;
+  userName: string | null;
   error: BusinessErrorResponse | null;
 }

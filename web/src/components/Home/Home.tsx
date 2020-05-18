@@ -4,24 +4,25 @@ import { useHistory } from 'react-router-dom';
 import { RootState } from '~/redux';
 import { categoryGetRequest } from '~/redux/category/get';
 import { IsLoginParam } from '~/@types/validate';
+import storage from '~/library/storage';
 import * as S from './styled';
 
-const isLogin = ({ user, error }: IsLoginParam) => {
-  return user.id !== '' && error?.status !== 401;
+const isLogin = ({ userId, userName, error }: IsLoginParam) => {
+  return userId !== null && userName !== null && error?.status !== 401;
 };
 
 export const Home: React.FC = () => {
-  const user = useSelector((state: RootState) => state.global.user);
+  const { userId, userName } = storage.getUserInfo();
   const { loading, data, error } = useSelector((state: RootState) => state.category.get);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  if (!isLogin({ user, error })) {
+  if (!isLogin({ userId, userName, error })) {
     history.push('/login');
   }
 
   useEffect(() => {
-    if (isLogin({ user, error })) {
+    if (isLogin({ userId, userName, error })) {
       dispatch(categoryGetRequest());
     }
   }, []);
@@ -35,7 +36,7 @@ export const Home: React.FC = () => {
       <S.TopWrapper>Top</S.TopWrapper>
       <S.BodyWrapper>
         <S.Aside>Aside</S.Aside>
-        <S.Body>하위 {user.name} ㅋㅋ</S.Body>
+        <S.Body>하위 {userName} ㅋㅋ</S.Body>
       </S.BodyWrapper>
     </S.EntireWrapper>
   );
