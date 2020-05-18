@@ -3,7 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RootState } from '~/redux';
 import { categoryGetRequest } from '~/redux/category/get';
+import { IsLoginParam } from '~/@types/validate';
 import * as S from './styled';
+
+const isLogin = ({ user, error }: IsLoginParam) => {
+  return user.id !== '' && error?.status !== 401;
+};
 
 export const Home: React.FC = () => {
   const user = useSelector((state: RootState) => state.global.user);
@@ -11,15 +16,19 @@ export const Home: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  if (user.id === '') {
+  if (!isLogin({ user, error })) {
     history.push('/login');
   }
 
   useEffect(() => {
-    if (user.id !== '') {
+    if (isLogin({ user, error })) {
       dispatch(categoryGetRequest());
     }
   }, []);
+
+  if (loading || data === null) {
+    return <S.Loading />;
+  }
 
   return (
     <S.EntireWrapper>
