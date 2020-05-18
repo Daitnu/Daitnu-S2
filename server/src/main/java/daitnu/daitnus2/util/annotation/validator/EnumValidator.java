@@ -17,7 +17,7 @@ public class EnumValidator implements ConstraintValidator<Enum, String> {
   @Override
   public boolean isValid(String value, ConstraintValidatorContext context) {
     java.lang.Enum<?>[] constants = this.annotation.enumClass().getEnumConstants();
-    if (constants != null) {
+    if (constants != null && value != null) {
       for (java.lang.Enum<?> constant: constants) {
         if (value.equals(constant.toString())
             || (this.annotation.ignoreCase() && value.equalsIgnoreCase(constant.toString()))) {

@@ -20,13 +20,15 @@ public class PatchMailValidator implements ConstraintValidator<PatchMailValid, M
 
   @Override
   public boolean isValid(MailDTO.PatchMailDTO dto, ConstraintValidatorContext context) {
-    if (dto.getType().equals(MailDTO.PatchType.MOVE.toString())) {
-      if (moveArgumentNullCheck(dto)) {
-        return true;
-      }
-    } else if (dto.getType().equals(MailDTO.PatchType.ALTER.toString())) {
-      if (alterArgumentNullCheck(dto)) {
-        return true;
+    if (dto.getType() != null) {
+      if (dto.getType().equals(MailDTO.PatchType.MOVE.toString())) {
+        if (moveArgumentNullCheck(dto)) {
+          return true;
+        }
+      } else if (dto.getType().equals(MailDTO.PatchType.ALTER.toString())) {
+        if (alterArgumentNullCheck(dto)) {
+          return true;
+        }
       }
     }
     return false;
