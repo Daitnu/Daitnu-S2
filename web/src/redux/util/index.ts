@@ -3,6 +3,7 @@ import { HTTPResponse } from '~/@types/response/success';
 import { BusinessErrorResponse } from '~/@types/response/error';
 import { ApiState } from '~/@types/state/api';
 import { ApiCallSagaFunc } from '~/@types/redux/util/makeFuncParam';
+import { historyPush } from './history';
 
 /**
  * @param type login인지, register인지 등을 나타내는 상수
@@ -21,6 +22,9 @@ export const makeApiCallSagaFunc = ({ type, apiFunc, successCb, failCb }: ApiCal
       }
     } catch (err) {
       yield put({ type: FAILURE, payload: err });
+      if (err.status === 401) {
+        yield call(historyPush, '/login');
+      }
       if (failCb !== undefined) {
         yield call(failCb, err);
       }
