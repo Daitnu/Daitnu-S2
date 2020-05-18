@@ -5,9 +5,7 @@ import UserApi from '~/library/request/UserApi';
 import { ResponseLogin } from '~/@types/response/user';
 import { HTTPResponse } from '~/@types/response/success';
 import { historyPush } from '~/redux/util/history';
-
-const USER_ID = 'userId' as const;
-const USER_NAME = 'userName' as const;
+import { USER_ID, USER_NAME } from '~/library/storage';
 
 const api = new UserApi();
 const successCb = function* ({ data: { userId, name } }: HTTPResponse<ResponseLogin>) {
