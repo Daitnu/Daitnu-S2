@@ -38,8 +38,8 @@ export const RegisterForm: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(registerClear);
-  });
+    dispatch(registerClear());
+  }, []);
 
   const handleInputChange = (key: string) => ({
     target: { value },
