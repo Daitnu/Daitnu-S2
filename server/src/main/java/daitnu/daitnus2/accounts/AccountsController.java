@@ -57,6 +57,12 @@ public class AccountsController {
     return new ResponseEntity<>(modelMapper.map(newUser, AccountsDTO.ResponseRegister.class), HttpStatus.CREATED);
   }
 
+  @PostMapping(path = "/logout")
+  public ResponseEntity<?> logout(HttpSession session) {
+    session.invalidate();
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
+
   @GetMapping("/password")
   public String changePassword() {
     return "change page";
