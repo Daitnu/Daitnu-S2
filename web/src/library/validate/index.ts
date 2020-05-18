@@ -1,3 +1,5 @@
+import { IsLoginParam } from '~/@types/validate';
+
 export const ID = 'id' as const;
 export const PASSWORD = 'password' as const;
 export const PASSWORD_CHECK = 'passwordCheck' as const;
@@ -57,4 +59,8 @@ export const equalValidate = (val1, val2): string => {
     return '같은 값을 입력해 주세요';
   }
   return '';
+};
+
+export const isLogin = ({ userId, userName }: IsLoginParam) => {
+  return userId !== null && userName !== null;
 };

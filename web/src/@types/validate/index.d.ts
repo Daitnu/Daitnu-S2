@@ -1,5 +1,3 @@
-import { BusinessErrorResponse } from '../response/error';
-
 export interface ValidateParam {
   val: string;
   min: number;
@@ -9,5 +7,4 @@ export interface ValidateParam {
 export interface IsLoginParam {
   userId: string | null;
   userName: string | null;
-  error: BusinessErrorResponse | null;
 }
