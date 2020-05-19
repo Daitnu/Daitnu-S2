@@ -43,4 +43,4 @@
 
 **Infra** - NCP(돈 적게 드는 방향으로..), Ubuntu, Nginx, Postfix, Dovecot
 
-**Testing** - Mocha, JUnit4
+**Testing** - JUnit4
