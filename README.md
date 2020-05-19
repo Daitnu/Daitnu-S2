@@ -35,11 +35,11 @@
 
 ### Season2 기술스택
 
-**FE** - TS, React, Redux, Styled-Component
+**FE** - TS, React, Redux, Redux-Saga, Styled-Components
 
-**BE** - Spring Boot, Spring JPA, Spring Security
+**BE** - Spring Boot, Spring MVC, Spring JPA, Spring Security
 
-**DB** - Mysql, MongoDB
+**DB** - Mysql
 
 **Infra** - NCP(돈 적게 드는 방향으로..), Ubuntu, Nginx, Postfix, Dovecot
 
