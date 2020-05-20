@@ -4,6 +4,10 @@ import LoadingGif from '~/assets/gif/loading.gif';
 import MobileMenuBtnPng from '~/assets/png/mobile_menu_btn.png';
 import COLOR from '../GlobalStyle/color';
 
+interface MobileProps {
+  mobileMenuToggle: boolean;
+}
+
 export const EntireWrapper = styled(GS.FlexCenter)`
   width: 100%;
   height: 100%;
@@ -13,7 +17,6 @@ export const EntireWrapper = styled(GS.FlexCenter)`
 export const TopWrapper = styled(GS.FlexCenter)`
   width: 100%;
   height: 15%;
-  border: 1px solid black;
   position: relative;
 `;
 
@@ -32,16 +35,20 @@ export const MobileMenuBtn = styled(GS.BackgroundImgDiv)`
 export const BodyWrapper = styled(GS.FlexCenter)`
   width: 100%;
   height: 85%;
-  border: 1px solid black;
 `;
 
-export const Aside = styled(GS.FlexCenter)`
+export const Aside = styled(GS.FlexCenter)<MobileProps>`
   width: 20%;
   height: 100%;
-  border: 1px solid black;
   flex-direction: column;
   @media (max-width: 732px) {
-    display: none;
+    position: absolute;
+    width: 180px;
+    height: 85%;
+    left: -180px;
+    transition: transform 2s;
+    transform: translateX(${({ mobileMenuToggle }) => (mobileMenuToggle ? '180px' : '0px')});
+    z-index: 1;
   }
 `;
 
@@ -63,7 +70,7 @@ export const AsideItem = styled(GS.FlexCenter)`
 export const Body = styled(GS.FlexCenter)`
   width: 80%;
   height: 100%;
-  border: 1px solid black;
+  position: relative;
   @media (max-width: 732px) {
     width: 100%;
   }
