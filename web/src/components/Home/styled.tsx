@@ -26,6 +26,9 @@ export const Aside = styled(GS.FlexCenter)`
   height: 100%;
   border: 1px solid black;
   flex-direction: column;
+  @media (max-width: 732px) {
+    display: none;
+  }
 `;
 
 export const AsideItem = styled(GS.FlexCenter)`
@@ -47,6 +50,9 @@ export const Body = styled(GS.FlexCenter)`
   width: 80%;
   height: 100%;
   border: 1px solid black;
+  @media (max-width: 732px) {
+    width: 100%;
+  }
 `;
 
 export const Loading = styled(GS.BackgroundImgDiv)`
