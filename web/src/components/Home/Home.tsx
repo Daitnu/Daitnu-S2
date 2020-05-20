@@ -32,8 +32,16 @@ export const Home: React.FC = () => {
     setMobileMenuToggle(!mobileMenuToggle);
   };
 
+  const handleMobileMenuClose = (e: React.MouseEvent<HTMLElement>) => {
+    if (mobileMenuToggle) {
+      e.stopPropagation();
+      setMobileMenuToggle(false);
+    }
+  };
+
   return (
     <S.EntireWrapper>
+      {mobileMenuToggle && <S.AsideMobileBackground onClick={handleMobileMenuClose} />}
       <S.TopWrapper>
         <S.MobileMenuBtn onClick={handleMobileMenuToggle} />
         Top

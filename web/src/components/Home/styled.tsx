@@ -44,6 +44,7 @@ export const Aside = styled(GS.FlexCenter)<MobileProps>`
   flex-direction: column;
   @media (max-width: 732px) {
     position: absolute;
+    background-color: white;
     width: ${SIZE.MOBILE.ASIDE.WIDTH};
     height: 100%;
     top: 0;
@@ -52,6 +53,17 @@ export const Aside = styled(GS.FlexCenter)<MobileProps>`
     transform: translateX(
       ${({ mobileMenuToggle }) => (mobileMenuToggle ? SIZE.MOBILE.ASIDE.WIDTH : '0px')}
     );
+    z-index: 2;
+  }
+`;
+
+export const AsideMobileBackground = styled.div`
+  @media (max-width: 732px) {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: grey;
+    opacity: 0.5;
     z-index: 1;
   }
 `;
