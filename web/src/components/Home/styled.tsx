@@ -3,6 +3,7 @@ import * as GS from '../GlobalStyle';
 import LoadingGif from '~/assets/gif/loading.gif';
 import MobileMenuBtnPng from '~/assets/png/mobile_menu_btn.png';
 import COLOR from '../GlobalStyle/color';
+import SIZE from '../GlobalStyle/size';
 
 interface MobileProps {
   mobileMenuToggle: boolean;
@@ -43,11 +44,14 @@ export const Aside = styled(GS.FlexCenter)<MobileProps>`
   flex-direction: column;
   @media (max-width: 732px) {
     position: absolute;
-    width: 180px;
-    height: 85%;
-    left: -180px;
+    width: ${SIZE.MOBILE.ASIDE.WIDTH};
+    height: 100%;
+    top: 0;
+    left: -${SIZE.MOBILE.ASIDE.WIDTH};
     transition: transform 1s;
-    transform: translateX(${({ mobileMenuToggle }) => (mobileMenuToggle ? '180px' : '0px')});
+    transform: translateX(
+      ${({ mobileMenuToggle }) => (mobileMenuToggle ? SIZE.MOBILE.ASIDE.WIDTH : '0px')}
+    );
     z-index: 1;
   }
 `;
@@ -70,7 +74,6 @@ export const AsideItem = styled(GS.FlexCenter)`
 export const Body = styled(GS.FlexCenter)`
   width: 80%;
   height: 100%;
-  position: relative;
   @media (max-width: 732px) {
     width: 100%;
   }
