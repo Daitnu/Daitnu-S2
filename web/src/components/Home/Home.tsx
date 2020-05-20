@@ -6,6 +6,7 @@ import { categoryGetRequest } from '~/redux/category/get';
 import { isLogin } from '~/library/validate';
 import storage from '~/library/storage';
 import * as S from './styled';
+import { Aside } from '../Aside';
 
 export const Home: React.FC = () => {
   const { userId, userName } = storage.getUserInfo();
@@ -47,17 +48,7 @@ export const Home: React.FC = () => {
         Top
       </S.TopWrapper>
       <S.BodyWrapper>
-        <S.Aside mobileMenuToggle={mobileMenuToggle}>
-          {data ? (
-            data.data.map((v) => (
-              <S.AsideItem key={v.id} id={`${v.id}`}>
-                {v.name}
-              </S.AsideItem>
-            ))
-          ) : (
-            <S.Loading />
-          )}
-        </S.Aside>
+        {data ? <Aside itemData={data.data} mobileMenuToggle={mobileMenuToggle} /> : <S.Loading />}
         <S.Body>하위 {userName} ㅋㅋ</S.Body>
       </S.BodyWrapper>
     </S.EntireWrapper>
