@@ -29,7 +29,10 @@ export const Home: React.FC = () => {
 
   return (
     <S.EntireWrapper>
-      <S.TopWrapper>Top</S.TopWrapper>
+      <S.TopWrapper>
+        <S.MobileMenuBtn />
+        Top
+      </S.TopWrapper>
       <S.BodyWrapper>
         <S.Aside>
           {data ? (

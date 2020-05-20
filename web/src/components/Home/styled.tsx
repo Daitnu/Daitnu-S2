@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import * as GS from '../GlobalStyle';
 import LoadingGif from '~/assets/gif/loading.gif';
+import MobileMenuBtnPng from '~/assets/png/mobile_menu_btn.png';
 import COLOR from '../GlobalStyle/color';
 
 export const EntireWrapper = styled(GS.FlexCenter)`
@@ -13,6 +14,19 @@ export const TopWrapper = styled(GS.FlexCenter)`
   width: 100%;
   height: 15%;
   border: 1px solid black;
+  position: relative;
+`;
+
+export const MobileMenuBtn = styled(GS.BackgroundImgDiv)`
+  @media (max-width: 732px) {
+    top: 5px;
+    left: 5px;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    cursor: pointer;
+    background-image: url(${MobileMenuBtnPng});
+  }
 `;
 
 export const BodyWrapper = styled(GS.FlexCenter)`
