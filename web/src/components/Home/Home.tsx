@@ -31,7 +31,17 @@ export const Home: React.FC = () => {
     <S.EntireWrapper>
       <S.TopWrapper>Top</S.TopWrapper>
       <S.BodyWrapper>
-        <S.Aside>Aside</S.Aside>
+        <S.Aside>
+          {data ? (
+            data.data.map((v) => (
+              <S.AsideItem key={v.id} id={`${v.id}`}>
+                {v.name}
+              </S.AsideItem>
+            ))
+          ) : (
+            <S.Loading />
+          )}
+        </S.Aside>
         <S.Body>하위 {userName} ㅋㅋ</S.Body>
       </S.BodyWrapper>
     </S.EntireWrapper>
