@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RootState } from '~/redux';
@@ -10,6 +10,7 @@ import * as S from './styled';
 export const Home: React.FC = () => {
   const { userId, userName } = storage.getUserInfo();
   const { loading, data, error } = useSelector((state: RootState) => state.category.get);
+  const [mobileMenuToggle, setMobileMenuToggle] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -27,14 +28,18 @@ export const Home: React.FC = () => {
     return <S.Loading />;
   }
 
+  const handleMobileMenuToggle = () => {
+    setMobileMenuToggle(!mobileMenuToggle);
+  };
+
   return (
     <S.EntireWrapper>
       <S.TopWrapper>
-        <S.MobileMenuBtn />
+        <S.MobileMenuBtn onClick={handleMobileMenuToggle} />
         Top
       </S.TopWrapper>
       <S.BodyWrapper>
-        <S.Aside>
+        <S.Aside mobileMenuToggle={mobileMenuToggle}>
           {data ? (
             data.data.map((v) => (
               <S.AsideItem key={v.id} id={`${v.id}`}>

@@ -46,7 +46,7 @@ export const Aside = styled(GS.FlexCenter)<MobileProps>`
     width: 180px;
     height: 85%;
     left: -180px;
-    transition: transform 2s;
+    transition: transform 1s;
     transform: translateX(${({ mobileMenuToggle }) => (mobileMenuToggle ? '180px' : '0px')});
     z-index: 1;
   }
