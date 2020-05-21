@@ -1,19 +1,18 @@
 package daitnu.daitnus2.mail;
 
 import daitnu.daitnus2.accounts.AccountsService;
-import daitnu.daitnus2.database.entity.Mail;
-import daitnu.daitnus2.database.entity.MailCategory;
-import daitnu.daitnus2.database.entity.MailTemplate;
-import daitnu.daitnus2.database.entity.User;
+import daitnu.daitnus2.database.entity.*;
 import daitnu.daitnus2.database.repository.MailRepository;
 import daitnu.daitnus2.exception.BusinessException;
 import daitnu.daitnus2.exception.ErrorCode;
+import daitnu.daitnus2.mail.attachment.MailAttachmentService;
 import daitnu.daitnus2.mail.category.MailCategoryService;
 import daitnu.daitnus2.mail.exception.NotFoundMail;
 import daitnu.daitnus2.mail.template.MailTemplateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,17 +24,30 @@ public class MailService {
 
   private final MailCategoryService mailCategoryService;
   private final MailTemplateService mailTemplateService;
+  private final MailAttachmentService mailAttachmentService;
   private final AccountsService accountsService;
   private final MailRepository mailRepository;
 
-  // 메일 생성
   @Transactional
-  public Mail makeMail(Long categoryId, Long userId, Long mailTemplateId) {
-    MailCategory mailCategory = mailCategoryService.findOne(categoryId);
+  public Mail addMail(Long userId, MailDTO.AddMailDTO dto) {
+    MailCategory sentMailBox = mailCategoryService.findByNameAndUserId("보낸메일함", userId);
+    MailTemplate mailTemplate = mailTemplateService.makeMailTemplate(dto.getFrom(),
+                                                                      dto.getMailReceivers(),
+                                                                      dto.getTitle(),
+                                                                      dto.getSubject());
+    List<MultipartFile> multipartFiles = dto.getFiles();
+    if (multipartFiles != null && !multipartFiles.isEmpty()) {
+      for (MultipartFile file: multipartFiles) {
+        MailAttachment attachment = mailAttachmentService.makeMailAttachment(mailTemplate.getId(),
+                                                                              file.getContentType(),
+                                                                              file.getOriginalFilename(),
+                                                                              "url",
+                                                                              file.getSize());
+        mailTemplate.addAttachment(attachment);
+      }
+    }
     User user = accountsService.findOne(userId);
-    MailTemplate mailTemplate = mailTemplateService.findOne(mailTemplateId);
-
-    Mail mail = new Mail(mailCategory, user, mailTemplate);
+    Mail mail = new Mail(sentMailBox, user, mailTemplate);
     mail.getMailTemplate().addMail(mail);
     mailRepository.save(mail);
     return mail;
