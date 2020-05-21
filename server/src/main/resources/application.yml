@@ -22,6 +22,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
+  servlet:
+    multipart:
+      max-file-size: 25MB
+
 logging:
   level:
     org.hibernate.SQL: debug
@@ -43,6 +47,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  servlet:
+    multipart:
+      max-file-size: 25MB
 
 logging:
   level:
