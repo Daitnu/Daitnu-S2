@@ -67,6 +67,9 @@ public class MailDTO {
     private String subject;
 
     @NotBlank
+    private String mailCategoryName;
+
+    @NotBlank
     private String from;
 
     @NotBlank

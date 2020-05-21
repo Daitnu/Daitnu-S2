@@ -30,7 +30,7 @@ public class MailService {
 
   @Transactional
   public Mail addMail(Long userId, MailDTO.AddMailDTO dto) {
-    MailCategory sentMailBox = mailCategoryService.findByNameAndUserId("보낸메일함", userId);
+    MailCategory sentMailBox = mailCategoryService.findByNameAndUserId(dto.getMailCategoryName(), userId);
     MailTemplate mailTemplate = mailTemplateService.makeMailTemplate(dto.getFrom(),
                                                                       dto.getMailReceivers(),
                                                                       dto.getTitle(),
