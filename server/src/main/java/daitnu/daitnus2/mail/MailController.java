@@ -43,4 +43,15 @@ public class MailController {
     Mail mail = mailService.findOne(dto.getMailId());
     return new ResponseEntity<>(modelMapper.map(mail, MailDTO.ResponsePatchDTO.class), HttpStatus.OK);
   }
+
+  @PostMapping
+  public ResponseEntity<?> addMail(MailDTO.AddMailDTO dto, BindingResult result, HttpSession session) {
+    if (result.hasErrors()) {
+      ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, result);
+      return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+    AccountsSession sessionUser = (AccountsSession) session.getAttribute("user");
+    Mail mail = mailService.addMail(sessionUser.getId(), dto);
+    return new ResponseEntity<>(modelMapper.map(mail, MailDTO.ResponseAddMailDTO.class), HttpStatus.CREATED);
+  }
 }

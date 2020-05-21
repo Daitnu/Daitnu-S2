@@ -75,4 +75,8 @@ public class MailDTO {
     @NotBlank
     private String mailReceivers;
   }
+
+  public static class ResponseAddMailDTO {
+    private Long MailId;
+  }
 }
