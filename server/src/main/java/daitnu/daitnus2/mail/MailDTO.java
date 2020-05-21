@@ -4,8 +4,11 @@ import daitnu.daitnus2.util.annotation.Enum;
 import daitnu.daitnus2.util.annotation.PatchMailValid;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class MailDTO {
 
@@ -51,5 +54,22 @@ public class MailDTO {
 
   public enum PatchType {
     MOVE, ALTER
+  }
+
+  @Getter @Setter
+  public static class AddMailDTO {
+    private List<MultipartFile> files;
+
+    @NotNull
+    private String title;
+
+    @NotNull
+    private String subject;
+
+    @NotBlank
+    private String from;
+
+    @NotBlank
+    private String mailReceivers;
   }
 }
