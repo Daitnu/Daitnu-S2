@@ -94,4 +94,8 @@ public class MailCategoryService {
     public List<MailCategory> findAll(Long userId) {
         return mailCategoryRepository.findAllByUserId(userId);
     }
+
+    public MailCategory findByNameAndUserId(String categoryName, Long userId) {
+      return mailCategoryRepository.findByNameAndUserId(categoryName, userId);
+    }
 }

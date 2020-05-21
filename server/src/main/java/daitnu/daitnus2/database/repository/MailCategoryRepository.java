@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface MailCategoryRepository extends JpaRepository<MailCategory, Long> {
 
+  MailCategory findByNameAndUserId(String categoryName, Long userId);
+
   /**
    * 메일함 조회시 사용할 예점
    * @param userId string id of user
