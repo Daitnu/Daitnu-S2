@@ -1,9 +1,7 @@
 package daitnu.daitnus2.mail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import daitnu.daitnus2.mail.attachment.MailAttachmentService;
 import daitnu.daitnus2.mail.category.MailCategoryService;
-import daitnu.daitnus2.mail.template.MailTemplateService;
 import daitnu.daitnus2.accounts.AccountsDTO;
 import daitnu.daitnus2.accounts.AccountsService;
 import daitnu.daitnus2.accounts.AccountsSession;
@@ -39,11 +37,7 @@ public class MailControllerTest {
   @Autowired
   MailCategoryService mailCategoryService;
   @Autowired
-  MailTemplateService mailTemplateService;
-  @Autowired
   MailService mailService;
-  @Autowired
-  MailAttachmentService mailAttachmentService;
   @Autowired
   MockMvc mockMvc;
   @Autowired
@@ -52,8 +46,6 @@ public class MailControllerTest {
   private Long userId;
   private Long mailCategoryId1;
   private Long mailCategoryId2;
-  private Long mailTemplateId;
-  private Long mailAttachmentId;
   private Long mailId;
 
   @Before
@@ -72,15 +64,14 @@ public class MailControllerTest {
     mailCategoryId1 = mailbox1.getId();
     mailCategoryId2 = mailbox2.getId();
 
-    MailTemplate mailTemplate = mailTemplateService
-      .makeMailTemplate("kyokyo@daitnu.com", "ksss012@daitnu2.com", "this is title", "this is subject");
-    mailTemplateId = mailTemplate.getId();
+    MailDTO.AddMailDTO addMailDTO = new MailDTO.AddMailDTO();
+    addMailDTO.setFrom("kyokyo@daitnu.com");
+    addMailDTO.setMailReceivers("ksss012@daitnu2.com");
+    addMailDTO.setTitle("this is title");
+    addMailDTO.setSubject("this is subject");
+    addMailDTO.setMailCategoryName(mailbox1.getName());
 
-    MailAttachment mailAttachment = mailAttachmentService
-      .makeMailAttachment(mailTemplateId, "type hi", "name hi", "url hi", 10L);
-    mailAttachmentId = mailAttachment.getId();
-
-    Mail mail = mailService.makeMail(mailCategoryId1, userId, mailTemplateId);
+    Mail mail = mailService.addMail(userId, addMailDTO);
     mailId = mail.getId();
   }
 
