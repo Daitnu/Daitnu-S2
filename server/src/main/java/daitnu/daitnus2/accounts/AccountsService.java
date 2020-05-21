@@ -68,7 +68,9 @@ public class AccountsService {
     String[] defaultCategoryNames = {"받은메일함", "보낸메일함", "내게쓴메일함", "휴지통"};
     List<MailCategory> mailCategories = new ArrayList<>();
     for (String name: defaultCategoryNames) {
-      mailCategories.add(new MailCategory(name, newUser));
+      MailCategory mailCategory = new MailCategory(name, newUser);
+      mailCategories.add(mailCategory);
+      newUser.addMailCategory(mailCategory);
     }
     mailCategoryRepository.saveAll(mailCategories);
     return newUser;
