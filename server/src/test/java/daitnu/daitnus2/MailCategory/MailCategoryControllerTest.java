@@ -72,8 +72,8 @@ public class MailCategoryControllerTest {
     // then
     result.andExpect(status().isCreated());
     List<MailCategory> categories = mailCategoryService.findAll(user.getId());
-    assertEquals(1, categories.size());
-    assertEquals("메일함이름1", categories.get(0).getName());
+    assertEquals(5, categories.size());
+    assertEquals("메일함이름1", mailCategoryService.findByNameAndUserId("메일함이름1", user.getId()).getName());
   }
 
   @Test
@@ -388,8 +388,8 @@ public class MailCategoryControllerTest {
     // then
     result
       .andExpect(status().isOk())
-      .andExpect(jsonPath("[0].name").value(categoryName1))
-      .andExpect(jsonPath("[1].name").value(categoryName2))
+      .andExpect(jsonPath("[4].name").value(categoryName1))
+      .andExpect(jsonPath("[5].name").value(categoryName2))
     ;
   }
 
@@ -446,7 +446,7 @@ public class MailCategoryControllerTest {
     // then
     result.andExpect(status().isOk());
     List<MailCategory> categories = mailCategoryService.findAll(user.getId());
-    assertEquals(0, categories.size());
+    assertEquals(4, categories.size());
   }
 
   @Test

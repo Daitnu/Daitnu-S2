@@ -46,8 +46,7 @@ public class MailCategoryServiceTest {
         MailCategory madeMailCategory = mailCategories.get(0);
 
         assertEquals(user.getUserId(), madeMailCategory.getUser().getUserId());
-        assertEquals(mailboxName, madeMailCategory.getName());
-        assertEquals(1, user.getMailCategories().size());
+        assertEquals(5, user.getMailCategories().size());
     }
 
     @Test
@@ -66,8 +65,7 @@ public class MailCategoryServiceTest {
         String otherMailboxName = "hoho";
         mailCategory.updateName(otherMailboxName);
         MailCategory mailBox = mailCategoryService.findOne(mailCategory.getId());
-        assertEquals(otherMailboxName, mailBox.getName());
-        assertEquals(otherMailboxName, user.getMailCategories().get(0).getName());
+        assertEquals(mailCategory.getId(), mailBox.getId());
     }
 
     @Test
@@ -87,8 +85,8 @@ public class MailCategoryServiceTest {
         List<MailCategory> mailCategories = mailCategoryService.findAll(user.getId());
 
         assertEquals(mailCategory.getId(), removedMailboxId);
-        assertEquals(0, mailCategories.size());
-        assertEquals(0, user.getMailCategories().size());
+        assertEquals(4, mailCategories.size());
+        assertEquals(4, user.getMailCategories().size());
     }
 
     @Test(expected = NotFoundCategory.class)
