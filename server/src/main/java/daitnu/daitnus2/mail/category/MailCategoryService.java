@@ -32,6 +32,11 @@ public class MailCategoryService {
         return mailCategory;
     }
 
+    @Transactional
+    public void addChildCategory(Long parentId, Long childId) {
+        this.findOne(parentId).addChildCategory(this.findOne(childId));
+    }
+
     private void validateMakeDir(MailCategory mailCategory) {
         List<MailCategory> mailCategories = mailCategoryRepository.
                 findAllByUserUserIdAndName(mailCategory.getUser().getUserId(), mailCategory.getName());

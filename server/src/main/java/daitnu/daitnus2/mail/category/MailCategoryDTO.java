@@ -15,6 +15,8 @@ public class MailCategoryDTO {
     @Pattern(regexp = "^[0-9a-zA-Z가-힣 ]{1,20}$",
             message = "메일함 이름은 1자이상 20자 이하, 완성된 한글, 영문, 숫자의 조합만 가능합니다")
     private String name;
+
+    private Long parentId;
   }
 
   @Getter @Setter

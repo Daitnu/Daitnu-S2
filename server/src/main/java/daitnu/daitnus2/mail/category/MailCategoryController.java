@@ -34,6 +34,9 @@ public class MailCategoryController {
     }
     AccountsSession sessionUser = (AccountsSession) session.getAttribute("user");
     MailCategory mailCategory = mailCategoryService.makeDir(dto.getName(), sessionUser.getId());
+    if (dto.getParentId() != null) {
+      mailCategoryService.addChildCategory(dto.getParentId(), mailCategory.getId());
+    }
     return new ResponseEntity<>(modelMapper.map(mailCategory, MailCategoryDTO.Response.class), HttpStatus.CREATED);
   }
 
