@@ -10,6 +10,8 @@
   - 모니터링 시스템 구축
   - CI/CD
 
+- 20.06 ~ 일시 중단
+
 ### [Season1 Repository](https://github.com/connect-foundation/2019-06)
 
 ## 만들고 싶은 기능
